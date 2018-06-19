@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, View, StatusBar } from "react-native";
+import { Image, ImageBackground, View, StatusBar, FlatList } from "react-native";
 import {
   Container,
   Header,
@@ -7,6 +7,7 @@ import {
   CardItem,
   Thumbnail,
   ListItem,
+  List,
   Content,
   Footer,
   FooterTab,
@@ -18,44 +19,93 @@ import {
   Right,
   Item,
   Input,
-  Title
+  Title,
+  Fab
 } from "native-base";
 
 import styles from "./styles";
+import RideItem from '../../components/RideItem';
 
 
-const rides = [
-  {
-    driver: 'driver_1',
-    destination: 'Oulu',
-    origin: 'Rovaniemi',
-    available_seats: 3,
-    date: '11-05-2018',
-    departure_time: '11:44',
-    est_fuel_price: 20.55
+const rides = [{
+  id: 981203810928,
+  driver: {
+    name: 'Make Penttilä',
+    rating: 4.55,
+    reviews: 200
   },
-  {
-    driver: 'driver_2',
-    destination: 'Oulu',
-    origin: 'Rovaniemi',
-    available_seats: 3,
-    date: '11-05-2018',
-    departure_time: '11:44',
-    est_fuel_price: 20.55
+  destination: 'Oulu',
+  origin: 'Rovaniemi',
+  available_seats: 3,
+  date: '11-05-2018',
+  departure: '11:44',
+  est_fuel_price: 20.55
+},
+{
+  id: 9812038104448,
+  driver: {
+    name: 'Make Penttilä',
+    rating: 4.55,
+    reviews: 200,
+    profile_url: 'xxxxx'
   },
+  destination: 'Oulu',
+  origin: 'Rovaniemi',
+  available_seats: 3,
+  date: '11-05-2018',
+  departure: '11:44',
+  est_fuel_price: 20.55
+},
+{
+  id: 1111111111111,
+  driver: {
+    name: 'Make Penttilä',
+    rating: 4.55,
+    reviews: 200,
+    profile_url: 'xxxxx'
+  },
+  destination: 'Oulu',
+  origin: 'Rovaniemi',
+  available_seats: 3,
+  date: '11-05-2018',
+  departure: '11:44',
+  est_fuel_price: 20.55
+},
+{
+  id: 2222222222222,
+  driver: {
+    name: 'Make Penttilä',
+    rating: 4.55,
+    reviews: 200,
+    profile_url: 'xxxxx'
+  },
+  destination: 'Oulu',
+  origin: 'Rovaniemi',
+  available_seats: 3,
+  date: '11-05-2018',
+  departure: '11:44',
+  est_fuel_price: 20.55
+}];
 
-];
 
 class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fabActive: true
+    };
+  }
   render() {
+
     return (
       <Container>
-        <Header span>
-            <Left>
-              <View>
+        <Header>
+          <Left>
+            <View>
               <Title>Kimppakyyti</Title>
-              </View>
-              {/*
+            </View>
+            {/*
               <View>
                 <Item rounded>
                   <Input placeholder="From" />
@@ -68,90 +118,47 @@ class Home extends Component {
                 </Item>
               </View>
               */}
-            </Left>
-           
-            
+          </Left>
 
         </Header>
         <Content >
-          <ListItem>
-            <Card>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} />
-                  <Body>
-                    <Text>Driver name</Text>
-                    <Text note>wubbalubba</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem cardBody>
-                <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Button transparent>
-                    <Icon active name="navigate" />
-                    <Text>12 Likes</Text>
-                  </Button>
-                </Left>
-                <Body>
-                  <Button transparent>
-                    <Icon active name="chatbubbles" />
-                    <Text>4 Comments</Text>
-                  </Button>
-                </Body>
-                <Right>
-                  <Text>11h ago</Text>
-                </Right>
-              </CardItem>
-            </Card>
-          </ListItem>
-          <ListItem>
-            <Card>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} />
-                  <Body>
-                    <Text>Second driver</Text>
-                    <Text note>wubbalubba</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem cardBody>
-                <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Button transparent>
-                    <Icon active name="navigate" />
-                    <Text>12 Likes</Text>
-                  </Button>
-                </Left>
-                <Body>
-                  <Button transparent>
-                    <Icon active name="chatbubbles" />
-                    <Text>4 Comments</Text>
-                  </Button>
-                </Body>
-                <Right>
-                  <Text>11h ago</Text>
-                </Right>
-              </CardItem>
-            </Card>
-          </ListItem>
+          <List>
+            <FlatList
+              data={rides}
+              renderItem={({ item }) => (
+                <RideItem rideItem={item} />
+              )}
+              keyExtractor={item => item.id}
+            />
+          </List>
+          
 
         </Content>
+        <Fab
+          active={this.state.fabActive}
+          direction="up"
+          containerStyle={{ bottom: 60 }}
+          style={{ backgroundColor: '#5067FF' }}
+          position="bottomRight"
+          onPress={() => this.setState({ fabActive: !this.state.fabActive })}>
+          <Icon name="share" />
+          <Button style={{ backgroundColor: '#34A34F' }}>
+            <Icon name="logo-whatsapp" />
+          </Button>
+          <Button style={{ backgroundColor: '#3B5998' }}>
+            <Icon name="logo-facebook" />
+          </Button>
+          <Button disabled style={{ backgroundColor: '#DD5144' }}>
+            <Icon name="mail" />
+          </Button>
+        </Fab>
         <Footer>
           <FooterTab>
             <Button vertical>
               <Icon name="apps" />
               <Text>Rides</Text>
             </Button>
-            <Button vertical>
-              <Icon name="camera" />
-              <Text>Passengers</Text>
-            </Button>
+
             <Button vertical>
               <Icon name="person" />
               <Text>Account</Text>

@@ -20,71 +20,34 @@ import {
   Input,
   Title
 } from "native-base";
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import styles from "./styles";
 
 
-const rides = [
-  {
-    driver: 'driver_1',
-    destination: 'Oulu',
-    origin: 'Rovaniemi',
-    available_seats: 3,
-    date: '11-05-2018',
-    departure_time: '11:44',
-    est_fuel_price: 20.55
-  },
-  {
-    driver: 'driver_2',
-    destination: 'Oulu',
-    origin: 'Rovaniemi',
-    available_seats: 3,
-    date: '11-05-2018',
-    departure_time: '11:44',
-    est_fuel_price: 20.55
-  },
+const RideItem = (props) => {
 
-];
-
-class Home extends Component {
-  render() {
     return (
       <ListItem>
-            <Card>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} />
-                  <Body>
-                    <Text>Driver name</Text>
-                    <Text note>wubbalubba</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-              <CardItem cardBody>
-                <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Button transparent>
-                    <Icon active name="navigate" />
-                    <Text>12 Likes</Text>
-                  </Button>
-                </Left>
-                <Body>
-                  <Button transparent>
-                    <Icon active name="chatbubbles" />
-                    <Text>4 Comments</Text>
-                  </Button>
-                </Body>
-                <Right>
-                  <Text>11h ago</Text>
-                </Right>
-              </CardItem>
-            </Card>
-          </ListItem>
-          
-    );
-  }
-}
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }} >
+          <View style={{ flex: 1 }}>
+            <Image
+              style={{ width: 90, height: 90, borderRadius: 45 }}
+              source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg' }}
+            />
+            <Text note>Rating {props.rideItem.driver.rating} {props.rideItem.driver.reviews}</Text>
+          </View>
+          <View style={{ flex: 2 }}>
+            <Text>{props.rideItem.driver.name}</Text>
+            <Text>{props.rideItem.origin}->{props.rideItem.destination}</Text>
+            <Text>{props.rideItem.date}->{props.rideItem.departure}</Text>
+            <Text>{props.rideItem.available_seats} seats; fuel {props.rideItem.est_fuel_price} e</Text>
+          </View>
 
-export default Home;
+        </View>
+      </ListItem>
+
+    );
+
+};
+
+export default RideItem;
