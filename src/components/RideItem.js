@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, View, StatusBar } from "react-native";
+import { Image, View, TouchableOpacity } from "react-native";
 import {
   Container,
   Header,
@@ -21,14 +21,15 @@ import {
   Title
 } from "native-base";
 import { Col, Row, Grid } from 'react-native-easy-grid';
-
+import { withNavigation } from 'react-navigation';
 
 
 const RideItem = (props) => {
-
+  
     return (
-      <ListItem>
-        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }} >
+      <ListItem button onPress={() => props.navigation.navigate('RideDetails', {rideItem:'testi', rideItem: props.rideItem})} >
+        <View 
+        style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
           <View style={{ flex: 1 }}>
             <Image
               style={{ width: 90, height: 90, borderRadius: 45 }}
@@ -44,10 +45,11 @@ const RideItem = (props) => {
           </View>
 
         </View>
+
       </ListItem>
 
     );
 
 };
 
-export default RideItem;
+export default withNavigation(RideItem);;

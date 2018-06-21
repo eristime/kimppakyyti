@@ -6,6 +6,7 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 import Home from "./screens/home/";
 import Login from "./screens/login/";
 import SideBar from "./screens/sidebar";
+import RideDetails from './screens/ridedetails';
 
 
 /*
@@ -29,7 +30,8 @@ const AppNavigator = StackNavigator(
   {
     //Drawer: { screen: Drawer },
     Login: { screen: Login},
-    Home: { screen: Home}
+    Home: { screen: Home},
+    RideDetails: { screen: RideDetails}
   },
   {
     initialRouteName: "Login",

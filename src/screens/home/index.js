@@ -32,7 +32,10 @@ const rides = [{
   driver: {
     name: 'Make Penttilä',
     rating: 4.55,
-    reviews: 200
+    reviews: 200,
+    profile_url: 'xxxxx',
+    car_model: 'Toyota Auris',
+    car_register_plate: 'FXX-223'  
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -47,7 +50,9 @@ const rides = [{
     name: 'Make Penttilä',
     rating: 4.55,
     reviews: 200,
-    profile_url: 'xxxxx'
+    profile_url: 'xxxxx',
+    car_model: 'Toyota Auris',
+    car_register_plate: 'FXX-223'  
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -62,7 +67,9 @@ const rides = [{
     name: 'Make Penttilä',
     rating: 4.55,
     reviews: 200,
-    profile_url: 'xxxxx'
+    profile_url: 'xxxxx',
+    car_model: 'Toyota Auris',
+    car_register_plate: 'FXX-223'  
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -77,7 +84,9 @@ const rides = [{
     name: 'Make Penttilä',
     rating: 4.55,
     reviews: 200,
-    profile_url: 'xxxxx'
+    profile_url: 'xxxxx',
+    car_model: 'Toyota Auris',
+    car_register_plate: 'FXX-223'  
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -93,7 +102,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabActive: true
+      fabActive: false
     };
   }
   render() {
@@ -126,7 +135,10 @@ class Home extends Component {
             <FlatList
               data={rides}
               renderItem={({ item }) => (
-                <RideItem rideItem={item} />
+                <RideItem 
+                  rideItem={item} 
+                  
+                />
               )}
               keyExtractor={item => item.id}
             />
