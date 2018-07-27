@@ -18,14 +18,14 @@ import {
 import { MapView } from 'expo';
 
 const markers = [{
-  latitude: 37.78825,
-  longitude: -122.4324,
+  latitude: 66.5039,
+  longitude: 25.7294,
   title: 'Rovaniemi',
   description: ''
 },
 {
-  latitude: 37.78825,
-  longitude: -122.4330,
+  latitude: 65.0121,
+  longitude: 25.4651,
   title: 'Oulu',
   description: ''
 }];
@@ -90,8 +90,8 @@ class RideDetails extends Component {
           <MapView
             style={{ height: 200 }}
             initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: 66.5039,
+              longitude: 25.7294,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}

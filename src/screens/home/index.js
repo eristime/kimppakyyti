@@ -5,7 +5,7 @@ import {
   Header,
   Card,
   CardItem,
-  Thumbnail,
+  Drawer,
   ListItem,
   List,
   Content,
@@ -25,6 +25,7 @@ import {
 
 import styles from "./styles";
 import RideItem from '../../components/RideItem';
+import AppHeader from "../../components/AppHeader";
 
 
 const rides = [{
@@ -109,12 +110,17 @@ class Home extends Component {
 
     return (
       <Container>
+        
+        
+        <AppHeader />
+        
+        {/*
         <Header>
           <Left>
             <View>
               <Title>Kimppakyyti</Title>
             </View>
-            {/*
+            
               <View>
                 <Item rounded>
                   <Input placeholder="From" />
@@ -126,10 +132,12 @@ class Home extends Component {
                   <Input placeholder="Date" />
                 </Item>
               </View>
-              */}
+              
           </Left>
 
         </Header>
+
+        */}
         <Content >
           <List>
             <FlatList
