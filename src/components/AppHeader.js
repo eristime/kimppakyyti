@@ -20,8 +20,14 @@ class AppHeader extends Component {
     super(props);
     this.state = {
       destination: '',
-      origin: 'From'
+      departure: '',
+      chosenDate: new Date()
     };
+    this.setDate = this.setDate.bind(this);
+  }
+
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate });
   }
 
   render() {
@@ -30,65 +36,55 @@ class AppHeader extends Component {
 
       <Header style={{ height: 150 }}>
         <Content>
-          <View style={{ flex: 1, marginLeft: 10, marginTop:10, flexDirection: 'row', justifyContent: 'center' }}>
+          <View style={{ flex: 1, marginLeft: 10, marginTop: 10, flexDirection: 'row', justifyContent: 'center' }}>
 
-            <View style={{}}>
-
-              {/*
-  <TextInput
-    style={{ height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, backgroundColor: 'white' }}
-    onChangeText={(origin) => this.setState({ origin })}
-    value={this.state.origin}
-  />
-  */}
-
+            <View >
 
               <Item fixedLabel
-                style={{width: 240, height:40, borderRadius: 5, marginTop:5, backgroundColor:'white'}}>
+                style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                 <Label>From</Label>
                 <Input placeholder='Set departure' />
               </Item>
 
               <Item fixedLabel
-                style={{width: 240, height:40, borderRadius: 5, marginTop:5, backgroundColor:'white'}}>
+                style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                 <Label>To</Label>
                 <Input placeholder='Set destination' />
               </Item>
             </View>
 
 
-
-            {/*TODO: make icon button
-            <View style={{ justifyContent: 'center', marginLeft: 10 }}>
-              <Icon name='swap' />
-            </View>
-            */}
-            <View style={{ justifyContent: 'center', marginLeft: 10 }}>
-            <Button iconLeft transparent dark >
-              <Icon name='swap' />
+            <View style={{ justifyContent: 'center'}}>
+              <Button iconLeft transparent dark >
+                <Icon name='swap' />
               </Button>
             </View>
-            
-
 
           </View>
-          {/*
-<DatePicker
-  defaultDate={new Date(2018, 4, 4)}
-  minimumDate={new Date(2018, 1, 1)}
-  maximumDate={new Date(2018, 12, 31)}
-  locale={"en"}
-  timeZoneOffsetInMinutes={undefined}
-  modalTransparent={false}
-  animationType={"fade"}
-  androidMode={"default"}
-  placeHolderText="Select date"
-/>
+          
+          <View style={{marginLeft:10, flexDirection:'row', justifyContent:'flex-start'}}>
+            <DatePicker
+            defaultDate={new Date(2018, 4, 4)}
+            minimumDate={new Date(2018, 1, 1)}
+            maximumDate={new Date(2018, 12, 31)}
+            locale={"en"}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={"fade"}
+            androidMode={"default"}
+            placeHolderText="Date"
+            textStyle={{ color: "white" }}
+            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            onDateChange={(date) => this.setDate(date)}
+          />
 
-*/}
+            <Button iconLeft transparent dark >
+                <Icon name='more' />
+            </Button>
+          </View>
+          
+          
         </Content>
-
-
 
       </Header>
 
