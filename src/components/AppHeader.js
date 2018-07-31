@@ -63,6 +63,7 @@ class AppHeader extends Component {
           </View>
           
           <View style={{marginLeft:10, flexDirection:'row', justifyContent:'flex-start'}}>
+            <Label>When</Label>
             <DatePicker
             defaultDate={new Date(2018, 4, 4)}
             minimumDate={new Date(2018, 1, 1)}
@@ -91,5 +92,43 @@ class AppHeader extends Component {
     );
   }
 }
+
+{/* TODO: contruct a stylesheet
+
+  const styles = StyleSheet.create({
+  destination: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 100,
+    paddingHorizontal: 30
+  },
+  row: {
+    marginBottom: 20,
+  },
+  columns: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  field: {
+    marginRight: 10,
+  },
+  ageField: {
+    width: 60,
+  },
+  button: {
+    width: 80,
+    marginTop: 15,
+  },
+  error: {
+    marginTop: 10,
+  },
+  errorMsg: {
+    color: 'red'
+  }
+})
+
+*/}
+
 
 export default AppHeader;

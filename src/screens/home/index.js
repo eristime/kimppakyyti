@@ -110,34 +110,9 @@ class Home extends Component {
 
     return (
       <Container>
-        
-        
-        <AppHeader />
-        
-        {/*
-        <Header>
-          <Left>
-            <View>
-              <Title>Kimppakyyti</Title>
-            </View>
-            
-              <View>
-                <Item rounded>
-                  <Input placeholder="From" />
-                </Item>
-                <Item rounded>
-                  <Input placeholder="To" />
-                </Item>
-                <Item regular>
-                  <Input placeholder="Date" />
-                </Item>
-              </View>
               
-          </Left>
+        <AppHeader />
 
-        </Header>
-
-        */}
         <Content >
           <List>
             <FlatList
@@ -152,7 +127,6 @@ class Home extends Component {
             />
           </List>
           
-
         </Content>
         <Fab
           active={this.state.fabActive}
@@ -160,17 +134,8 @@ class Home extends Component {
           containerStyle={{ bottom: 60 }}
           style={{ backgroundColor: '#5067FF' }}
           position="bottomRight"
-          onPress={() => this.setState({ fabActive: !this.state.fabActive })}>
-          <Icon name="share" />
-          <Button style={{ backgroundColor: '#34A34F' }}>
-            <Icon name="logo-whatsapp" />
-          </Button>
-          <Button style={{ backgroundColor: '#3B5998' }}>
-            <Icon name="logo-facebook" />
-          </Button>
-          <Button disabled style={{ backgroundColor: '#DD5144' }}>
-            <Icon name="mail" />
-          </Button>
+          onPress={() => this.props.navigation.navigate('AddRide')}>
+          <Icon name="md-add" />
         </Fab>
         <Footer>
           <FooterTab>

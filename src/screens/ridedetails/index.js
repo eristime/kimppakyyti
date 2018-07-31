@@ -112,15 +112,17 @@ class RideDetails extends Component {
             );
           })}
 
+
+
+          <Button block primary
+            onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+            <Text>Join ride</Text>
+          </Button>
         </Content>
-
-        <Button block primary
-          onPress={() => {
-            this.setModalVisible(!this.state.modalVisible)
-          }}>
-          <Text>Join ride</Text>
-        </Button>
-
+            
+          {/*TODO: style modal page*/}
         <Modal
           animationType="slide"
           transparent={false}
@@ -129,11 +131,6 @@ class RideDetails extends Component {
         >
           <Container>
             <Header>
-              <Left>
-                <Button transparent onPress={() => this.setModalVisible(!this.state.modalVisible)}>
-                  <Icon name='arrow-back' />
-                </Button>
-              </Left>
               <Body>
                 <Title>Confirm Ride</Title>
               </Body>
@@ -144,10 +141,22 @@ class RideDetails extends Component {
             <Text>Departing on {rideItem.date} at {rideItem.departure}</Text>
             <Text>{rideItem.available_seats} seats available </Text>
             <Text>Estimated fuel cost {rideItem.est_fuel_price} euros</Text>
-            
-            <Button block success>
-              <Text>Confirm</Text>
-            </Button>
+
+
+
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+              <Button block success>
+
+                {/*TODO: Add the person to ride list and continue to home page?*/}
+                <Text>Confirm</Text>
+              </Button>
+              <Button block danger
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible)
+                }}>
+                <Text>Cancel</Text>
+              </Button>
+            </View>
           </Container>
 
         </Modal>

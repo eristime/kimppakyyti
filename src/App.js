@@ -7,6 +7,7 @@ import Home from "./screens/home/";
 import Login from "./screens/login/";
 import SideBar from "./screens/sidebar";
 import RideDetails from './screens/ridedetails';
+import AddRide from './screens/add-ride'
 
 
 /*
@@ -31,7 +32,8 @@ const AppNavigator = StackNavigator(
     //Drawer: { screen: Drawer },
     Login: { screen: Login},
     Home: { screen: Home},
-    RideDetails: { screen: RideDetails}
+    RideDetails: { screen: RideDetails},
+    AddRide: {screen: AddRide}
   },
   {
     initialRouteName: "Login",
