@@ -36,6 +36,6 @@ from rest_framework import routers, serializers, viewsets
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     #url(r'^', include(router.urls)),
+    url(r'^', include('apiv1.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^', include('kimppakyyti.apiv1.urls')),
 ]

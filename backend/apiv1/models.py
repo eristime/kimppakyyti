@@ -1,27 +1,29 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    token = models.CharField(max_length=100, unique=True)
-    #Private
-    #Id Token
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile',)
+    
+    #private
+    reported = models.IntegerField(default=0)  # not in use
+    deleted = models.BooleanField(default=False) # not in use
+    is_active = models.BooleanField(default=True) # not in use
+    token = models.CharField(max_length=100, unique=True)  # TODO: find a better place
+
+    # public
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-
     phone_number = models.CharField(max_length=1000, default=None) 
     photo = models.CharField(max_length=50, default=None) # URL for picture
 
-    # not currently in use
-    reported = models.IntegerField(default=0)
-    deleted = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
     driver_rating = models.DecimalField(max_digits=3, decimal_places=2, default=None) # modify to 0 - 5 scale
     driver_reviews = models.IntegerField(default=0)
     passenger_rating = models.DecimalField(max_digits=3, decimal_places=2, default=None) # modify to 0 - 5 scale
     passenger_reviews = models.IntegerField(default=0)
     
     def __str__(self):
-        return self.first_name + " - " + self.last_name
+        return self.first_name + " - " + self.last_name + " profile"
 
 
 class Car(models.Model):
@@ -31,7 +33,7 @@ class Car(models.Model):
     consumption = models.DecimalField(max_digits=4, decimal_places=2, default=None) #liters per 100 km
 
     def __str__(self):
-        return self.owner + " - " + self.register_plate
+        return self.owner.username + " - " + self.register_plate
 
 
 class Ride(models.Model):
@@ -48,17 +50,18 @@ class Ride(models.Model):
         ('MONTHLY', 'MONTHLY'),
     )
 
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rides',)
+    passengers = models.ManyToManyField(User, verbose_name="passengers", default=None)
+
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
     available_seats = models.IntegerField()
     status = models.CharField(max_length=10,choices=STATUS)
-
-    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='driver_rides',)
-    passengers = models.ManyToManyField(User, verbose_name="passengers")
-    ride_ended = models.DateTimeField(default=None)
+    
+    #ride_ended = models.DateTimeField(default=None) #TODO fix the fault
     car = models.ForeignKey(Car, on_delete=models.CASCADE)  # probably not want to delete when deleting a car
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2)
-    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='ONE_TIME')
+    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='ONE_TIME')  # not in use
     
     
     ## implemented if time 
