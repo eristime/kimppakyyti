@@ -35,6 +35,10 @@ class Car(models.Model):
     def __str__(self):
         return self.owner.username + " - " + self.register_plate
 
+#class Passenger:
+#    '''Rides have passengers. Passenger is a user who isn't a driver'''
+#    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='passenger',)
+#    ride = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='passenger',)
 
 class Ride(models.Model):
 
@@ -50,8 +54,11 @@ class Ride(models.Model):
         ('MONTHLY', 'MONTHLY'),
     )
 
+    private = models.OneToOneField(PrivateRide, on_delete=models.CASCADE, related_name='profile',)
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rides',)
+    # only passenger information not available to public
     passengers = models.ManyToManyField(User, verbose_name="passengers", default=None)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)  # probably not want to delete when deleting a car
 
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
@@ -59,7 +66,7 @@ class Ride(models.Model):
     status = models.CharField(max_length=10,choices=STATUS)
     
     #ride_ended = models.DateTimeField(default=None) #TODO fix the fault
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)  # probably not want to delete when deleting a car
+    
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2)
     recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='ONE_TIME')  # not in use
     
@@ -73,6 +80,9 @@ class Ride(models.Model):
         return self.departure + " - " + self.destination
 
 
+class PrivateRide(models.Model):
+    #
+
 class Message(models.Model):
 
     ride  = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='messages',)  # deleteting messages when ride deleted
@@ -84,7 +94,7 @@ class Message(models.Model):
     inappropriate = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.ride
+        return self.id
 
 
 

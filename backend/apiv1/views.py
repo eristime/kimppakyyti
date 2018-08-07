@@ -14,12 +14,12 @@ from rest_framework import renderers
 from apiv1.models import Profile, Car, Ride, Message
 from apiv1.serializers import UserSerializer, ProfileSerializer, CarSerializer, RideSerializer, MessageSerializer
 
-
+#TODO: only admin able to see user list
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
+#TODO: only user able to see it's user list
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -27,6 +27,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 
 class ProfileList(generics.ListCreateAPIView):
+    # All able to see Profile
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -36,17 +37,20 @@ class ProfileList(generics.ListCreateAPIView):
 
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
+    #Only user able to modify profile
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly)
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
 
 class CarDetail(generics.RetrieveUpdateDestroyAPIView):
+    # Only user able to modify and see her cars
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly)
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
 class CarList(generics.ListCreateAPIView):
+    # Only user able to modify and see her cars
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Car.objects.all()
     serializer_class = CarSerializer
@@ -58,11 +62,13 @@ class CarList(generics.ListCreateAPIView):
 
 class RideDetail(generics.RetrieveUpdateDestroyAPIView):
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    #Only driver and passengers able to see rides
     queryset = Ride.objects.all()
     serializer_class = RideSerializer
 
 class RideList(generics.ListCreateAPIView):
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    #Only driver and passengers able to see rides
     queryset = Ride.objects.all()
     serializer_class = RideSerializer
 
@@ -79,8 +85,6 @@ class MessageList(generics.ListCreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(timestamp=datetime.datetime.now())
 
 
 
