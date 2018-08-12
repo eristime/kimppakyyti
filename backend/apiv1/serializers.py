@@ -4,20 +4,20 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    rides = serializers.PrimaryKeyRelatedField(many=True, queryset=Ride.objects.all())
-    cars = serializers.PrimaryKeyRelatedField(many=True, queryset=Car.objects.all())
-    sent_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
-    received_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
+    #rides = serializers.PrimaryKeyRelatedField(many=True, queryset=Ride.objects.all())
+    #cars = serializers.PrimaryKeyRelatedField(many=True, queryset=Car.objects.all())
+    #sent_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
+    #received_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
     #profile = serializers.PrimaryKeyRelatedField(many=True, queryset=Profile.objects.all()) # TODO: add profile information
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'rides', 'cars', 'sent_messages', 'received_messages')
+        fields = ('id', 'username',)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     
-    user = serializers.ReadOnlyField(source='owner.username')
+    #user = serializers.ReadOnlyField(source='owner.username')
     
     class Meta:
         model = Profile
@@ -36,18 +36,20 @@ class CarSerializer(serializers.ModelSerializer):
 
 
 class RideSerializer(serializers.ModelSerializer):
-    messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
-    driver = serializers.ReadOnlyField(source='owner.username')
+    #messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
+    #driver = serializers.ReadOnlyField(source='owner.username')
 
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'messages', 'destination', 'departure', 'available_seats', 'status', 'car', 'estimated_fuel_cost', 'recurrent')
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'available_seats', 'status', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
-class MessageSerializer(serializers.ModelSerializer):
-    #owner = serializers.ReadOnlyField(source='owner.username')
-    
-    class Meta:
-        model = Message
-        fields = ('id', 'ride', 'sender', 'receiver', 'body')
+
+
+#class MessageSerializer(serializers.ModelSerializer):
+#    #owner = serializers.ReadOnlyField(source='owner.username')
+#    
+#    class Meta:
+#        model = Message
+#        fields = ('id', 'ride', 'sender', 'receiver', 'body')
