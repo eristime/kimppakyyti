@@ -12,12 +12,20 @@ urlpatterns = format_suffix_patterns([
         views.UserDetail.as_view(),
         name='user-detail'),
 
-    url(r'^profiles/$',
-        views.ProfileList.as_view(),
-        name='profile-list'),
+    #url(r'^profiles/$',
+    #    views.ProfileList.as_view(),
+    #    name='profile-list'),
     url(r'^profiles/(?P<pk>[0-9]+)/$',
         views.ProfileDetail.as_view(),
         name='profile-detail'),
+
+    url(r'^staff_profiles/(?P<pk>[0-9]+)/$',
+        views.StaffProfileDetail.as_view(),
+        name='staff-profile-detail'),
+
+     url(r'^private_profiles/(?P<pk>[0-9]+)/$',
+        views.PrivateProfileDetail.as_view(),
+        name='private-profile-detail'),
 
     url(r'^rides/$',
         views.RideList.as_view(),

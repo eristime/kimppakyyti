@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apiv1.models import Profile, Car, Ride, PrivateRide, DriverOnlyRide, Message
+from apiv1.models import Profile, StaffProfile, Car, Ride, PrivateRide, DriverOnlyRide, Message
 from django.contrib.auth.models import User
 
 
@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username','profile',)
+        fields = ('id', 'username', 'profile',)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -21,7 +21,26 @@ class ProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Profile
-        fields = ('id', 'user', 'first_name', 'last_name', 'phone_number', 'photo', )
+        fields = ('id', 'first_name', 'last_name', 'phone_number', 'photo')
+
+
+class PrivateProfileSerializer(serializers.ModelSerializer):
+    
+    #user = serializers.ReadOnlyField(source='owner.username')
+    
+    class Meta:
+        model = Profile
+        fields = ('id', 'phone_number', )
+
+
+
+class StaffProfileSerializer(serializers.ModelSerializer):
+    
+    #user = serializers.ReadOnlyField(source='owner.username')
+    
+    class Meta:
+        model = StaffProfile
+        fields = ('id', 'reported_count', 'deleted', 'is_active',)
 
 
 
