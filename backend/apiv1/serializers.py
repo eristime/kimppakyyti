@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apiv1.models import Profile, StaffProfile, Car, Ride, PrivateRide, DriverOnlyRide, Message
+from apiv1.models import *
 from django.contrib.auth.models import User
 
 
@@ -56,24 +56,39 @@ class CarSerializer(serializers.ModelSerializer):
 
 
 class RideSerializer(serializers.ModelSerializer):
-    #messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
-    #driver = serializers.ReadOnlyField(source='owner.username')
-    
-
+    private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'available_seats', 'status', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
 class PrivateRideSerializer(serializers.ModelSerializer):
-    #messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
-    #driver = serializers.ReadOnlyField(source='owner.username')
-    #ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     
+    ride = serializers.ReadOnlyField(source='ride.id')
+
     class Meta:
-        model = Ride
-        fields = ('__all__')
+        model = PrivateRide
+        fields = ('ride', 'passengers')
+
+
+class DriverOnlyRideSerializer(serializers.ModelSerializer):
+    
+    ride = serializers.ReadOnlyField(source='ride.id')
+
+    class Meta:
+        model = DriverOnlyRide
+        fields = ('ride', )
+
+
+class StaffOnlyRideSerializer(serializers.ModelSerializer):
+    
+    ride = serializers.ReadOnlyField(source='ride.id')
+
+    class Meta:
+        model = StaffOnlyRide
+        fields = ('ride', )
 
 
 

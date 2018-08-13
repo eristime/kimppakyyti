@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from apiv1.models.rides import PrivateRide
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -44,16 +45,37 @@ class IsOwner(permissions.BasePermission):
         # Write permissions are only allowed to the owner of the snippet.
         return obj.owner == request.user
 
-#class IsDriverOrPassenger(permissions.BasePermission):
-#    """
-#    Custom permission to only allow owners of an object to edit it.
-#    """
-#
-#    def has_object_permission(self, request, view, obj):
-#        # Read permissions are allowed to any request,
-#        # so we'll always allow GET, HEAD or OPTIONS requests.
-#        if request.method in permissions.Da:
-#            return True
-#
-#        # Write permissions are only allowed to the owner of the ride.
-#        return obj.driver == request.user
+
+
+class IsDriver(permissions.BasePermission):
+    """
+    Custom permission to only allow drivers of a ride to interact with it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        # Write permissions are only allowed to the owner of the snippet.
+        return obj.driver == request.user
+
+
+
+class IsDriverOrPassengerReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow driver to modify and passenger to see.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        
+        if request.method in permissions.SAFE_METHODS:
+            
+            #TODO check that this works
+            ride_pk = pk
+            passengers = PrivateRide.objects.filter(pk=ride_pk).passengers
+            print('custom_permission: passengers', passengers)
+
+            return passengers.filter(request.user).exists()
+
+        # Write permissions are only allowed to the owner of the ride.
+        return obj.driver == request.user

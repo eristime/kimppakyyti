@@ -19,20 +19,33 @@ urlpatterns = format_suffix_patterns([
         views.ProfileDetail.as_view(),
         name='profile-detail'),
 
-    url(r'^staff_profiles/(?P<pk>[0-9]+)/$',
+    url(r'^profiles_staff_only/(?P<pk>[0-9]+)/$',
         views.StaffProfileDetail.as_view(),
         name='staff-profile-detail'),
 
-     url(r'^private_profiles/(?P<pk>[0-9]+)/$',
+     url(r'^profiles_private/(?P<pk>[0-9]+)/$',
         views.PrivateProfileDetail.as_view(),
         name='private-profile-detail'),
 
     url(r'^rides/$',
         views.RideList.as_view(),
         name='ride-list'),
+
     url(r'^rides/(?P<pk>[0-9]+)/$',
         views.RideDetail.as_view(),
         name='ride-detail'),
+    
+    url(r'^rides_private/(?P<pk>[0-9]+)/$',
+        views.PrivateRideDetail.as_view(),
+        name='private-ride-detail'),
+
+    url(r'^rides_staff_only/(?P<pk>[0-9]+)/$',
+        views.StaffOnlyRideDetail.as_view(),
+        name='staff-only-ride-detail'),
+
+    url(r'^rides_driver_only/(?P<pk>[0-9]+)/$',
+        views.DriverOnlyRideDetail.as_view(),
+        name='driver-only-ride-detail'),
 
     url(r'^cars/$',
         views.CarList.as_view(),

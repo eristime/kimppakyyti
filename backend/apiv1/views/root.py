@@ -111,5 +111,6 @@ from rest_framework.reverse import reverse
 def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
-        #TODO fill the rest
+        #'profiles': reverse('profile-list', request=request, format=format),
+        'rides': reverse('ride-list', request=request, format=format),
     })
