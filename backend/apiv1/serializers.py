@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apiv1.models import Profile, Car, Ride, Message
+from apiv1.models import Profile, Car, Ride, PrivateRide, DriverOnlyRide, Message
 from django.contrib.auth.models import User
 
 
@@ -8,11 +8,11 @@ class UserSerializer(serializers.ModelSerializer):
     #cars = serializers.PrimaryKeyRelatedField(many=True, queryset=Car.objects.all())
     #sent_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
     #received_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
-    #profile = serializers.PrimaryKeyRelatedField(many=True, queryset=Profile.objects.all()) # TODO: add profile information
+    profile = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
 
     class Meta:
         model = User
-        fields = ('id', 'username',)
+        fields = ('id', 'username','profile',)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -28,6 +28,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
 
     owner = serializers.ReadOnlyField(source='owner.username')
+    #owner = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
 
     class Meta:
         model = Car
@@ -38,12 +39,22 @@ class CarSerializer(serializers.ModelSerializer):
 class RideSerializer(serializers.ModelSerializer):
     #messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
     #driver = serializers.ReadOnlyField(source='owner.username')
+    
 
     
     class Meta:
         model = Ride
         fields = ('id', 'driver', 'car', 'destination', 'departure', 'available_seats', 'status', 'estimated_fuel_cost', 'private', 'driver_only', )
 
+
+class PrivateRideSerializer(serializers.ModelSerializer):
+    #messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
+    #driver = serializers.ReadOnlyField(source='owner.username')
+    #ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    
+    class Meta:
+        model = Ride
+        fields = ('__all__')
 
 
 

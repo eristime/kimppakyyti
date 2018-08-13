@@ -1,6 +1,6 @@
 from rest_framework import permissions, generics
 
-from apiv1.serializers import RideSerializer
+from apiv1.serializers import RideSerializer, PrivateRideSerializer
 from apiv1.permissions import IsOwnerOrReadOnly
 from apiv1.models import Ride, PrivateRide, DriverOnlyRide
 
@@ -21,4 +21,14 @@ class RideList(generics.ListCreateAPIView):
     queryset = Ride.objects.all()
     serializer_class = RideSerializer
 
-'''End ride endpoint.'''
+
+class PrivateRideDetail(generics.RetrieveUpdateDestroyAPIView):
+    ''''''
+    queryset = PrivateRide.objects.all()
+    serializer_class = PrivateRideSerializer
+
+
+class DriverOnlyRide():
+    pass
+
+#TODO: add End ride endpoint.?

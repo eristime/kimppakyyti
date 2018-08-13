@@ -12,11 +12,15 @@ class ProfileList(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
 
     def perform_create(self, serializer):
+        #TODO if profile exists, return
         serializer.save(user=self.request.user)
 
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     '''Only user able to modify profile. All able to see it'''
-    permission_classes = (IsOwnerOrReadOnly,)
+    #permission_classes = (IsOwnerOrReadOnly,)
+    #TODO add owner property to profile model so that authentication works (owner vs user?)
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+  #TODO: add view for PrivateProfile
