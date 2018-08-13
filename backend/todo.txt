@@ -1,0 +1,1 @@
+- divide the code into django apps for re-use
