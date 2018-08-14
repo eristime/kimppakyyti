@@ -1,4 +1,6 @@
-- rename passenger and drivers to profiles
+- hook request events on creation of passengers
+- show only user cars and modify car url
+- add a nested router
 - add readonly fields as in private ride serializer
 - private ride authentication
 - TODO show only user cars
@@ -6,7 +8,9 @@
 - divide user and profile functionality to its own django app
 - restructure urls.py
 - revisit api root
+- check error messages, 404 and 403 etc.
 - retstructure serializers
 - write docs
 - start with unit tests
 - hyperlinking
+- convert primary keys to slugs/strings

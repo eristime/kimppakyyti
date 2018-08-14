@@ -34,6 +34,22 @@ urlpatterns = format_suffix_patterns([
     url(r'^rides/(?P<pk>[0-9]+)/$',
         views.RideDetail.as_view(),
         name='ride-detail'),
+
+    url(r'^rides/(?P<pk>[0-9]+)/passengers/$',
+        views.PassengerList.as_view(),
+        name='passenger-list'),
+
+    url(r'^rides/(?P<pk>[0-9]+)/passengers/(?P<request_pk>[0-9]+)/$',
+        views.PassengerDetail.as_view(),
+        name='passenger-detail'),
+
+    url(r'^rides/(?P<pk>[0-9]+)/requests/$',
+        views.RequestList.as_view(),
+        name='request-list'),
+
+    url(r'^rides/(?P<pk>[0-9]+)/requests/(?P<request_pk>[0-9]+)/$',
+        views.RequestDetail.as_view(),
+        name='request-detail'),
     
     url(r'^rides_private/(?P<pk>[0-9]+)/$',
         views.PrivateRideDetail.as_view(),

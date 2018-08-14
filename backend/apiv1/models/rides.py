@@ -4,7 +4,6 @@ from django.core.validators import MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from apiv1.models.roles import Passenger, Driver
 from apiv1.models.car import Car
 
 

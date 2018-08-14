@@ -57,6 +57,16 @@ class IsDriver(permissions.BasePermission):
         # Write permissions are only allowed to the owner of the snippet.
         return obj.driver == request.user
 
+class IsRideDriver(permissions.BasePermission):
+    """
+    For object with ride-field.Custom permission to only allow drivers of a ride to interact with it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        # Write permissions are only allowed to the owner of the snippet.
+        return obj.ride.driver == request.user
+
 
 
 class IsDriverOrPassengerReadOnly(permissions.BasePermission):
@@ -71,11 +81,39 @@ class IsDriverOrPassengerReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             
             #TODO check that this works
-            ride_pk = pk
-            passengers = PrivateRide.objects.filter(pk=ride_pk).passengers
-            print('custom_permission: passengers', passengers)
+            #ride_pk = pk
+            #passengers = PrivateRide.objects.filter(pk=ride_pk).passengers
+            print('custom_permission: passengers', view.kwargs['passengers'])
 
-            return passengers.filter(request.user).exists()
+            return True #|| passengers.filter(request.user).exists()
 
         # Write permissions are only allowed to the owner of the ride.
         return obj.driver == request.user
+
+
+class IsRidePassengerOrDriverReadOnly(permissions.BasePermission):
+    """
+    For objects with ride field. Custom permission to only allow passengers to modify and drivers to see.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.method in permissions.SAFE_METHODS:
+            
+            return obj.ride.driver == request.user 
+
+        return obj.ride.passengers.get(request.user.pk).exists()
+
+
+class IsRideDriverOrDriverReadOnly(permissions.BasePermission):
+    """
+    For objects with ride field. Custom permission to only allow passengers to modify and drivers to see.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.method in permissions.SAFE_METHODS:
+            
+            return obj.ride.driver == request.user 
+
+        return obj.ride.passengers.get(request.user.pk).exists()

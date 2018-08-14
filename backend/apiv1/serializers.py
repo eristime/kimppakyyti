@@ -58,6 +58,7 @@ class CarSerializer(serializers.ModelSerializer):
 class RideSerializer(serializers.ModelSerializer):
     private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     
     class Meta:
         model = Ride
@@ -91,6 +92,22 @@ class StaffOnlyRideSerializer(serializers.ModelSerializer):
         fields = ('ride', )
 
 
+class RequestSerializer(serializers.ModelSerializer):
+    ride = serializers.ReadOnlyField(source='ride.id')
+    requester = serializers.ReadOnlyField(source='requester.id')
+    
+    class Meta:
+        model = Request
+        fields = ('id', 'ride', 'requester', 'note', 'status', )
+
+
+class PassengerSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    ride = serializers.ReadOnlyField(source='ride.id')
+    
+    class Meta:
+        model = Passenger
+        fields = ('id', 'user', 'ride')
 
 #class MessageSerializer(serializers.ModelSerializer):
 #    #owner = serializers.ReadOnlyField(source='owner.username')

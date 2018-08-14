@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Passenger(models.Model):
+class PassengerProfile(models.Model):
     '''Rides have passengers. Passenger is a user who isn't a driver'''
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='passenger',)
     #rides = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='passenger',)
@@ -15,7 +15,7 @@ class Passenger(models.Model):
         return self.user.username 
 
 
-class Driver(models.Model):
+class DriverProfile(models.Model):
     '''Rides have passengers. Passenger is a user who isn't a driver'''
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='driver',)
     #rides = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='driver',)

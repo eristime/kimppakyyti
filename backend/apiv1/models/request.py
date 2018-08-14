@@ -1,7 +1,7 @@
 from django.db import models
 
-from apiv1.models.roles import Passenger
-from apiv1.models.rides import DriverOnlyRide
+from apiv1.models.rides import Ride
+from django.contrib.auth.models import User
 
 
 class Request(models.Model):
@@ -16,10 +16,10 @@ class Request(models.Model):
     )
 
     #TODO: check that there are no overlapping requests
-    ride  = models.ForeignKey(DriverOnlyRide, on_delete=models.CASCADE, related_name='requests',)  
-    requester = models.ForeignKey(Passenger, on_delete=models.CASCADE, related_name='requests',)
+    ride  = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='requests',)  
+    requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests',)
     note = models.TextField()
     status = models.CharField(max_length=10,choices=STATUS)
 
     def __str__(self):
-        return self.id
+        return "Request " + str(self.id)
