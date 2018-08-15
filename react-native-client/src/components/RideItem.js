@@ -1,33 +1,21 @@
 import React, { Component } from "react";
 import { Image, View, TouchableOpacity } from "react-native";
 import {
-  Container,
-  Header,
-  Card,
-  CardItem,
-  Thumbnail,
   ListItem,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Icon,
   Text,
-  Left,
-  Body,
-  Right,
-  Item,
-  Input,
-  Title
 } from "native-base";
-import { Col, Row, Grid } from 'react-native-easy-grid';
 import { withNavigation } from 'react-navigation';
 
 
 const RideItem = (props) => {
   
     return (
-      <ListItem button onPress={() => props.navigation.navigate('RideDetails', {rideItem:'testi', rideItem: props.rideItem})} >
+      
+      <ListItem 
+      button onPress={() => props.navigation.navigate('RideDetails', {rideItem:'testi', rideItem: props.rideItem})}
+      containerStyle={{ borderBottomWidth: 0 }}
+      >
+      
         <View 
         style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
           <View style={{ flex: 1 }}>
@@ -38,18 +26,18 @@ const RideItem = (props) => {
             <Text note>Rating {props.rideItem.driver.rating} {props.rideItem.driver.reviews}</Text>
           </View>
           <View style={{ flex: 2 }}>
-            <Text>{props.rideItem.driver.name}</Text>
-            <Text>{props.rideItem.origin}->{props.rideItem.destination}</Text>
-            <Text>{props.rideItem.date}->{props.rideItem.departure}</Text>
-            <Text>{props.rideItem.available_seats} seats; fuel {props.rideItem.est_fuel_price} e</Text>
+            <Text>Driver: {props.rideItem.driver}</Text>
+            <Text>{props.rideItem.departure}->{props.rideItem.destination}</Text>
+            {/*}<Text>{props.rideItem.date}->{props.rideItem.departure}</Text>*/}
+            <Text>{props.rideItem.available_seats} seats; fuel {props.rideItem.estimated_fuel_cost} e</Text>
           </View>
 
         </View>
-
+        
       </ListItem>
 
     );
 
 };
 
-export default withNavigation(RideItem);;
+export default withNavigation(RideItem);

@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, View, StatusBar, FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import {
   Container,
-  Header,
-  Card,
-  CardItem,
-  Drawer,
-  ListItem,
   List,
   Content,
   Footer,
@@ -14,13 +9,8 @@ import {
   Button,
   Icon,
   Text,
-  Left,
-  Body,
-  Right,
-  Item,
-  Input,
-  Title,
-  Fab
+  Fab,
+  Spinner
 } from "native-base";
 
 import styles from "./styles";
@@ -36,7 +26,7 @@ const rides = [{
     reviews: 200,
     profile_url: 'xxxxx',
     car_model: 'Toyota Auris',
-    car_register_plate: 'FXX-223'  
+    car_register_plate: 'FXX-223'
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -53,7 +43,7 @@ const rides = [{
     reviews: 200,
     profile_url: 'xxxxx',
     car_model: 'Toyota Auris',
-    car_register_plate: 'FXX-223'  
+    car_register_plate: 'FXX-223'
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -70,7 +60,7 @@ const rides = [{
     reviews: 200,
     profile_url: 'xxxxx',
     car_model: 'Toyota Auris',
-    car_register_plate: 'FXX-223'  
+    car_register_plate: 'FXX-223'
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -87,7 +77,7 @@ const rides = [{
     reviews: 200,
     profile_url: 'xxxxx',
     car_model: 'Toyota Auris',
-    car_register_plate: 'FXX-223'  
+    car_register_plate: 'FXX-223'
   },
   destination: 'Oulu',
   origin: 'Rovaniemi',
@@ -103,30 +93,131 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabActive: false
+      fabActive: false,
+      loading: false,
+      data: [],
+      page: 1,
+      error: null,
+      refreshing: false
     };
   }
+
+  componentDidMount() {
+    this.makeRemoteRequest();
+  }
+
+  makeRemoteRequest = () => {
+    const { page } = this.state;
+    const url = `http://10.0.2.2:8000/rides/?page=${page}`;
+    //const url = `https://randomuser.me/api/?page=${page}&results=20`;
+    
+    this.setState({ loading: true });
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          data: page === 1 ? res.results : [...this.state.data, ...res.results],
+          error: res.error || null,
+          loading: false,
+          refreshing: false
+        });
+      })
+      .catch(error => {
+        this.setState({ error, loading: false });
+      });
+  };
+
+  handleRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        seed: this.state.seed + 1,
+        refreshing: true
+      },
+      () => {
+        this.makeRemoteRequest();
+      }
+    );
+  };
+
+  handleLoadMore = () => {
+    this.setState(
+      {
+        page: this.state.page + 1
+      },
+      () => {
+        this.makeRemoteRequest();
+      }
+    );
+  };
+
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+  };
+
+  renderHeader = () => {
+    return <AppHeader />;
+  };
+
+  renderFooter = () => {
+    if (!this.state.loading) return null;
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: "#CED0CE"
+        }}
+      >
+        <Spinner />
+      </View>
+    );
+  };
+
+
+
   render() {
 
     return (
       <Container>
-              
-        <AppHeader />
+
+        {/*<AppHeader />*/}
 
         <Content >
-          <List>
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
-              data={rides}
+              //data={rides}
+              data={this.state.data}
               renderItem={({ item }) => (
-                <RideItem 
-                  rideItem={item} 
-                  
+                //console.log(item)
+                <RideItem
+                 rideItem={item}
                 />
+              
               )}
               keyExtractor={item => item.id}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader}
+              ListFooterComponent={this.renderFooter}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.refreshing}
+              //onEndReached={this.handleLoadMore}
+              //onEndReachedThreshold={50}
             />
           </List>
-          
+
         </Content>
         <Fab
           active={this.state.fabActive}
