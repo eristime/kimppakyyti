@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'apiv1.apps.Apiv1Config'
 ]
 
@@ -109,7 +110,7 @@ REST_FRAMEWORK = {
     #    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     #],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5
+    'PAGE_SIZE': 10
 }
 
 # Internationalization

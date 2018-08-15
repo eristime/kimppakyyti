@@ -48,6 +48,11 @@ class Ride(models.Model):
     def __str__(self):
         return "Ride: " + str(self.id) + " from" + self.departure + " to " + self.destination
 
+    def save(self, *args, **kwargs):
+        self.destination = self.destination.lower()
+        self.departure = self.departure.lower()
+        return super(Ride, self).save(*args, **kwargs)
+
 
 class PrivateRide(models.Model):
     '''Extend Ride-model with information only available to participants.'''

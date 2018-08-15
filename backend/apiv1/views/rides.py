@@ -1,4 +1,5 @@
 from rest_framework import permissions, generics
+import django_filters.rest_framework
 
 from apiv1.serializers import RideSerializer, PrivateRideSerializer, StaffOnlyRideSerializer, DriverOnlyRideSerializer
 from apiv1.permissions import IsOwnerOrReadOnly, IsDriver, IsDriverOrPassengerReadOnly
@@ -12,6 +13,9 @@ class RideList(generics.ListCreateAPIView):
     #Only driver and passengers able to see rides
     queryset = Ride.objects.all()
     serializer_class = RideSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_fields = ('driver', 'car', 'destination', 'departure')
+    #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
 
     def perform_create(self, serializer):
