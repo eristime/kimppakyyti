@@ -46,7 +46,7 @@ class AppHeader extends Component {
 
   render() {
     const d = new Date();
-    const maximumDate = d.setFullYear(d.getFullYear() + 2);
+    const maximumDate = new Date(d.setFullYear(d.getFullYear() + 2));
     return (
 
       <Header style={{ height: 150 }}>
@@ -93,7 +93,6 @@ class AppHeader extends Component {
                   <Text style={{ color: 'white' }}>{this.state.chosenDate.toLocaleDateString()}</Text>
                 </TouchableOpacity>
 
-                {/*TODO: maximumDate type sets a warning*/}
                 <DateTimePicker
                   minimumDate={new Date()}
                   maximumDate={maximumDate}
