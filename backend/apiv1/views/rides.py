@@ -1,27 +1,36 @@
-from rest_framework import permissions, generics
+from rest_framework import permissions
+from rest_framework import generics
+from rest_framework import mixins
+from rest_framework import viewsets
 import django_filters.rest_framework
 
-from apiv1.serializers import RideSerializer, PrivateRideSerializer, StaffOnlyRideSerializer, DriverOnlyRideSerializer
+from apiv1.serializers import RideSerializer, RideProfileCombinedSerializer, PrivateRideSerializer, StaffOnlyRideSerializer, DriverOnlyRideSerializer
 from apiv1.permissions import IsOwnerOrReadOnly, IsDriver, IsDriverOrPassengerReadOnly
 from apiv1.models import Ride, PrivateRide, DriverOnlyRide, StaffOnlyRide
 
 
-class RideList(generics.ListCreateAPIView):
+class RideViewSet(viewsets.ModelViewSet):
     '''All able to see. Drivers with cars able to post. (done automatically?)'''
     #only drivers who have cars able to create a ride
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     #Only driver and passengers able to see rides
     queryset = Ride.objects.all()
-    serializer_class = RideSerializer
+    serializer_class = RideProfileCombinedSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ('driver', 'car', 'destination', 'departure')
+    filter_fields = ('driver', 'car', 'destination', 'departure', 'date')
     #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return RideProfileCombinedSerializer
+        if self.action == 'create':
+            return RideSerializer
 
     def perform_create(self, serializer):
         serializer.save(driver=self.request.user)
 
-
+  
 class RideDetail(generics.RetrieveUpdateDestroyAPIView):
     
     #def __init__(self):

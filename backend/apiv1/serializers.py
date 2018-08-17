@@ -62,7 +62,18 @@ class RideSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
+
+
+class RideProfileCombinedSerializer(serializers.ModelSerializer):
+    private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver = ProfileSerializer()
+    
+    class Meta:
+        model = Ride
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
+
 
 
 class PrivateRideSerializer(serializers.ModelSerializer):

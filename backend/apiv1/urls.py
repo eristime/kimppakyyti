@@ -3,6 +3,11 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from apiv1 import views
 
 
+ride_list = views.RideViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
 urlpatterns = format_suffix_patterns([
     url(r'^$', views.api_root),
     url(r'^users/$',
@@ -28,7 +33,7 @@ urlpatterns = format_suffix_patterns([
         name='private-profile-detail'),
 
     url(r'^rides/$',
-        views.RideList.as_view(),
+        ride_list,
         name='ride-list'),
 
     url(r'^rides/(?P<pk>[0-9]+)/$',

@@ -32,6 +32,7 @@ class Ride(models.Model):
 
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
+    date = models.DateField()
     available_seats = models.PositiveIntegerField(default=4)
     status = models.CharField(max_length=10,choices=STATUS)
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)], blank=True)
