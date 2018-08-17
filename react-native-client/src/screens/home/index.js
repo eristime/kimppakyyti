@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { FlatList, View } from "react-native";
+import React, { Component } from 'react';
+import { FlatList, View } from 'react-native';
 import {
   Container,
   List,
@@ -11,11 +11,11 @@ import {
   Text,
   Fab,
   Spinner
-} from "native-base";
+} from 'native-base';
 
-import styles from "./styles";
+import styles from './styles';
 import RideItem from '../../components/RideItem';
-import AppHeader from "../../components/AppHeader";
+import AppHeader from '../../components/AppHeader';
 
 
 const rides = [{
@@ -97,6 +97,7 @@ class Home extends Component {
       loading: false,
       data: [],
       page: 1,
+      seed: 1,
       error: null,
       refreshing: false
     };
@@ -106,10 +107,32 @@ class Home extends Component {
     this.makeRemoteRequest();
   }
 
-  makeRemoteRequest = () => {
+  makeRemoteRequest = (destination = false, departure = false, date = false, newRequest = false) => {
+    /*
+      makes a request for 
+    */
+    if (newRequest) {
+      this.setState({
+        page: 1,
+        seed: 1
+      });
+    }
     const { page } = this.state;
-    const url = `http://10.0.2.2:8000/rides/?page=${page}`;
-    //const url = `https://randomuser.me/api/?page=${page}&results=20`;
+    //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
+    let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
+
+
+    if (destination) {
+      url = url + `&destination=${destination}`;
+    }
+
+    if (departure) {
+      url = url + `&departure=${departure}`;
+    }
+     //TODO: add date filtering
+    if (date) {
+      //url += `&date=${date}`;
+    }
     
     this.setState({ loading: true });
 
@@ -158,16 +181,19 @@ class Home extends Component {
       <View
         style={{
           height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
+          width: '86%',
+          backgroundColor: '#CED0CE',
+          marginLeft: '14%'
         }}
       />
     );
   };
 
   renderHeader = () => {
-    return <AppHeader />;
+    return <AppHeader
+      handleSearchButtonPress={this.makeRemoteRequest}
+
+    />;
   };
 
   renderFooter = () => {
@@ -178,7 +204,7 @@ class Home extends Component {
         style={{
           paddingVertical: 20,
           borderTopWidth: 1,
-          borderColor: "#CED0CE"
+          borderColor: '#CED0CE'
         }}
       >
         <Spinner />
@@ -186,57 +212,59 @@ class Home extends Component {
     );
   };
 
-
+  renderList = () => {
+    if (this.state.error) {
+      return <Text>{this.state.error}</Text>
+    }
+  }
 
   render() {
 
     return (
       <Container>
 
-        {/*<AppHeader />*/}
-
         <Content >
+
+
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
-              //data={rides}
               data={this.state.data}
               renderItem={({ item }) => (
-                //console.log(item)
                 <RideItem
-                 rideItem={item}
+                  rideItem={item}
                 />
-              
+
               )}
               keyExtractor={item => item.id}
-              ItemSeparatorComponent={this.renderSeparator}
+              //ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
               ListFooterComponent={this.renderFooter}
               onRefresh={this.handleRefresh}
               refreshing={this.state.refreshing}
-              //onEndReached={this.handleLoadMore}
-              //onEndReachedThreshold={50}
+              onEndReached={this.handleLoadMore}
+            //onEndReachedThreshold={50}
             />
           </List>
 
         </Content>
         <Fab
           active={this.state.fabActive}
-          direction="up"
+          direction='up'
           containerStyle={{ bottom: 60 }}
           style={{ backgroundColor: '#5067FF' }}
-          position="bottomRight"
+          position='bottomRight'
           onPress={() => this.props.navigation.navigate('AddRide')}>
-          <Icon name="md-add" />
+          <Icon name='md-add' />
         </Fab>
         <Footer>
           <FooterTab>
             <Button vertical>
-              <Icon name="apps" />
+              <Icon name='apps' />
               <Text>Rides</Text>
             </Button>
 
             <Button vertical>
-              <Icon name="person" />
+              <Icon name='person' />
               <Text>Account</Text>
             </Button>
           </FooterTab>

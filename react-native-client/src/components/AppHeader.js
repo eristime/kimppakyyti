@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { View, TextInput } from "react-native";
+import React, { Component } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   Button,
   Content,
-  Container,
-  DatePicker,
   Icon,
   Input,
   Item,
   Label,
   Header,
   Text
-} from "native-base";
+} from 'native-base';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import PropTypes from 'prop-types';
 
 
 class AppHeader extends Component {
@@ -23,68 +23,98 @@ class AppHeader extends Component {
       departure: '',
       chosenDate: new Date()
     };
-    this.setDate = this.setDate.bind(this);
   }
 
-  setDate(newDate) {
-    this.setState({ chosenDate: newDate });
+  _showDatePicker = () => this.setState({ isDatePickerVisible: true });
+
+  _hideDatePicker = () => this.setState({ isDatePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    this.setState({ chosenDate: date });
+    this._hideDatePicker();
+  };
+
+  searchRides = () => {
+    const { handleSearchButtonPress } = this.props;
+    handleSearchButtonPress(this.state.destination, this.state.departure, this.state.chosenDate, true);
   }
+
 
   render() {
-
+    const d = new Date();
+    const maximumDate = d.setFullYear(d.getFullYear() + 2);
     return (
 
       <Header style={{ height: 150 }}>
-        <Content>
+        <Content style={{ flex: 1 }}>
+          {/*<Text>Kimppakyyti application</Text>*/}
           <View style={{ flex: 1, marginLeft: 10, marginTop: 10, flexDirection: 'row', justifyContent: 'center' }}>
-
             <View >
 
               <Item fixedLabel
                 style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                 <Label>From</Label>
-                <Input placeholder='Set departure' />
+                <Input
+                  placeholder='Set departure'
+                  onChangeText={(text) => this.setState({ departure: text })}
+                />
               </Item>
 
               <Item fixedLabel
                 style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                 <Label>To</Label>
-                <Input placeholder='Set destination' />
+                <Input
+                  placeholder='Set destination'
+                  onChangeText={(text) => this.setState({ destination: text })}
+                />
               </Item>
             </View>
 
 
-            <View style={{ justifyContent: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
               <Button iconLeft transparent dark >
                 <Icon name='swap' />
               </Button>
             </View>
 
           </View>
-          
-          <View style={{marginLeft:10, flexDirection:'row', justifyContent:'flex-start'}}>
-            <Label>When</Label>
-            <DatePicker
-            defaultDate={new Date(2018, 4, 4)}
-            minimumDate={new Date(2018, 1, 1)}
-            maximumDate={new Date(2018, 12, 31)}
-            locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            placeHolderText="Date"
-            textStyle={{ color: "white" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
-            onDateChange={(date) => this.setDate(date)}
-          />
 
-            <Button iconLeft transparent dark >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 5 }} >
+
+
+            <View >
+              {/*<Label>When</Label>*/}
+              <View >
+                <TouchableOpacity onPress={this._showDatePicker}>
+                  <Text style={{ color: 'white' }}>{this.state.chosenDate.toLocaleDateString()}</Text>
+                </TouchableOpacity>
+
+                {/*TODO: maximumDate type sets a warning*/}
+                <DateTimePicker
+                  minimumDate={new Date()}
+                  maximumDate={maximumDate}
+                  date={this.state.chosenDate}
+                  isVisible={this.state.isDatePickerVisible}
+                  onConfirm={this._handleDatePicked}
+                  onCancel={this._hideDatePicker}
+                  mode='date'
+                />
+              </View>
+
+              {/* TODO: icon for more filter options
+              <Button iconLeft transparent dark >
                 <Icon name='more' />
+              </Button>
+              */}
+            </View>
+
+            <Button rounded success
+              onPress={() => this.searchRides()}>
+              <Text>Search</Text>
             </Button>
           </View>
-          
-          
+
+
         </Content>
 
       </Header>
@@ -93,42 +123,21 @@ class AppHeader extends Component {
   }
 }
 
-{/* TODO: contruct a stylesheet
 
-  const styles = StyleSheet.create({
-  destination: {
-    flex: 1,
+const styles = StyleSheet.create({
+  headerRowItem: {
+    marginLeft: 10,
     backgroundColor: '#fff',
     paddingTop: 100,
     paddingHorizontal: 30
-  },
-  row: {
-    marginBottom: 20,
-  },
-  columns: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  field: {
-    marginRight: 10,
-  },
-  ageField: {
-    width: 60,
-  },
-  button: {
-    width: 80,
-    marginTop: 15,
-  },
-  error: {
-    marginTop: 10,
-  },
-  errorMsg: {
-    color: 'red'
   }
-})
+});
 
-*/}
 
+/*
+AppHeader.propTypes = {
+  handleSearchButtonPress: React.PropTypes.func
+};
+*/
 
 export default AppHeader;

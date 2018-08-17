@@ -32,6 +32,3 @@ class CarList(generics.ListCreateAPIView):
 
         return Car.objects.filter(owner=self.request.user)
     
-
-    #def get_queryset(self):
-    #   return Car.objects.all().filter(owner=self.request.user)

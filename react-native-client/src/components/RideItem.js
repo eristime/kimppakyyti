@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Image, View, TouchableOpacity } from "react-native";
+import React, { Component } from 'react';
+import { Image, View, TouchableOpacity } from 'react-native';
 import {
   ListItem,
   Text,
-} from "native-base";
+} from 'native-base';
 import { withNavigation } from 'react-navigation';
 
 
 const RideItem = (props) => {
-  
+
     return (
-      
+
       <ListItem 
       button onPress={() => props.navigation.navigate('RideDetails', {rideItem:'testi', rideItem: props.rideItem})}
       containerStyle={{ borderBottomWidth: 0 }}
       >
-      
+
         <View 
         style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
           <View style={{ flex: 1 }}>
