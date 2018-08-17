@@ -34,9 +34,13 @@ class AppHeader extends Component {
     this._hideDatePicker();
   };
 
-  searchRides = () => {
+  passParamsToParent = () => {
     const { handleSearchButtonPress } = this.props;
-    handleSearchButtonPress(this.state.destination, this.state.departure, this.state.chosenDate, true);
+    handleSearchButtonPress({
+      destination: this.state.destination,
+      departure: this.state.departure,
+      date: this.state.chosenDate
+    });
   }
 
 
@@ -109,7 +113,7 @@ class AppHeader extends Component {
             </View>
 
             <Button rounded success
-              onPress={() => this.searchRides()}>
+              onPress={() => this.passParamsToParent()}>
               <Text>Search</Text>
             </Button>
           </View>

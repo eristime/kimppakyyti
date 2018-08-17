@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import {
+  Button,
   Container,
-  List,
   Content,
+  Fab,
+  List,
   Footer,
   FooterTab,
-  Button,
+  H3,
   Icon,
-  Text,
-  Fab,
-  Spinner
+  Spinner,
+  Text
 } from 'native-base';
 
 import styles from './styles';
@@ -101,15 +102,26 @@ class Home extends Component {
       error: null,
       refreshing: false
     };
+    this.filterParams = {
+      destination: '',
+      departure: '',
+      date: null
+    };
   }
 
   componentDidMount() {
     this.makeRemoteRequest();
   }
 
-  makeRemoteRequest = (destination = false, departure = false, date = false, newRequest = false) => {
+  makeFilteredRemoteRequest = (filterParams) => {
+    this.filterParams.destination = filterParams.destination;
+    this.filterParams.departure = filterParams.departure;
+    this.makeRemoteRequest('new-request');
+  };
+
+  makeRemoteRequest = (newRequest = false) => {
     /*
-      makes a request for 
+      param: newRequest: boolean. If true will start on a first page. 
     */
     if (newRequest) {
       this.setState({
@@ -122,15 +134,15 @@ class Home extends Component {
     let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
 
 
-    if (destination) {
-      url = url + `&destination=${destination}`;
+    if (this.filterParams.destination) {
+      url = url + `&destination=${this.filterParams.destination}`;
     }
 
-    if (departure) {
-      url = url + `&departure=${departure}`;
+    if (this.filterParams.departure) {
+      url = url + `&departure=${this.filterParams.departure}`;
     }
-     //TODO: add date filtering
-    if (date) {
+     //TODO: add date filtering, make today default choice
+    if (this.filterParams.date) {
       //url += `&date=${date}`;
     }
     
@@ -191,7 +203,7 @@ class Home extends Component {
 
   renderHeader = () => {
     return <AppHeader
-      handleSearchButtonPress={this.makeRemoteRequest}
+      handleSearchButtonPress={this.makeFilteredRemoteRequest}
 
     />;
   };
@@ -212,11 +224,20 @@ class Home extends Component {
     );
   };
 
+  renderEmpty = () => {
+    return (
+      <View>
+        <H3>Unfortunately no rides available.</H3>
+      </View>
+    );
+  };
+  /*
   renderList = () => {
     if (this.state.error) {
       return <Text>{this.state.error}</Text>
     }
   }
+  */
 
   render() {
 
@@ -239,6 +260,7 @@ class Home extends Component {
               //ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
               ListFooterComponent={this.renderFooter}
+              ListEmptyComponent={this.renderEmpty}
               onRefresh={this.handleRefresh}
               refreshing={this.state.refreshing}
               onEndReached={this.handleLoadMore}
