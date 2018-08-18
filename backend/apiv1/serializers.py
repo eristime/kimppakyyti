@@ -24,6 +24,15 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'phone_number', 'photo')
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ('id', 'profile',)
+
+
 class PrivateProfileSerializer(serializers.ModelSerializer):
     
     #user = serializers.ReadOnlyField(source='owner.username')
@@ -68,7 +77,7 @@ class RideSerializer(serializers.ModelSerializer):
 class RideProfileCombinedSerializer(serializers.ModelSerializer):
     private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
-    driver = ProfileSerializer()
+    driver = UserProfileSerializer()
     
     class Meta:
         model = Ride
