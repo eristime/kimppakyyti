@@ -105,7 +105,7 @@ class Home extends Component {
     this.filterParams = {
       destination: '',
       departure: '',
-      date: null
+      date: new Date()
     };
   }
 
@@ -113,9 +113,26 @@ class Home extends Component {
     this.makeRemoteRequest();
   }
 
+  convertDateForAPI = (dateObject) => {
+    /*
+    param:date, JS date object
+    */
+    // getMonth() returns month from 0 to 11
+    let month = (dateObject.getMonth() + 1).toString();
+    let date = (dateObject.getDate()).toString();
+    if (month.length < 2){
+      month = '0' + month;
+    }
+    if (date.length < 2){
+      date = '0' + date;
+    }
+    return `${dateObject.getFullYear()}-${month}-${date}`;
+  };
+
   makeFilteredRemoteRequest = (filterParams) => {
     this.filterParams.destination = filterParams.destination;
     this.filterParams.departure = filterParams.departure;
+    this.filterParams.date = filterParams.date;
     this.makeRemoteRequest('new-request');
   };
 
@@ -139,11 +156,11 @@ class Home extends Component {
     }
 
     if (this.filterParams.departure) {
-      url = url + `&departure=${this.filterParams.departure}`;
+      url = url + `&departure=${this.filterParams.departure.toLocaleDateString()}`;
     }
      //TODO: add date filtering, make today default choice
     if (this.filterParams.date) {
-      //url += `&date=${date}`;
+      url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
     }
     
     this.setState({ loading: true });

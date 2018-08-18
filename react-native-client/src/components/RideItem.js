@@ -26,7 +26,7 @@ const RideItem = (props) => {
             <Text note>Rating {props.rideItem.driver.rating} {props.rideItem.driver.reviews}</Text>
           </View>
           <View style={{ flex: 2 }}>
-            <Text>Driver: {props.rideItem.driver}</Text>
+            <Text>{props.rideItem.driver.first_name || 'unknown'} {props.rideItem.driver.lastname_name || 'unknown'}</Text>
             <Text>{props.rideItem.departure}->{props.rideItem.destination}</Text>
             {/*}<Text>{props.rideItem.date}->{props.rideItem.departure}</Text>*/}
             <Text>{props.rideItem.available_seats} seats; fuel {props.rideItem.estimated_fuel_cost} e</Text>

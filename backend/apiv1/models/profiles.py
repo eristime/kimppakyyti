@@ -10,7 +10,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     phone_number = models.CharField(max_length=100, blank=True) 
-    photo = models.CharField(max_length=50, blank=True) # URL for picture
+    photo = models.CharField(max_length=1000, blank=True) # URL for picture
 
     def __str__(self):
         return self.owner.username + "public profile"
