@@ -120,10 +120,10 @@ class Home extends Component {
     // getMonth() returns month from 0 to 11
     let month = (dateObject.getMonth() + 1).toString();
     let date = (dateObject.getDate()).toString();
-    if (month.length < 2){
+    if (month.length < 2) {
       month = '0' + month;
     }
-    if (date.length < 2){
+    if (date.length < 2) {
       date = '0' + date;
     }
     return `${dateObject.getFullYear()}-${month}-${date}`;
@@ -158,11 +158,11 @@ class Home extends Component {
     if (this.filterParams.departure) {
       url = url + `&departure=${this.filterParams.departure.toLocaleDateString()}`;
     }
-     //TODO: add date filtering, make today default choice
+    //TODO: add date filtering, make today default choice
     if (this.filterParams.date) {
       url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
     }
-    
+
     this.setState({ loading: true });
 
     fetch(url)
@@ -302,7 +302,9 @@ class Home extends Component {
               <Text>Rides</Text>
             </Button>
 
-            <Button vertical>
+            <Button vertical
+              onPress={() => this.props.navigation.navigate('Login')}
+            >
               <Icon name='person' />
               <Text>Account</Text>
             </Button>

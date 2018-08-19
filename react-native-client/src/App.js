@@ -36,7 +36,7 @@ const AppNavigator = StackNavigator(
     AddRide: {screen: AddRide}
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Home",
     headerMode: "none"
   }
 );
