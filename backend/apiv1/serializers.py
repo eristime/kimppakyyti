@@ -113,12 +113,23 @@ class StaffOnlyRideSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    ride = serializers.ReadOnlyField(source='ride.id')
-    requester = serializers.ReadOnlyField(source='requester.id')
+    ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     
     class Meta:
         model = Request
         fields = ('id', 'ride', 'requester', 'note', 'status', )
+
+
+class RequestUpdateSerializer(serializers.ModelSerializer):
+    ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    note = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = Request
+        fields = ('id', 'ride', 'requester', 'note', 'status', )
+
 
 
 class PassengerSerializer(serializers.ModelSerializer):
