@@ -148,7 +148,8 @@ class Home extends Component {
     }
     const { page } = this.state;
     //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
-    let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
+    //let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
+    let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
 
 
     if (this.filterParams.destination) {

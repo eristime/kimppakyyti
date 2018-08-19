@@ -96,8 +96,9 @@ class Login extends Component {
         <Content>
           <H1>Login</H1>
           <Button
-            style={{ backgroundColor: "red", alignSelf: "center" }}
-            onPress={()=>this.logIn()}
+            primary
+            style={{ alignSelf: "center" }}
+            onPress={()=>this._handlePressAsync()}
           >
             <Text>Facebook</Text>
           </Button>
