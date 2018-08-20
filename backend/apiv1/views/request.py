@@ -13,7 +13,7 @@ class RequestList(generics.ListCreateAPIView):
     serializer_class = RequestSerializer
 
     def perform_create(self, serializer):
-        serializer.save(requester=self.request.user, ride=Ride.objects.get(pk=self.kwargs['pk']))
+        serializer.save(requester=self.request.user, ride=Ride.objects.get(pk=self.kwargs['pk']), status='PENDING')
         #TODO: if request exists not able to post another one
         #TODO: if driver, not able to post request
 
@@ -23,11 +23,11 @@ class RequestList(generics.ListCreateAPIView):
         """
         
         ride = self.kwargs['pk']
-        return Request.objects.filter(ride=ride)
+        return Request.objects.filter(ride=ride, status='pending')
 
 
 class RequestDetail(generics.RetrieveUpdateAPIView):
-    #TODO make a custom endpoint
+    #TODO make a custom request/:id/accept route
     '''Only driver able to modify.'''
     permission_classes = (IsRideDriver,)
     queryset = Request.objects.all()
@@ -38,4 +38,4 @@ class RequestDetail(generics.RetrieveUpdateAPIView):
         Only return requests that are not accepted.
         """
         ride = self.kwargs['pk']
-        return Request.objects.filter(ride=ride)
+        return Request.objects.filter(ride=ride, status='pending')

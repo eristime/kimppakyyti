@@ -1,0 +1,5 @@
+- fix bug where toLocaleString js Date method was used on departure data
+- my-rides screen to footer
+- removing List and Content wrappers from FlatList in home and my-rides screens
+- moving local testing data to data-dump.js
+- showing only requests with 'pending'-status in request-list endpoint

@@ -115,6 +115,7 @@ class StaffOnlyRideSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    status = serializers.ReadOnlyField()
     
     class Meta:
         model = Request

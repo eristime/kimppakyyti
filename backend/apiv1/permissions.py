@@ -132,3 +132,17 @@ class IsRideDriverOrDriverReadOnly(permissions.BasePermission):
             return obj.ride.driver == request.user 
 
         return obj.ride.passengers.get(request.user.pk).exists()
+
+
+class IsAuthenticatedOrDriverReadOnly(permissions.BasePermission):
+    """
+    Drivers not able to post, only read.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.method in permissions.SAFE_METHODS:
+            
+            return obj.ride.driver == request.user 
+
+        return obj.ride.passengers.get(request.user.pk).exists()
