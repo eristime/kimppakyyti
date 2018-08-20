@@ -8,3 +8,5 @@ from apiv1.views.request import *
 from apiv1.views.user_rides_as_driver import *
 from apiv1.views.user_rides_as_passenger import *
 from apiv1.views.user_requests import *
+from apiv1.views.end_ride import *
+from apiv1.views.accept_request import *

@@ -1,4 +1,3 @@
-- "my_rides_as_driver"-endpoint: return the rides where current user driver
-- "my_rides_as_passenger"-endpoint: return the rides where current user passenger
-- "my_requests"-endpoint: return current user ride requests
-- added route for adding passengers for deving purposes
+- end-ride endpoint
+- ride model to contain total number of seats
+- rides enpoint only returns rides with 'ongoing' status

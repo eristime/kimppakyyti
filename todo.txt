@@ -1,4 +1,9 @@
+Current commit:
+- check every view which returns rides and filter with completed
+
+
 backend:
+- start with unit tests
 - populate with fake data
 - hook request events on creation of passengers
 - add a nested router
@@ -10,7 +15,7 @@ backend:
 - private ride authentication
 - first_name and last_name in user model
 - divide user and profile functionality to its own django app
-- start with unit tests
+- divide serializers to its own folder
 - convert primary keys to slugs/strings
 - hyperlinking
 - revisit api root
@@ -24,3 +29,6 @@ client:
 - one single container for gathered data?
 - find a better place for the footer
 - make my-rides tabs to own components
+
+decisions:
+- are old rides automatically set to 'completed'?

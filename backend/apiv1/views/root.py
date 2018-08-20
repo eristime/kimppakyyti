@@ -18,6 +18,7 @@ def api_root(request, format=None):
         'users': reverse('user-list', request=request, format=format),
         #'profiles': reverse('profile-list', request=request, format=format),
         'rides': reverse('ride-list', request=request, format=format),
+        #'end-ride': reverse('end-ride', request=request, format=format),
         'my rides as driver': reverse('user-rides-as-driver-list', request=request, format=format),
         'my rides as passenger': reverse('user-rides-as-passenger-list', request=request, format=format),
         'my ride requests': reverse('user-request-list', request=request, format=format),

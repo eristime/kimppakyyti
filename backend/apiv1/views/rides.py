@@ -30,6 +30,13 @@ class RideViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(driver=self.request.user)
 
+    def get_queryset(self):
+        """
+        This view should return all request for a specific ride.
+        """
+        
+        return Ride.objects.filter(status='ongoing')
+
   
 class RideDetail(generics.RetrieveUpdateDestroyAPIView):
     

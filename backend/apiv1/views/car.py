@@ -13,6 +13,8 @@ class CarDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
+    #TODO: override deletion, can't delete if used in ongoing ride
+
 
 class CarList(generics.ListCreateAPIView):
     ''' Only user able to modify and see her cars'''

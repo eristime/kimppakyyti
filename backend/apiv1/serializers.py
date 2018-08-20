@@ -72,7 +72,7 @@ class RideSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats','total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
 class RideProfileCombinedSerializer(serializers.ModelSerializer):
@@ -82,7 +82,18 @@ class RideProfileCombinedSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+
+
+class EndRideSerializer(serializers.ModelSerializer):
+    private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    driver = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    
+    class Meta:
+        model = Ride
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        read_only_fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
 
@@ -133,7 +144,6 @@ class RequestUpdateSerializer(serializers.ModelSerializer):
         fields = ('id', 'ride', 'requester', 'note', 'status', )
 
 
-
 class PassengerSerializer(serializers.ModelSerializer):
     #user = serializers.PrimaryKeyRelatedField(many=False, )
     ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True, )
@@ -141,6 +151,7 @@ class PassengerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Passenger
         fields = ('id', 'user', 'ride')
+
 
 #class MessageSerializer(serializers.ModelSerializer):
 #    #owner = serializers.ReadOnlyField(source='owner.username')

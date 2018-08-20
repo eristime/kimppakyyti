@@ -18,7 +18,7 @@ class Ride(models.Model):
         ('ONE_TIME', 'one_time'),
         ('DAILY', 'daily'),
         ('WEEKLY', 'weekly'),
-        ('MONTHLY', 'MONTHLY'),
+        ('MONTHLY', 'monthly'),
     )
 
     
@@ -33,10 +33,11 @@ class Ride(models.Model):
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
     date = models.DateField()
-    available_seats = models.PositiveIntegerField(default=4)
+    available_seats = models.PositiveIntegerField()
+    total_seat_count = models.PositiveIntegerField()
     status = models.CharField(max_length=10,choices=STATUS)
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)], blank=True)
-    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='ONE_TIME')  # not in use
+    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='one_time')  # not in use
 
     #ride_ended = models.DateTimeField(default=None) #TODO fix the fault
     
@@ -53,6 +54,7 @@ class Ride(models.Model):
         self.destination = self.destination.lower()
         self.departure = self.departure.lower()
         return super(Ride, self).save(*args, **kwargs)
+
 
 
 class PrivateRide(models.Model):
