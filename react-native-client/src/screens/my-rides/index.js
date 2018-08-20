@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import {
+  Body,
   Button,
   Container,
   Content,
-  Fab,
+  Left,
   List,
   Footer,
   FooterTab,
+  Header,
   H3,
   Icon,
+  ListItem,
+  Separator,
   Spinner,
+  Tabs,
+  Tab,
+  Title,
   Text
 } from 'native-base';
 
 import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
+import testData from  '../../../data-dump';
 
 
 class Home extends Component {
@@ -24,47 +32,19 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fabActive: false,
       loading: false,
-      data: [],
+      data: testData.rides,
       page: 1,
       seed: 1,
       error: null,
       refreshing: false
     };
-    this.filterParams = {
-      destination: '',
-      departure: '',
-      date: new Date()
-    };
+
   }
 
   componentDidMount() {
     this.makeRemoteRequest();
   }
-
-  convertDateForAPI = (dateObject) => {
-    /*
-    param:date, JS date object
-    */
-    // getMonth() returns month from 0 to 11
-    let month = (dateObject.getMonth() + 1).toString();
-    let date = (dateObject.getDate()).toString();
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (date.length < 2) {
-      date = '0' + date;
-    }
-    return `${dateObject.getFullYear()}-${month}-${date}`;
-  };
-
-  makeFilteredRemoteRequest = (filterParams) => {
-    this.filterParams.destination = filterParams.destination;
-    this.filterParams.departure = filterParams.departure;
-    this.filterParams.date = filterParams.date;
-    this.makeRemoteRequest('new-request');
-  };
 
   makeRemoteRequest = (newRequest = false) => {
     /*
@@ -80,19 +60,6 @@ class Home extends Component {
     //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
     //let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
     let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
-
-
-    if (this.filterParams.destination) {
-      url = url + `&destination=${this.filterParams.destination}`;
-    }
-
-    if (this.filterParams.departure) {
-      url = url + `&departure=${this.filterParams.departure}`;
-    }
-    //TODO: add date filtering, make today default choice
-    if (this.filterParams.date) {
-      url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
-    }
 
     this.setState({ loading: true });
 
@@ -150,10 +117,16 @@ class Home extends Component {
   };
 
   renderHeader = () => {
-    return <AppHeader
-      handleSearchButtonPress={this.makeFilteredRemoteRequest}
-
-    />;
+    return <Header>
+      <Left>
+        <Button transparent onPress={() => this.props.navigation.goBack()}>
+          <Icon name='arrow-back' />
+        </Button>
+      </Left>
+      <Body>
+        <Title>My Rides</Title>
+      </Body>
+    </Header>;
   };
 
   renderFooter = () => {
@@ -175,54 +148,69 @@ class Home extends Component {
   renderEmpty = () => {
     return (
       <View>
-        <H3>Unfortunately no rides available.</H3>
+        <H3>You haven't participated on any rides yet!</H3>
       </View>
     );
   };
-
 
   render() {
 
     return (
       <Container>
-        <FlatList
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <RideItem
-              rideItem={item}
-            />
 
-          )}
-          keyExtractor={item => item.id}
-          //ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
-          ListEmptyComponent={this.renderEmpty}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
-          onEndReached={this.handleLoadMore}
-        //onEndReachedThreshold={50}
-        />
+        <Header hasTabs>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>My Rides</Title>
+          </Body>
+        </Header>
+        <Tabs locked>
+          <Tab heading="As passenger">
+          <Content>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <RideItem
+                rideItem={item}
+              />
 
-        <Fab
-          active={this.state.fabActive}
-          direction='up'
-          containerStyle={{ bottom: 60 }}
-          style={{ backgroundColor: '#5067FF' }}
-          position='bottomRight'
-          onPress={() => this.props.navigation.navigate('AddRide')}>
-          <Icon name='md-add' />
-        </Fab>
+            )}
+            keyExtractor={item => item.id}
+            //ItemSeparatorComponent={this.renderSeparator}
+            //ListHeaderComponent={this.renderHeader}
+            ListFooterComponent={this.renderFooter}
+            ListEmptyComponent={this.renderEmpty}
+            onRefresh={this.handleRefresh}
+            refreshing={this.state.refreshing}
+            onEndReached={this.handleLoadMore}
+          //onEndReachedThreshold={50}
+          />
+        </Content>
+        
+          </Tab>
+          <Tab heading="As Driver">
+            <Text>some content here</Text>
+          </Tab>
+          <Tab heading="Requests">
+          <Text>some content here</Text>
+          </Tab>
+        </Tabs>
+
+
         <Footer>
           <FooterTab>
-            <Button vertical>
+            <Button vertical
+              onPress={() => this.props.navigation.navigate('Home')}
+            >
               <Icon name='md-list' />
               <Text>Rides</Text>
             </Button>
 
-            <Button vertical
-              onPress={() => this.props.navigation.navigate('MyRides')}
-            >
+            <Button vertical>
               <Icon name='md-car' />
               <Text>My Rides</Text>
             </Button>

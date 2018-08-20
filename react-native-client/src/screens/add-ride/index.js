@@ -62,7 +62,7 @@ class AddRide extends Component {
 
   render() {
     const d = new Date();
-    const maximumDate = d.setFullYear(d.getFullYear() + 2);
+    const maximumDate = new Date(d.setFullYear(d.getFullYear() + 2));
     return (
       <Container>
 
