@@ -4,6 +4,8 @@ backend:
 - add a nested router
 - correct search filter url
 - show only user cars when posting ride
+- don't show full rides
+- remove old rides periodically??
 - add readonly fields as in private ride serializer
 - private ride authentication
 - first_name and last_name in user model

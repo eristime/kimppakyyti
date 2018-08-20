@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    #rides = serializers.PrimaryKeyRelatedField(many=True, queryset=Ride.objects.all())
-    #cars = serializers.PrimaryKeyRelatedField(many=True, queryset=Car.objects.all())
+    #rides_as_driver = serializers.PrimaryKeyRelatedField(many=True, queryset=Ride.objects.all(), source='driver')
+    #rides_as_passenger
+    cars = serializers.PrimaryKeyRelatedField(many=True, queryset=Car.objects.all())
     #sent_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
     #received_messages = serializers.PrimaryKeyRelatedField(many=True, queryset=Message.objects.all())
     profile = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
@@ -134,8 +135,8 @@ class RequestUpdateSerializer(serializers.ModelSerializer):
 
 
 class PassengerSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    ride = serializers.ReadOnlyField(source='ride.id')
+    #user = serializers.PrimaryKeyRelatedField(many=False, )
+    ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True, )
     
     class Meta:
         model = Passenger

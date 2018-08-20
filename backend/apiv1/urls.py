@@ -44,6 +44,11 @@ urlpatterns = format_suffix_patterns([
         views.PassengerList.as_view(),
         name='passenger-list'),
 
+    # TODO remove when not needed, only for deving
+    url(r'^rides/(?P<pk>[0-9]+)/passengers_create/$',
+        views.PassengerCreate.as_view(),
+        name='passenger-create'),
+
     url(r'^rides/(?P<pk>[0-9]+)/passengers/(?P<request_pk>[0-9]+)/$',
         views.PassengerDetail.as_view(),
         name='passenger-detail'),
@@ -74,6 +79,20 @@ urlpatterns = format_suffix_patterns([
     url(r'^cars/(?P<pk>[0-9]+)/$',
         views.CarDetail.as_view(),
         name='car-detail'),
+
+    url(r'^my_rides_as_driver/$',
+        views.UserRidesAsDriverList.as_view(),
+        name='user-rides-as-driver-list'),
+
+    url(r'^my_rides_as_passenger/$',
+        views.UserRidesAsPassengerList.as_view(),
+        name='user-rides-as-passenger-list'),
+    
+    url(r'^my_requests/$',
+        views.UserRequests.as_view(),
+        name='user-request-list'),
+
+    
     
     #url(r'^message/$',
     #    views.MessageList.as_view(),
