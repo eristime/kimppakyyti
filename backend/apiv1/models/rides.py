@@ -28,7 +28,7 @@ class Ride(models.Model):
     
     # TODO don't cascade delete but lock it instead
     # TODO show only user cars
-    car = models.ForeignKey(Car, on_delete=models.CASCADE) 
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True) 
 
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)

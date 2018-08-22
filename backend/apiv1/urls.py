@@ -49,7 +49,7 @@ urlpatterns = format_suffix_patterns([
         views.PassengerCreate.as_view(),
         name='passenger-create'),
 
-    url(r'^rides/(?P<pk>[0-9]+)/passengers/(?P<request_pk>[0-9]+)/$',
+    url(r'^rides/(?P<pk>[0-9]+)/passengers/(?P<passenger_pk>[0-9]+)/$',
         views.PassengerDetail.as_view(),
         name='passenger-detail'),
 
@@ -64,6 +64,10 @@ urlpatterns = format_suffix_patterns([
     url(r'^rides/(?P<pk>[0-9]+)/requests/(?P<request_pk>[0-9]+)/$',
         views.RequestDetail.as_view(),
         name='request-detail'),
+
+    url(r'^rides/(?P<pk>[0-9]+)/requests/(?P<request_pk>[0-9]+)/accept/$',
+        views.AcceptRequest.as_view(),
+        name='accept-request'),
     
     url(r'^rides_private/(?P<pk>[0-9]+)/$',
         views.PrivateRideDetail.as_view(),

@@ -152,6 +152,14 @@ class PassengerSerializer(serializers.ModelSerializer):
         model = Passenger
         fields = ('id', 'user', 'ride')
 
+class AcceptRequestSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=True, )
+    ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True, )
+    
+    class Meta:
+        model = Passenger
+        fields = ('id', 'user', 'ride')
+
 
 #class MessageSerializer(serializers.ModelSerializer):
 #    #owner = serializers.ReadOnlyField(source='owner.username')

@@ -28,7 +28,6 @@ class PassengerCreate(generics.CreateAPIView):
     queryset = Passenger.objects.all()
 
 
-
     def perform_create(self, serializer):
         """
         Create a user for current ride
