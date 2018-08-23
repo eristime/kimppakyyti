@@ -5,9 +5,10 @@ from django.core.validators import MinValueValidator
 
 class Car(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cars',)
-    model = models.CharField(max_length=50)
-    register_plate = models.CharField(max_length=50)
-    consumption = models.DecimalField(max_digits=4, decimal_places=2, default=None, validators=[MinValueValidator(0.01)]) #liters per 100 km
+    brand = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    register_plate = models.CharField(max_length=100)
+    consumption = models.DecimalField(max_digits=4, decimal_places=2, null=True, validators=[MinValueValidator(0.01)]) #liters per 100 km
 
     def __str__(self):
-        return self.owner.username + " - " + self.register_plate
+        return "User: " + str(self.owner.id) + " car " + self.register_plate

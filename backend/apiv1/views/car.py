@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
-from rest_framework import permissions, generics
+from rest_framework import permissions
+from rest_framework import generics
 
 from apiv1.models import Car
 from apiv1.serializers import CarSerializer
-from apiv1.permissions import IsOwner, IsOwnerOrWriteOnly, IsOwnerOrReadOnly
+from apiv1.permissions import IsOwnerOrReadOnly
 
 
 
@@ -26,9 +27,9 @@ class CarList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         """
-        This view should return all passengers on a ride.
+        This view should return only current user cars.
         """
-        ##TODO handle anonymous users
+
         if self.request.user.is_anonymous:
             return Car.objects.none()
 

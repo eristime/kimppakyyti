@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from apiv1.models import *
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -69,6 +70,15 @@ class RideSerializer(serializers.ModelSerializer):
     private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+
+    def validate_date(self, value):
+        '''
+        Check that date is not in the past.
+        '''
+        if datetime.now() < value:
+            raise serializers.ValidationError('Date cannot be set in the past.')
+
+        return value
     
     class Meta:
         model = Ride
@@ -151,6 +161,7 @@ class PassengerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Passenger
         fields = ('id', 'user', 'ride')
+
 
 class AcceptRequestSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(many=False, read_only=True, )
