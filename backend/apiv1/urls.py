@@ -88,15 +88,15 @@ urlpatterns = format_suffix_patterns([
         views.CarDetail.as_view(),
         name='car-detail'),
 
-    url(r'^my_rides_as_driver/$',
+    url(r'^me/rides_as_driver/$',
         views.UserRidesAsDriverList.as_view(),
         name='user-rides-as-driver-list'),
 
-    url(r'^my_rides_as_passenger/$',
+    url(r'^me/rides_as_passenger/$',
         views.UserRidesAsPassengerList.as_view(),
         name='user-rides-as-passenger-list'),
     
-    url(r'^my_requests/$',
+    url(r'^me/requests/$',
         views.UserRequests.as_view(),
         name='user-request-list'),
 

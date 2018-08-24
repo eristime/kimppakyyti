@@ -9,7 +9,7 @@ class CarModelTest(TestCase):
         # Set up non-modified objects used by all test methods
         self.user = User.objects.create_user(
             username='test_user', password='some_secure_password here')
-        Car.objects.create(owner=self.user, brand='Volvo', model='V60', registerplate='FXX-123', consumption=8.50)
+        Car.objects.create(owner=self.user, brand='Volvo', model='V60', register_plate='FXX-123', consumption=8.50)
 
     def test_brand_max_length(self):
         car = Car.objects.get(id=1)
@@ -28,7 +28,7 @@ class CarModelTest(TestCase):
 
     def test_consumption_max_digits(self):
         car = Car.objects.get(id=1)
-        max_length = car._meta.get_field('consumption').max_digits
+        max_digits = car._meta.get_field('consumption').max_digits
         self.assertEquals(max_digits, 4)
 
     def test_consumption_decimal_places(self):
@@ -38,7 +38,7 @@ class CarModelTest(TestCase):
 
     def test_object_name(self):
         car = Car.objects.get(id=1)
-        expected_object_name = f'User: {owner.id} car {car.first_name}'
+        expected_object_name = f'User: {car.owner.id} car {car.register_plate}'
         self.assertEquals(expected_object_name, str(car))
 
     def test_get_absolute_url(self):
