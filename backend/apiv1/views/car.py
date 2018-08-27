@@ -8,7 +8,7 @@ from apiv1.permissions import IsOwnerOrReadOnly
 
 
 
-class CarDetail(generics.RetrieveUpdateDestroyAPIView):
+class CarDetail(generics.RetrieveDestroyAPIView):
     '''Only user able to modify and see her cars. Cars able to be deleted.''' 
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = Car.objects.all()
