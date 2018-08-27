@@ -22,4 +22,6 @@ def api_root(request, format=None):
         'my rides as driver': reverse('user-rides-as-driver-list', request=request, format=format),
         'my rides as passenger': reverse('user-rides-as-passenger-list', request=request, format=format),
         'my ride requests': reverse('user-request-list', request=request, format=format),
+        'my cars': reverse('car-list', request=request, format=format),
+        #TODO name url names consistently
     })

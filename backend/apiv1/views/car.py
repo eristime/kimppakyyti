@@ -4,13 +4,12 @@ from rest_framework import generics
 
 from apiv1.models import Car
 from apiv1.serializers import CarSerializer
-from apiv1.permissions import IsOwnerOrReadOnly
-
+from apiv1.permissions import IsOwnerOrReadOnly, IsOwner
 
 
 class CarDetail(generics.RetrieveDestroyAPIView):
     '''Only user able to modify and see her cars. Cars able to be deleted.''' 
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsOwner,)
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
