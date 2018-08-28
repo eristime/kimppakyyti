@@ -27,8 +27,7 @@ class Ride(models.Model):
 
     
     # TODO don't cascade delete but lock it instead
-    # TODO show only user cars
-    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True) 
+    car = models.ForeignKey(Car, on_delete=models.CASCADE,) 
 
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
@@ -39,8 +38,6 @@ class Ride(models.Model):
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)], blank=True)
     recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='one_time')  # not in use
 
-    #ride_ended = models.DateTimeField(default=None) #TODO fix the fault
-    
     
     ## implemented if time 
     #Route Object
@@ -53,6 +50,7 @@ class Ride(models.Model):
     def save(self, *args, **kwargs):
         self.destination = self.destination.lower()
         self.departure = self.departure.lower()
+        self.total_seat_count = self.available_seats
         return super(Ride, self).save(*args, **kwargs)
 
 

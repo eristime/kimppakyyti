@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apiv1.models import *
 from django.contrib.auth.models import User
-from datetime import datetime
+from datetime import date
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    
+    # link profile to users
     profile = ProfileSerializer()
 
     class Meta:
@@ -65,30 +65,52 @@ class CarSerializer(serializers.ModelSerializer):
         fields = ('id', 'owner', 'model', 'register_plate', 'consumption')
 
 
+class UserCarField(serializers.PrimaryKeyRelatedField):
+    '''
+    Field which returns only user cars.
+    '''
+    def get_queryset(self):
+        user = self.context['request'].user
+        queryset = Car.objects.filter(owner=user)
+        return queryset
+
 
 class RideSerializer(serializers.ModelSerializer):
     private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    car = UserCarField(many=False)
 
     def validate_date(self, value):
         '''
         Check that date is not in the past.
         '''
-        if datetime.now() < value:
+        if value < date.today():
             raise serializers.ValidationError('Date cannot be set in the past.')
+
+        return value
+
+    def validate_car(self, value):
+        '''
+        Check that user is the car owner.
+        '''
+
+        if self.context['request'].user != value.owner:
+            raise serializers.ValidationError('Driver needs to be the car owner.')
 
         return value
     
     class Meta:
         model = Ride
         fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats','total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        read_only_fields = ('total_seat_count', )
 
 
-class RideProfileCombinedSerializer(serializers.ModelSerializer):
+class RideListSerializer(serializers.ModelSerializer):
     private = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver_only = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     driver = UserProfileSerializer()
+    car = CarSerializer()
     
     class Meta:
         model = Ride
@@ -104,7 +126,6 @@ class EndRideSerializer(serializers.ModelSerializer):
         model = Ride
         fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
         read_only_fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
-
 
 
 class PrivateRideSerializer(serializers.ModelSerializer):
