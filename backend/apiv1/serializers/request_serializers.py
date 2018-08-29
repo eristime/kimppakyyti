@@ -12,14 +12,15 @@ class RequestSerializer(serializers.ModelSerializer):
         fields = ('id', 'ride', 'requester', 'note', 'status', )
 
 
-class RequestUpdateSerializer(serializers.ModelSerializer):
+class RequestDetailSerializer(serializers.ModelSerializer):
     ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
-    note = serializers.ReadOnlyField()
+    #request_pk = serializers.IntegerField(source='id')
     
     class Meta:
         model = Request
         fields = ('id', 'ride', 'requester', 'note', 'status', )
+        read_only_fields = ('id', 'ride', 'requester', 'status',)
 
 
 class AcceptRequestSerializer(serializers.ModelSerializer):

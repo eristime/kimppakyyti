@@ -61,6 +61,15 @@ class IsOwner(permissions.BasePermission):
         return obj.owner == request.user
 
 
+class IsRequester(permissions.BasePermission):
+    """
+    Custom permission to only allow requesters of an object to interact with it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+
+        return obj.requester == request.user
+
 
 class IsDriver(permissions.BasePermission):
     """
