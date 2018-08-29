@@ -11,9 +11,11 @@ class Request(models.Model):
     '''
     PENDING = 'PENDING'
     ACCEPTED = 'ACCEPTED'
+    DECLINED = 'DECLINED'
     STATUS = (
         (PENDING, 'pending'),
         (ACCEPTED, 'accepted'),
+        (DECLINED, 'declined'),
     )
 
     #request_id = models.AutoField(primary_key=True)

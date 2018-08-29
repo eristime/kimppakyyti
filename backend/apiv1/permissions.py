@@ -155,3 +155,38 @@ class IsAuthenticatedOrDriverReadOnly(permissions.BasePermission):
             return obj.ride.driver == request.user 
 
         return obj.ride.passengers.get(request.user.pk).exists()
+
+
+class RideDriverReadOrAuthenticatedWrite(permissions.BasePermission):
+    """
+    Read access: RideDriver
+    Others: authenticated
+    """
+
+    def has_object_permission(self, request, view, obj):
+        
+        return False and obj.ride.driver != request.user 
+
+        if request.method in permissions.SAFE_METHODS:
+            
+            #Ride.objects.get(pk=self.kwargs['pk'])
+            print(obj)
+            obj.something
+
+            return False and obj.ride.driver != request.user 
+
+        return request.user.is_authenticated
+
+class RideDriverRead(permissions.BasePermission):
+    """
+    Read access: RideDriver
+    Others: authenticated
+    """
+
+    def has_object_permission(self, request, view, obj):
+        
+
+        if request.method == 'GET':
+            
+
+            return obj.ride.driver == request.user 

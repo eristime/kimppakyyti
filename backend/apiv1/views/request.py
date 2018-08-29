@@ -1,26 +1,23 @@
 from rest_framework import permissions, generics
 
 from apiv1.serializers import RequestSerializer, RequestDetailSerializer
-from apiv1.permissions import IsRideDriver, IsRidePassengerOrDriverReadOnly, IsRequester
+from apiv1.permissions import IsRideDriver, IsRidePassengerOrDriverReadOnly, IsRequester, RideDriverReadOrAuthenticatedWrite, RideDriverRead
 from apiv1.models import Request, Ride
 
 
 class RequestList(generics.ListCreateAPIView):
     '''
     Drivers able to read. Users able to add themselves.
+    IF POST: is authenticated
+    If get: isDriver
     '''
-    #only drivers who have cars able to create a ride
-    #permission_classes = (IsAuthenticatedOrDriverReadOnly,)
-    #queryset = Request.objects.all()
+    #only drivers who 
+    permission_classes = (permissions.IsAuthenticated, RideDriverRead)
     serializer_class = RequestSerializer
 
 
     def perform_create(self, serializer):
-        #serializer.save(requester=self.request.user, ride=Ride.objects.get(pk=self.kwargs['pk']), status='PENDING')
         serializer.save(requester=self.request.user, ride=Ride.objects.get(pk=self.kwargs['pk']))
-        #TODO: if request exists, not able to post another one
-        #TODO: if driver, not able to post request
-        #TODO: if passenger, not able to post request 
 
 
     def get_queryset(self):
