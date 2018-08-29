@@ -3,11 +3,12 @@ Current commit:
 
 
 backend:
-- start with unit tests
-- populate with fake data
+- 
 - hook request events on creation of passengers
 - add a nested router
 - correct search filter url
+- retstructure serializers
+- 
 - show only user cars when posting ride
 - don't show full rides
 - remove old rides periodically??
@@ -20,7 +21,7 @@ backend:
 - hyperlinking
 - revisit api root
 - check error messages, 404 and 403 etc.
-- retstructure serializers
+
 - write docs
 
 client:
