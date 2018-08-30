@@ -8,11 +8,19 @@ from apiv1.models.car import Car
 
 
 class Ride(models.Model):
+    
+    ONGOING = 'ONGOING'
+    COMPLETED = 'COMPLETED'
 
     STATUS = (
-        ('ONGOING', 'ongoing'),
-        ('COMPLETED', 'completed'),
+        (ONGOING, 'ongoing'),
+        (COMPLETED, 'completed'),
     )
+    ONE_TIME = 'ONE_TIME'
+    DAILY = 'DAILY'
+    WEEKLY = 'WEEKLY'
+    MONTHLY = 'MONTHLY'
+
 
     RECURRENCY = (
         ('ONE_TIME', 'one_time'),
@@ -34,7 +42,7 @@ class Ride(models.Model):
     date = models.DateField()
     available_seats = models.PositiveIntegerField()
     total_seat_count = models.PositiveIntegerField()
-    status = models.CharField(max_length=10,choices=STATUS)
+    status = models.CharField(max_length=10,choices=STATUS, default=ONGOING, editable=False)
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)], blank=True)
     recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='one_time')  # not in use
 
@@ -50,7 +58,8 @@ class Ride(models.Model):
     def save(self, *args, **kwargs):
         self.destination = self.destination.lower()
         self.departure = self.departure.lower()
-        self.total_seat_count = self.available_seats
+        self.total_seat_count = self.available_seats # check if this works
+        self.status = self.ONGOING
         return super(Ride, self).save(*args, **kwargs)
 
 

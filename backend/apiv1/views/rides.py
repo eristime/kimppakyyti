@@ -20,6 +20,7 @@ class RideViewSet(viewsets.ModelViewSet):
     serializer_class = RideListSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_fields = ('driver', 'car', 'destination', 'departure', 'date')
+    ordering_fields = ('date', 'destination', 'departure')
     #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
 
@@ -39,7 +40,7 @@ class RideViewSet(viewsets.ModelViewSet):
         This view should return all request for a specific ride.
         '''
         
-        return Ride.objects.filter(status='ongoing')
+        return Ride.objects.filter(status='ONGOING')
 
   
 class RideDetail(generics.RetrieveAPIView):

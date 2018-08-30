@@ -1,32 +1,50 @@
 from rest_framework import permissions, generics
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.serializers import ValidationError
 
 from apiv1.serializers import RequestSerializer, RequestDetailSerializer
-from apiv1.permissions import IsRideDriver, IsRidePassengerOrDriverReadOnly, IsRequester, RideDriverReadOrAuthenticatedWrite, RideDriverRead
-from apiv1.models import Request, Ride
+from apiv1.permissions import IsRequester
+from apiv1.models import Request, Ride, Passenger
 
 
 class RequestList(generics.ListCreateAPIView):
     '''
-    Drivers able to read. Users able to add themselves.
-    IF POST: is authenticated
-    If get: isDriver
+    Drivers able to see the ride requests. Authenticated users able to create requets for rides.
     '''
-    #only drivers who 
-    permission_classes = (permissions.IsAuthenticated, RideDriverRead)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = RequestSerializer
 
 
     def perform_create(self, serializer):
-        serializer.save(requester=self.request.user, ride=Ride.objects.get(pk=self.kwargs['pk']))
+
+        ride = Ride.objects.get(pk=self.kwargs['pk'])
+        if Request.objects.filter(requester=self.request.user, ride=ride).exists():
+            raise ValidationError('User can have only one request per ride.')
+
+
+        if self.request.user == ride.driver:
+            raise ValidationError('Driver can\'t make requests to her own ride.')
+
+
+        for passenger in Passenger.objects.filter(ride=ride):
+            if self.request.user == passenger.user:
+                raise ValidationError('User can\'t make requests if already passenger.')
+
+
+        serializer.save(requester=self.request.user, ride=ride)
 
 
     def get_queryset(self):
         '''
-        This view should return all request for a specific ride.
+        This view should return all request for a specific ride if ride driver. Otherwise don't return anything.
         '''
+        ride_pk = self.kwargs['pk']
         
-        ride = self.kwargs['pk']
-        return Request.objects.filter(ride=ride, status='PENDING')
+        if self.request.user == Ride.objects.get(pk=ride_pk).driver:
+            return Request.objects.filter(ride=ride_pk, status='PENDING')
+
+        return Request.objects.none()
 
 
 class RequestDetail(generics.RetrieveUpdateDestroyAPIView):

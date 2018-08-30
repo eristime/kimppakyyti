@@ -1,18 +1,12 @@
-Current commit:
-- check every view which returns rides and filter with completed
-
 
 backend:
-- 
 - hook request events on creation of passengers
 - add a nested router
 - correct search filter url
-- retstructure serializers
-- 
+- make global string file
 - show only user cars when posting ride
 - don't show full rides
 - remove old rides periodically??
-- add readonly fields as in private ride serializer
 - private ride authentication
 - first_name and last_name in user model
 - divide user and profile functionality to its own django app
@@ -20,8 +14,6 @@ backend:
 - convert primary keys to slugs/strings
 - hyperlinking
 - revisit api root
-- check error messages, 404 and 403 etc.
-
 - write docs
 
 client:

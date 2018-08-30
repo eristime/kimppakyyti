@@ -8,25 +8,23 @@ from rest_framework.test import APIClient
 from rest_framework.test import force_authenticate
 from rest_framework import status
 
-from apiv1.models import Car, Ride
+from apiv1.models import Car, Ride, Profile
 
 
 class TestRideList(APITestCase):
 
     def setUp(self):
-        # create objects
+        # create user objects
         self.user = User.objects.create_user(
             username='test_user', password='some_secure_password here')
-        # create a ride user owns
         self.user_car = Car.objects.create(owner=self.user,\
                                         brand='Volvo', \
                                         model='V60', \
                                         register_plate='FXX-123',\
                                         consumption=8.50)
-        
-        # create a ride
+        #Profile.objects.create(owner=self.user, first_name='Mauno', last_name='Koivisto', phone_number='12345')
         self.user_ride_date = date.today() + timedelta(days=3)
-        Ride.objects.create(driver=self.user, \
+        self.user_ride = Ride.objects.create(driver=self.user, \
                             car=self.user_car, \
                             destination='helsinki', \
                             departure='oulu', \
@@ -35,7 +33,7 @@ class TestRideList(APITestCase):
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
 
-        # create car for another user
+        # create another user objects
         self.another_user_ride_date = date.today() + timedelta(days=5) # rides on different day
         self.another_user = User.objects.create_user(
             username='another_user', password='some_ultra_secure_password here')
@@ -44,8 +42,8 @@ class TestRideList(APITestCase):
                                                    model='R80XYZLOL',\
                                                    register_plate='SXX-123',\
                                                    consumption=30.50)
-        # create ride made by another user
-        Ride.objects.create(driver=self.another_user, \
+        #Profile.objects.create(owner=self.another_user, first_name='Urho', last_name='Kekkonen', phone_number='12345')            
+        self.another_user_ride= Ride.objects.create(driver=self.another_user, \
                             car=self.another_user_car, \
                             destination='helsinki', \
                             departure='oulu', \
@@ -103,6 +101,21 @@ class TestRideList(APITestCase):
         self.assertEqual(response.status_code, 400) # API returns 400 since only user cars are returned using serializer
 
 
+    def test_users_can_see_rides(self):
+        '''
+        Ensure authenticated users can see rides.
+        '''
+
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+
+        url = reverse('ride-list')
+        response = client.get(url, format='json')  
+        
+        self.assertEqual(len(response.data['results']), 2) # two rides overall, both on diffent dates
+        self.assertEqual(response.status_code, 200)
+
+
     def test_users_can_filter_rides_using_date(self):
         '''
         Ensure authenticated users can only get a list of cars which belong to them.
@@ -111,12 +124,13 @@ class TestRideList(APITestCase):
         client = APIClient()
         client.force_authenticate(user=self.user)
 
-        url = reverse('car-list') + '?date=' + self.user_ride_date.__str__() # construct filter query
+        url = reverse('ride-list') + '?date=' + self.user_ride_date.__str__() # construct filter query
 
-        response = client.get(url, format='json')
+        response = client.get(url, format='json')  
+
         
         self.assertEqual(len(response.data['results']), 1) # two rides overall, both on diffent dates
-        
+        self.assertEqual(response.data['results'][0]['date'], self.user_ride_date.__str__())
         self.assertEqual(response.status_code, 200)
 
        

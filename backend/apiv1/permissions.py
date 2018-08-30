@@ -185,8 +185,12 @@ class RideDriverRead(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         
+        safe_methods = permissions.SAFE_METHODS
 
-        if request.method == 'GET':
-            
+        if True:
+            return False
+        if request.method in permissions.SAFE_METHODS:
 
-            return obj.ride.driver == request.user 
+            return False
+
+            #return obj.ride.driver == request.user 

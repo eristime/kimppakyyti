@@ -90,7 +90,7 @@ class TestRequestList(APITestCase):
         client = APIClient()
         client.force_authenticate(user=self.user)
 
-        # point url to another user request
+        # point url to user request
         user_ride = Ride.objects.filter(driver=self.user)[0]
         url = reverse('request-list', args=[user_ride.pk])
         response = client.post(url, data, format='json')
@@ -107,7 +107,7 @@ class TestRequestList(APITestCase):
             'note': 'some_note'
         }
         # create a request 
-        Request.objects.create(ride=self.user_ride, requester=self.another_user, note='lolz')
+        Request.objects.create(ride=self.another_user_ride, requester=self.user, note='lolz')
         client = APIClient()
         client.force_authenticate(user=self.user)
 
@@ -117,7 +117,7 @@ class TestRequestList(APITestCase):
         response = client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(Request.objects.count(), 0)
+        self.assertEqual(Request.objects.count(), 1) # only one request available which we just created in this test
 
 
     def test_users_cannot_create_requests_if_user_already_passenger(self):
@@ -142,7 +142,47 @@ class TestRequestList(APITestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Request.objects.count(), 0)
 
-       
+
+    def test_non_drivers_cant_see_requests(self):
+        '''
+        Ensure non drivers can't see requests.
+        '''
+        REQUEST_1_NOTE = 'lolz'
+        Request.objects.create(ride=self.another_user_ride, requester=self.user, note=REQUEST_1_NOTE)
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+
+        # point url to another user request
+        another_user_ride = Ride.objects.filter(driver=self.another_user)[0]
+        url = reverse('request-list', args=[another_user_ride.pk])
+
+        response = client.get(url, format='json')
+        
+        self.assertEqual(len(response.data['results']), 0) # no requests returned
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_drivers_can_see_requests_for_their_ride(self):
+        '''
+        Ensure drivers able to get correct number of requests.
+        '''
+        REQUEST_1_NOTE = 'lolz'
+        Request.objects.create(ride=self.user_ride, requester=self.another_user, note=REQUEST_1_NOTE)
+        Request.objects.create(ride=self.another_user_ride, requester=self.user, note='xD')
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+
+        # point url to user request
+        user_ride = Ride.objects.filter(driver=self.user)[0]
+        url = reverse('request-list', args=[user_ride.pk])
+
+        response = client.get(url, format='json')
+        
+        self.assertEqual(len(response.data['results']), 1) # two requests overall, one for user_ride
+        self.assertEqual(response.data['results'][0]['note'], REQUEST_1_NOTE)
+        self.assertEqual(response.status_code, 200)
+
+
     def test_ride_list_view_not_available_for_unauthenticated_users(self):
         '''
         Ensure unauthenticated users can't use the request-list view.

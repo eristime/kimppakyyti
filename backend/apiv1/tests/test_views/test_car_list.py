@@ -49,6 +49,7 @@ class TestCarList(APITestCase):
 
         response = client.get(reverse('car-list'), format='json')
         
+        print('car-list response:', response.data['results'])
         # user has only one car
         self.assertEqual(len(response.data['results']), 1)
         

@@ -23,6 +23,7 @@ class RideSerializer(serializers.ModelSerializer):
 
         return value
 
+
     def validate_car(self, value):
         '''
         Check that user is the car owner.
@@ -33,6 +34,7 @@ class RideSerializer(serializers.ModelSerializer):
 
         return value
     
+
     class Meta:
         model = Ride
         fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats','total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )

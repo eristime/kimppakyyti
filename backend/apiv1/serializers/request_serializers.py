@@ -6,7 +6,7 @@ class RequestSerializer(serializers.ModelSerializer):
     ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     status = serializers.ReadOnlyField()
-    
+
     class Meta:
         model = Request
         fields = ('id', 'ride', 'requester', 'note', 'status', )
