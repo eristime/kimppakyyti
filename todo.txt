@@ -4,8 +4,8 @@ backend:
 - add a nested router
 - correct search filter url
 - make global string file
-- show only user cars when posting ride
 - don't show full rides
+- rename views to correspond tests
 - remove old rides periodically??
 - private ride authentication
 - first_name and last_name in user model
@@ -13,6 +13,7 @@ backend:
 - divide serializers to its own folder
 - convert primary keys to slugs/strings
 - hyperlinking
+- go through tests again and reorganize
 - revisit api root
 - write docs
 

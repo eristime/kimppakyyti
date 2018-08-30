@@ -13,4 +13,4 @@ class Passenger(models.Model):
 
 
     def __str__(self):
-        return self.user.id
+        return str(self.user.id)

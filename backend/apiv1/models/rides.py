@@ -59,7 +59,6 @@ class Ride(models.Model):
         self.destination = self.destination.lower()
         self.departure = self.departure.lower()
         self.total_seat_count = self.available_seats # check if this works
-        self.status = self.ONGOING
         return super(Ride, self).save(*args, **kwargs)
 
 

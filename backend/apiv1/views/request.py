@@ -19,9 +19,12 @@ class RequestList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
 
         ride = Ride.objects.get(pk=self.kwargs['pk'])
+
         if Request.objects.filter(requester=self.request.user, ride=ride).exists():
             raise ValidationError('User can have only one request per ride.')
 
+        if ride.status !='ONGOING':
+            raise ValidationError('Not possible to add requests to ride which are not ongoing.')
 
         if self.request.user == ride.driver:
             raise ValidationError('Driver can\'t make requests to her own ride.')

@@ -143,6 +143,42 @@ class TestRequestList(APITestCase):
         self.assertEqual(Request.objects.count(), 0)
 
 
+    def test_users_cant_create_requests_for_completed_rides(self):
+        '''
+        Ensure it is not possible to create requests for completed rides.
+        '''
+        data = {
+            'note': 'some_note'
+        }
+        # create a ride and make it complete
+        local_another_user_ride = Ride.objects.create(driver=self.another_user, \
+                            car=self.another_user_car, \
+                            destination='helsinki', \
+                            departure='oulu', \
+                            date=self.another_user_ride_date.__str__(), \
+                            available_seats=3, \
+                            total_seat_count=3, \
+                            estimated_fuel_cost=15.5)
+        #setattr(local_another_user_ride, 'status', 'COMPLETED')
+        #local_another_user_ride.save()
+        
+        local_another_user_ride.status='COMPLETED'
+        local_another_user_ride.save()
+
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+
+        
+        # point url to another user request
+        url = reverse('request-list', args=[local_another_user_ride.pk])
+        response = client.post(url, data, format='json')
+
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(Request.objects.count(), 0)
+
+
+
     def test_non_drivers_cant_see_requests(self):
         '''
         Ensure non drivers can't see requests.
