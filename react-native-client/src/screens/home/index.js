@@ -85,9 +85,6 @@ class Home extends Component {
     
     //let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
 
-    //let headers = new Headers();
-    //headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
-
 
     if (this.filterParams.destination) {
       url = url + `&destination=${this.filterParams.destination}`;
@@ -101,17 +98,10 @@ class Home extends Component {
       url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
     }
 
-    const basicAuth = 'Basic ' + base64url.encode(KIMPPAKYYTI_API_USERNAME + ':' + KIMPPAKYYTI_API_PASSWORD);
+    //const basicAuth = 'Basic ' + base64url.encode(KIMPPAKYYTI_API_USERNAME + ':' + KIMPPAKYYTI_API_PASSWORD);
     this.setState({ loading: true });
 
-    axios.get(url,
-    {
-      //auth: {
-      //  username: KIMPPAKYYTI_API_USERNAME,
-      //  password: KIMPPAKYYTI_API_PASSWORD
-      //}
-      headers: { 'Authorization': + basicAuth }
-    })
+    axios.get(url)
       //.then(res => res.json())
       .then(res => {
         this.setState({

@@ -15,8 +15,10 @@ import {
   Content
 } from "native-base";
 import { Expo, AuthSession } from 'expo';
-import { config } from '../../../config';
+import axios from 'axios';
 import styles from "./styles";
+import { config } from '../../../config';
+console.log();
 
 
 class Login extends Component {
@@ -74,8 +76,33 @@ class Login extends Component {
   }
   // send message to confirm login
   */
+
+
+
 }
 
+
+  _handleTestLoginPressAsync = async () => {
+  
+      //this.setState({ error: '', loading: true });
+      //const url = `http://${config.DESKTOP_IP}:8000/login/`;
+      
+      const url = `http://192.168.1.103:8000/login/`;
+      //console.log(url)
+      axios.post(url,{
+          username: 'matkustaja',
+          password: 'matkustaja123',
+      })
+      .then((response) => {
+         // Handle the JWT response here
+         console.log('response:', response);
+         console.log('token:', response.data.token);
+      })
+      .catch((error) => {
+         console.log(error);
+      });
+    
+  }
 
 
   render() {
@@ -102,6 +129,14 @@ class Login extends Component {
           >
             <Text>Facebook</Text>
           </Button>
+          <Button
+            primary
+            style={{ alignSelf: "center" }}
+            onPress={()=>this._handleTestLoginPressAsync()}
+          >
+            <Text>Test</Text>
+          </Button>
+
 
           {/*
         <Button
@@ -113,7 +148,7 @@ class Login extends Component {
         */}
         </Content>
 
-
+        {/*
         <Footer>
           <FooterTab>
             <Button vertical
@@ -131,6 +166,7 @@ class Login extends Component {
             </Button>
           </FooterTab>
         </Footer>
+        */}
       </Container>
     );
   }
