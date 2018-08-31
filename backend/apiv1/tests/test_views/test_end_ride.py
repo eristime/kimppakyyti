@@ -112,4 +112,4 @@ class TestEndRide(APITestCase):
         self.assertEqual(405, response.status_code) # get method not allowed
 
         response = self.client.patch(url, data, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)

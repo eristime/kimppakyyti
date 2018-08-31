@@ -1,28 +1,24 @@
 
 backend:
-- hook request events on creation of passengers
-- add a nested router
-- correct search filter url
-- don't show full rides
 - rename views to correspond tests
-- remove old rides periodically??
-- private ride authentication
+- don't show full rides
+- tests for ride fields
+- remove old rides periodically aka. set complete when outdated
 - first_name and last_name in user model
 - divide user and profile functionality to its own django app
-- divide serializers to its own folder
+- add a nested router
+- fix search filter url
+- fix warnings
 - convert primary keys to slugs/strings
 - hyperlinking
 - go through tests again and reorganize
-- tests for ride fields
 - revisit api root
 - write docs
 
 client:
+- authentication
 - add backend url to config: 10.0.2.2
 - add default pictures and values, when not loaded
 - one single container for gathered data?
 - find a better place for the footer
 - make my-rides tabs to own components
-
-decisions:
-- are old rides automatically set to 'completed'?

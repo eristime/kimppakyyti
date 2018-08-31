@@ -15,7 +15,7 @@ import {
   Content
 } from "native-base";
 import { Expo, AuthSession } from 'expo';
-import { keys } from '../../../config/keys';
+import { config } from '../../../config';
 import styles from "./styles";
 
 

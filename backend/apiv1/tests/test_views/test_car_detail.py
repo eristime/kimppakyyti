@@ -99,7 +99,7 @@ class TestCarDetail(APITestCase):
         url = reverse('car-detail', args=[1])
 
         response = self.client.get(url, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)
 
         response = self.client.delete(url, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)

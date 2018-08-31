@@ -1,3 +1,0 @@
-- end-ride tests
-- end-ride tests passing
-- use model constants in models, views and tests instead of hardcoded strings

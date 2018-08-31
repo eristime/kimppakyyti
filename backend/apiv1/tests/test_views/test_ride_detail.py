@@ -75,4 +75,4 @@ class TestCarDetail(APITestCase):
         url = reverse('ride-detail', args=[1])
 
         response = self.client.get(url, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)

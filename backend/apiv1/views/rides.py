@@ -15,7 +15,7 @@ class RideViewSet(viewsets.ModelViewSet):
     '''
     #only drivers who have cars able to create a ride
     permission_classes = (permissions.IsAuthenticated,)
-    #Only driver and passengers able to see rides
+    #permission_classes = () # temporarily remove permission classes since basic auth doesn't work with react native 
     queryset = Ride.objects.all()
     serializer_class = RideListSerializer
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)

@@ -233,9 +233,9 @@ class TestRequestList(APITestCase):
 
         response = self.client.post(url, data, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
         self.assertEqual(Request.objects.count(), 0) # request creation didn't work, only two rides
 
         response = self.client.get(url, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)

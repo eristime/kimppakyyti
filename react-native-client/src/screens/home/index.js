@@ -13,10 +13,13 @@ import {
   Spinner,
   Text
 } from 'native-base';
+import axios from 'axios';
+import base64url from 'base64-url';
 
 import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
+import { KIMPPAKYYTI_API_USERNAME, KIMPPAKYYTI_API_PASSWORD  } from '../../../config';
 
 
 class Home extends Component {
@@ -78,8 +81,12 @@ class Home extends Component {
     }
     const { page } = this.state;
     //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
-    //let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
-    let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
+    let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
+    
+    //let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
+
+    //let headers = new Headers();
+    //headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
 
 
     if (this.filterParams.destination) {
@@ -94,10 +101,18 @@ class Home extends Component {
       url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
     }
 
+    const basicAuth = 'Basic ' + base64url.encode(KIMPPAKYYTI_API_USERNAME + ':' + KIMPPAKYYTI_API_PASSWORD);
     this.setState({ loading: true });
 
-    fetch(url)
-      .then(res => res.json())
+    axios.get(url,
+    {
+      //auth: {
+      //  username: KIMPPAKYYTI_API_USERNAME,
+      //  password: KIMPPAKYYTI_API_PASSWORD
+      //}
+      headers: { 'Authorization': + basicAuth }
+    })
+      //.then(res => res.json())
       .then(res => {
         this.setState({
           data: page === 1 ? res.results : [...this.state.data, ...res.results],

@@ -177,9 +177,9 @@ class TestRideList(APITestCase):
         
         response = self.client.post(url, data, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
         self.assertEqual(Ride.objects.count(), 2) # ride creation didn't work, only two rides
 
         response = self.client.get(url, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)

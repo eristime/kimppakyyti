@@ -182,7 +182,7 @@ class TestRequestDetail(APITestCase):
         url = reverse('request-detail', args=[user_ride.pk, user_request.pk])
 
         response = self.client.get(url, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)
 
         response = self.client.delete(url, format='json')
-        self.assertEqual(403, response.status_code)
+        self.assertEqual(401, response.status_code)

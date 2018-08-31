@@ -64,9 +64,9 @@ class TestCarList(APITestCase):
         
         response = self.client.post(url, data, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
         self.assertEqual(Car.objects.count(), 2)
 
         response = self.client.get(url, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)

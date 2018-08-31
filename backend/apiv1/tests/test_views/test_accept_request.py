@@ -182,9 +182,9 @@ class TestRequestList(APITestCase):
 
         response = self.client.post(url, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
         self.assertEqual(Request.objects.count(), 2) # only two requested which were created in setup
 
         response = self.client.get(url, format='json')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
