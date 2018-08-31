@@ -13,4 +13,4 @@ class EndRide(generics.UpdateAPIView):
 
 
     def perform_update(self, serializer):
-        serializer.save(status='completed')
+        serializer.save(status=Ride.COMPLETED)

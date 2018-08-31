@@ -77,6 +77,32 @@ class TestRideList(APITestCase):
         self.assertEqual(Ride.objects.count(), 3)
 
 
+    def test_ride_status_is_set_on_creation(self):
+        '''
+        Ensure the ride status is automatically set to 'ONGOING' when creating a ride.
+        '''
+        # api won't allow creating objects if date passed so we set date to future
+        date_for_input = date.today() + timedelta(days=3)
+        data = {
+            'car': self.user_car.pk,
+            'destination': 'oulu',
+            'departure': 'helsinki',
+            'date': date_for_input.__str__(), # also api uses datetimes.date string representation
+            'available_seats': 3,
+            'estimated_fuel_cost': 12.00
+        }
+        
+        url = reverse('ride-list')
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+        response = client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Ride.objects.count(), 3)
+        self.assertEqual(Ride.objects.get(pk=self.user_ride.pk).status, Ride.ONGOING) # two ways of doing the same thing
+        self.assertEqual(self.user_ride.status, Ride.ONGOING)
+
+
     def test_users_cannot_create_rides_using_other_users_cars(self):
         '''
         Ensure it's not possible to use other user's cars to post rides.

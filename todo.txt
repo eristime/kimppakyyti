@@ -3,7 +3,6 @@ backend:
 - hook request events on creation of passengers
 - add a nested router
 - correct search filter url
-- make global string file
 - don't show full rides
 - rename views to correspond tests
 - remove old rides periodically??
@@ -14,6 +13,7 @@ backend:
 - convert primary keys to slugs/strings
 - hyperlinking
 - go through tests again and reorganize
+- tests for ride fields
 - revisit api root
 - write docs
 

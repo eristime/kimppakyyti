@@ -23,6 +23,8 @@ class RequestList(generics.ListCreateAPIView):
         if Request.objects.filter(requester=self.request.user, ride=ride).exists():
             raise ValidationError('User can have only one request per ride.')
 
+
+        ride.status 
         if ride.status !='ONGOING':
             raise ValidationError('Not possible to add requests to ride which are not ongoing.')
 

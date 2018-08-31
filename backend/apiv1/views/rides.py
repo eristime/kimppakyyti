@@ -40,7 +40,7 @@ class RideViewSet(viewsets.ModelViewSet):
         This view should return all request for a specific ride.
         '''
         
-        return Ride.objects.filter(status='ONGOING')
+        return Ride.objects.filter(status=Ride.ONGOING)
 
   
 class RideDetail(generics.RetrieveAPIView):

@@ -1,3 +1,3 @@
-- accept-request view tests generated
-- accept-request view tests passed
-- adding test to not to create requests for completed rides
+- end-ride tests
+- end-ride tests passing
+- use model constants in models, views and tests instead of hardcoded strings

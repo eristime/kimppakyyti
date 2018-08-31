@@ -9,24 +9,25 @@ from apiv1.models.car import Car
 
 class Ride(models.Model):
     
+    # status choices
     ONGOING = 'ONGOING'
     COMPLETED = 'COMPLETED'
-
     STATUS = (
         (ONGOING, 'ongoing'),
         (COMPLETED, 'completed'),
     )
+
+    # recurrency choices
     ONE_TIME = 'ONE_TIME'
     DAILY = 'DAILY'
     WEEKLY = 'WEEKLY'
     MONTHLY = 'MONTHLY'
 
-
     RECURRENCY = (
-        ('ONE_TIME', 'one_time'),
-        ('DAILY', 'daily'),
-        ('WEEKLY', 'weekly'),
-        ('MONTHLY', 'monthly'),
+        (ONE_TIME, 'one_time'),
+        (DAILY, 'daily'),
+        (WEEKLY, 'weekly'),
+        (MONTHLY, 'monthly'),
     )
 
     
@@ -44,7 +45,7 @@ class Ride(models.Model):
     total_seat_count = models.PositiveIntegerField()
     status = models.CharField(max_length=10,choices=STATUS, default=ONGOING, editable=False)
     estimated_fuel_cost = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(0.01)], blank=True)
-    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default='one_time')  # not in use
+    recurrent = models.CharField(max_length=1,choices=RECURRENCY, default=ONE_TIME)  # not in use
 
     
     ## implemented if time 
