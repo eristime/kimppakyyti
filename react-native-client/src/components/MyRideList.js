@@ -23,7 +23,7 @@ import deviceStorage from '../../services/DeviceStorage';
 import testData from  '../../../data-dump';
 
 
-class MyRides extends Component {
+class MyRideList extends Component {
 
   constructor(props) {
     super(props);
@@ -35,7 +35,6 @@ class MyRides extends Component {
       error: null,
       refreshing: false
     };
-
   }
 
   componentDidMount() {
@@ -90,60 +89,17 @@ class MyRides extends Component {
     );
   };
 
-
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '86%',
-          backgroundColor: '#CED0CE',
-          marginLeft: '14%'
-        }}
-      />
-    );
-  };
-
-  renderHeader = () => {
-    return <Header>
-      <Left>
-        <Button transparent onPress={() => this.props.navigation.goBack()}>
-          <Icon name='arrow-back' />
-        </Button>
-      </Left>
-      <Body>
-        <Title>My Rides</Title>
-      </Body>
-    </Header>;
-  };
-
-
   renderEmpty = () => {
     return (
-      <View>
+      <Content>
         <H3>You haven't participated on any rides yet!</H3>
-      </View>
+      </Content>
     );
   };
 
   render() {
     
     return (
-      <Container>
-
-        <Header hasTabs>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>My Rides</Title>
-          </Body>
-        </Header>
-        <Tabs locked>
-          <Tab heading="Passenger">
-          <Content>
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
@@ -162,18 +118,8 @@ class MyRides extends Component {
             onEndReached={this.handleLoadMore}
           //onEndReachedThreshold={50}
           />
-        </Content>
-        
-          </Tab>
-          <Tab heading="Driver">
-            <Text>some content here</Text>
-          </Tab>
-        </Tabs>
-
-
-      </Container>
     );
   }
 }
 
-export default MyRides;
+export default MyRideList;

@@ -14,7 +14,7 @@ class RideViewSet(viewsets.ModelViewSet):
     All able to see. Drivers with cars able to post. (done automatically?)
     '''
     #only drivers who have cars able to create a ride
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     #permission_classes = () # temporarily remove permission classes since basic auth doesn't work with react native 
     queryset = Ride.objects.all()
     serializer_class = RideListSerializer

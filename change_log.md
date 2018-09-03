@@ -1,0 +1,3 @@
+- ride view read allowed for anyone
+- storing token to async storage
+- unnecessary files deleted

@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import { Image, View, Modal } from "react-native";
 import {
   Button,
-  Card,
   Container,
   Header,
   Content,
-  Footer,
-  FooterTab,
   H2,
   Icon,
   Text,
@@ -15,7 +12,7 @@ import {
   Body,
   Title
 } from "native-base";
-import { MapView } from 'expo';
+//import { MapView } from 'expo';
 
 const markers = [{
   latitude: 66.5039,
@@ -87,7 +84,8 @@ class RideDetails extends Component {
               <Text>Register plate:{rideItem.car_model}</Text>
             </View>
           </View>
-          <MapView
+          {/*
+            <MapView
             style={{ height: 200 }}
             initialRegion={{
               latitude: 66.5039,
@@ -96,6 +94,9 @@ class RideDetails extends Component {
               longitudeDelta: 0.0421,
             }}
           />
+          */}
+          
+          {/*
 
           {markers.map((marker, index) => {
             const coords = {
@@ -111,6 +112,7 @@ class RideDetails extends Component {
               />
             );
           })}
+          */}
 
 
 

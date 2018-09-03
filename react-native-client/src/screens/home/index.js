@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import {
   Button,
   Container,
@@ -20,7 +20,7 @@ import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
 import { KIMPPAKYYTI_API_USERNAME, KIMPPAKYYTI_API_PASSWORD  } from '../../../config';
-
+import { convertDateForAPI } from '../../services/utils';
 
 class Home extends Component {
 
@@ -33,7 +33,8 @@ class Home extends Component {
       page: 1,
       seed: 1,
       error: null,
-      refreshing: false
+      refreshing: false,
+      next: undefined
     };
     this.filterParams = {
       destination: '',
@@ -43,33 +44,18 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.makeRemoteRequest();
+    this.getRidesFromAPI('new request'); // string eveluates to true
   }
 
-  convertDateForAPI = (dateObject) => {
-    /*
-    param:date, JS date object
-    */
-    // getMonth() returns month from 0 to 11
-    let month = (dateObject.getMonth() + 1).toString();
-    let date = (dateObject.getDate()).toString();
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (date.length < 2) {
-      date = '0' + date;
-    }
-    return `${dateObject.getFullYear()}-${month}-${date}`;
-  };
 
   makeFilteredRemoteRequest = (filterParams) => {
     this.filterParams.destination = filterParams.destination;
     this.filterParams.departure = filterParams.departure;
     this.filterParams.date = filterParams.date;
-    this.makeRemoteRequest('new-request');
+    this.getRidesFromAPI('new-request');
   };
 
-  makeRemoteRequest = (newRequest = false) => {
+  getRidesFromAPI = (newRequest = false) => {
     /*
       param: newRequest: boolean. If true will start on a first page. 
     */
@@ -82,7 +68,6 @@ class Home extends Component {
     const { page } = this.state;
     //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
     let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
-    
     //let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
 
 
@@ -95,14 +80,13 @@ class Home extends Component {
     }
     //TODO: add date filtering, make today default choice
     if (this.filterParams.date) {
-      url += `&date=${this.convertDateForAPI(this.filterParams.date)}`;
+      url += `&date=${convertDateForAPI(this.filterParams.date)}`;
     }
 
-    //const basicAuth = 'Basic ' + base64url.encode(KIMPPAKYYTI_API_USERNAME + ':' + KIMPPAKYYTI_API_PASSWORD);
     this.setState({ loading: true });
 
-    axios.get(url)
-      //.then(res => res.json())
+    fetch(url)
+      .then(res => res.json())
       .then(res => {
         this.setState({
           data: page === 1 ? res.results : [...this.state.data, ...res.results],
@@ -116,18 +100,18 @@ class Home extends Component {
       });
   };
 
-  handleRefresh = () => {
-    this.setState(
-      {
-        page: 1,
-        seed: this.state.seed + 1,
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
-  };
+  //handleRefresh = () => {
+  //  this.setState(
+  //    {
+  //      page: 1,
+  //      seed: this.state.seed + 1,
+  //      refreshing: true
+  //    },
+  //    () => {
+  //      this.getRidesFromAPI();
+  //    }
+  //  );
+  //};
 
   handleLoadMore = () => {
     this.setState(
@@ -135,24 +119,24 @@ class Home extends Component {
         page: this.state.page + 1
       },
       () => {
-        this.makeRemoteRequest();
+        this.getRidesFromAPI();
       }
     );
   };
 
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '86%',
-          backgroundColor: '#CED0CE',
-          marginLeft: '14%'
-        }}
-      />
-    );
-  };
+  //renderSeparator = () => {
+  //  return (
+  //    <View
+  //      style={{
+  //        height: 1,
+  //        width: '86%',
+  //        backgroundColor: '#CED0CE',
+  //        marginLeft: '14%'
+  //      }}
+  //    />
+  //  );
+  //};
 
   renderHeader = () => {
     return <AppHeader
@@ -161,33 +145,34 @@ class Home extends Component {
     />;
   };
 
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: '#CED0CE'
-        }}
-      >
-        <Spinner />
-      </View>
-    );
-  };
+  //renderFooter = () => {
+  //  if (!this.state.loading) return null;
+  //
+  //  return (
+  //    <View
+  //      style={{
+  //        paddingVertical: 20,
+  //        borderTopWidth: 1,
+  //        borderColor: '#CED0CE'
+  //      }}
+  //    >
+  //      <Spinner />
+  //    </View>
+  //  );
+  //};
 
   renderEmpty = () => {
     return (
-      <View>
-        <H3>Unfortunately no rides available.</H3>
-      </View>
+      <Content>
+        <H3>Unfortunately no rides available for this day.</H3>
+      </Content>
+
     );
   };
 
 
   render() {
-
+    this.token = this.props.navigation.getParam('token');
     return (
       <Container>
         <FlatList
@@ -201,10 +186,10 @@ class Home extends Component {
           keyExtractor={item => item.id}
           //ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
+          //ListFooterComponent={this.renderFooter}
           ListEmptyComponent={this.renderEmpty}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
+          //onRefresh={this.handleRefresh}
+          //refreshing={this.state.refreshing}
           onEndReached={this.handleLoadMore}
         //onEndReachedThreshold={50}
         />
@@ -215,29 +200,31 @@ class Home extends Component {
           containerStyle={{ bottom: 60 }}
           style={{ backgroundColor: '#5067FF' }}
           position='bottomRight'
-          onPress={() => this.props.navigation.navigate('AddRide')}>
+          onPress={() => this.props.navigation.navigate('AddRide', { token: this.token })}>
           <Icon name='md-add' />
         </Fab>
         <Footer>
           <FooterTab>
             <Button vertical>
-              <Icon name='md-list' />
-              <Text>Rides</Text>
+              <Icon name='md-home' />
+              <Text>Home</Text>
             </Button>
 
             <Button vertical
-              onPress={() => this.props.navigation.navigate('MyRides')}
+              onPress={() => this.props.navigation.navigate('MyRides', { token: this.token })}
             >
               <Icon name='md-car' />
               <Text>My Rides</Text>
             </Button>
 
             <Button vertical
-              onPress={() => this.props.navigation.navigate('Login')}
+              onPress={() => this.props.navigation.navigate('Login', { token: this.token })}
             >
               <Icon name='person' />
               <Text>Account</Text>
             </Button>
+
+            
           </FooterTab>
         </Footer>
 
