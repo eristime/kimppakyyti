@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import { Alert, FlatList, View } from 'react-native';
 import {
-  Body,
-  Button,
-  Container,
   Content,
-  Left,
-  Header,
-  H3,
-  Icon,
-  Spinner,
-  Tabs,
-  Tab,
-  Title,
-  Text
+  H3
 } from 'native-base';
 
-import styles from './styles';
-import RideItem from '../../components/RideItem';
-import AppHeader from '../../components/AppHeader';
-import deviceStorage from '../../services/DeviceStorage';
-import testData from  '../../../data-dump';
+import RideItem from './RideItem';
+import deviceStorage from '../services/DeviceStorage';
+//import testData from  '../../data-dump';
 
 
 class MyRideList extends Component {
@@ -29,7 +16,7 @@ class MyRideList extends Component {
     super(props);
     this.state = {
       loading: false,
-      data: testData.rides,
+      data: [],
       page: 1,
       seed: 1,
       error: null,
@@ -38,14 +25,20 @@ class MyRideList extends Component {
   }
 
   componentDidMount() {
-    let token = this.props.navigation.getParam(token, undefined);
-    if (!token) {
-      deviceStorage.loadToken().
-      then(
-        this.makeRemoteRequest(`http://192.168.43.216:8000/me/rides_as_driver//?page=${page}`, token);
-      );
+    const token = this.props.token;
+    Alert.alert('token from my-rides view:', token);
+    if (token === false || token === undefined) {
+      deviceStorage.loadToken()
+      .then((token) => {
+          Alert.alert('token from async storage:', token);
+          this.makeRemoteRequest(this.props.url, token);
+        })
+        .catch((error) => {
+          Alert.alert('Error:', error.toString());
+        });
+    } else {
+      this.makeRemoteRequest(this.props.url, token);
     }
-    this.makeRemoteRequest();
   }
 
   makeRemoteRequest = (url, token, newRequest = false) => {
@@ -100,24 +93,20 @@ class MyRideList extends Component {
   render() {
     
     return (
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <RideItem
-                rideItem={item}
-              />
-
-            )}
-            keyExtractor={item => item.id}
-            //ItemSeparatorComponent={this.renderSeparator}
-            //ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={this.renderFooter}
-            ListEmptyComponent={this.renderEmpty}
-            onRefresh={this.handleRefresh}
-            refreshing={this.state.refreshing}
-            onEndReached={this.handleLoadMore}
-          //onEndReachedThreshold={50}
+      <FlatList
+        data={this.state.data}
+        renderItem={({ item }) => (
+          <RideItem
+            rideItem={item}
           />
+        )}
+        keyExtractor={item => item.id}
+        ListFooterComponent={this.renderFooter}
+        ListEmptyComponent={this.renderEmpty}
+        onRefresh={this.handleRefresh}
+        refreshing={this.state.refreshing}
+        onEndReached={this.handleLoadMore}
+      />
     );
   }
 }

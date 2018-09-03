@@ -1,3 +1,2 @@
-- ride view read allowed for anyone
-- storing token to async storage
-- unnecessary files deleted
+- restructuring my-rides screen
+- passing authentication token to passenger and driver rides components

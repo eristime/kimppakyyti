@@ -1,8 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 const deviceStorage = {
-  
-    async saveItem(key, value) {
+     saveItem: async (key, value) => {
       try {
         await AsyncStorage.setItem(key, value);
       } catch (error) {
@@ -11,7 +10,7 @@ const deviceStorage = {
     },
 
 
-    async loadToken() {
+    loadToken: async () => {
         try {
           const value = await AsyncStorage.getItem('token');
           //if (value !== null) {
@@ -30,7 +29,7 @@ const deviceStorage = {
         }
       },
 
-      async deleteToken() {
+      deleteToken: async () => {
         try{
           await AsyncStorage.removeItem('token')
           //.then(

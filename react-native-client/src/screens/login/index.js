@@ -14,7 +14,7 @@ import {
   Title,
   Content
 } from "native-base";
-import { Expo, AuthSession } from 'expo';
+//import { Expo, AuthSession } from 'expo';
 import axios from 'axios';
 import styles from "./styles";
 import { config } from '../../../config';
@@ -33,14 +33,16 @@ class Login extends Component {
          // Handle the JWT response here
          console.log('response:', response);
          console.log('token:', response.data.token);
-         deviceStorage.saveKey('token', response.data.token);
-         Alert('Now logged in. Token:', response.data.token);
-         this.props.navigation.navigate('Home', { token: response.data.token})
+         deviceStorage.saveItem('token', response.data.token)
+         .then(() => {
+          Alert.alert('Now logged in. Token:', response.data.token);
+          this.props.navigation.navigate('Home', { token: response.data.token});
+         });
+
       })
       .catch((error) => {
-        Alert('Error:', error);
+        Alert.alert('Error:', error.toString());
       });
-    
   }
 
 
