@@ -1,2 +1,2 @@
-- restructuring my-rides screen
-- passing authentication token to passenger and driver rides components
+- using RideList serializer in me/rides_as_driver and me/rides_as_passenger views
+- fetching data to user's driver and passenger list

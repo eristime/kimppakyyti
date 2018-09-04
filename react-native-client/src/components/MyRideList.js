@@ -20,31 +20,47 @@ class MyRideList extends Component {
       page: 1,
       seed: 1,
       error: null,
-      refreshing: false
+      refreshing: false,
+      token: null
     };
   }
 
   componentDidMount() {
-    const token = this.props.token;
-    Alert.alert('token from my-rides view:', token);
-    if (token === false || token === undefined) {
-      deviceStorage.loadToken()
-      .then((token) => {
-          Alert.alert('token from async storage:', token);
-          this.makeRemoteRequest(this.props.url, token);
-        })
-        .catch((error) => {
-          Alert.alert('Error:', error.toString());
-        });
-    } else {
-      this.makeRemoteRequest(this.props.url, token);
-    }
+    this.makeRemoteRequest(this.props.url);
   }
 
-  makeRemoteRequest = (url, token, newRequest = false) => {
+
+  loadToken = async () => {
+    /*
+    Check if token in state, if not return it from async storage.
+    */
+    const token = this.state.token;
+    let loadedToken = '';
+    //Alert.alert('token from my-rides view:', token);
+    if (token === false || token === undefined || token === null) {
+      loadedToken = await deviceStorage.loadToken();
+      //console.log('loadedToken from deviceStorage:', loadedToken);
+        //.then((tokenFromStorage) => {
+        //  Alert.alert('token from async storage:', tokenFromStorage);
+        //  this.setState({ token: tokenFromStorage });
+        //  Promise.resolve(tokenFromStorage);
+        //})
+        //.catch((error) => {
+        //  Alert.alert('Error:', error.toString());
+        //});
+    } else {
+      this.setState({ token: token });
+      loadedToken = token;
+    }
+    //console.log('loadedToken:', loadedToken);
+    return loadedToken;
+  }
+
+  makeRemoteRequest = (url, newRequest = false) => {
     /*
       param: newRequest: boolean. If true will start on a first page. 
     */
+
     if (newRequest) {
       this.setState({
         page: 1,
@@ -54,20 +70,28 @@ class MyRideList extends Component {
     const { page } = this.state;
 
     this.setState({ loading: true });
-
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false
+    this.loadToken().
+    then((token)=>{
+      console.log('Token: ' + token);
+      fetch(url, {
+        headers: {
+          authorization: 'Token ' + token
+        }
+      }).then(res => res.json())
+        .then(res => {
+          console.log(res);
+          this.setState({
+            data: page === 1 ? res.results : [...this.state.data, ...res.results],
+            error: res.error || null,
+            loading: false,
+            refreshing: false
+          });
+        })
+        .catch(error => {
+          this.setState({ error, loading: false });
+          //Alert.alert('Error:', error.toString());
         });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+    });
   };
 
 
@@ -85,13 +109,13 @@ class MyRideList extends Component {
   renderEmpty = () => {
     return (
       <Content>
-        <H3>You haven't participated on any rides yet!</H3>
+        <H3>{this.props.renderEmpty}</H3>
       </Content>
     );
   };
 
   render() {
-    
+
     return (
       <FlatList
         data={this.state.data}

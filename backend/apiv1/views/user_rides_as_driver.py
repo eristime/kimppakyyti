@@ -3,13 +3,13 @@ from rest_framework import permissions
 from rest_framework import generics
 
 from apiv1.models import Ride
-from apiv1.serializers import RideSerializer
+from apiv1.serializers import RideListSerializer
 
 
 class UserRidesAsDriverList(generics.ListAPIView):
     ''' Only logged in user able to see her rides where she acts as a driver'''
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = RideSerializer
+    serializer_class = RideListSerializer
 
 
     def get_queryset(self):

@@ -43,6 +43,7 @@ class MyRides extends Component {
 
   render() {
     const token = this.props.navigation.getParam(token, undefined); // passed to child component
+    //Alert.alert('token in my-rides view:', token);
     return (
       <Container>
         <Header hasTabs>
@@ -59,16 +60,18 @@ class MyRides extends Component {
           <Tab heading="Passenger">
           <Content>
             <MyRideList 
-            url="http://192.168.43.216:8000/me/rides_as_passenger/"
+            url="http://192.168.1.103:8000/me/rides_as_passenger/"
             token={token}
+            renderEmpty="You have no rides or request as a passenger yet."
             />
           </Content>
         
           </Tab>
           <Tab heading="Driver">
             <MyRideList 
-            url="http://192.168.43.216:8000/me/rides_as_driver/"
+            url="http://192.168.1.103:8000/me/rides_as_driver/"
             token={token}
+            renderEmpty="You have no rides or there isn't any requests for you yet."
             />
           </Tab>
         </Tabs>
