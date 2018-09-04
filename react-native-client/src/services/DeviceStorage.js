@@ -12,7 +12,7 @@ const deviceStorage = {
 
     loadToken: async () => {
         try {
-          const value = await AsyncStorage.getItem('token');
+            return await AsyncStorage.getItem('token');
           //if (value !== null) {
           //  this.setState({
           //    token: value,
@@ -23,15 +23,14 @@ const deviceStorage = {
           //    loading: false
           //  });
           //}
-          return value;
         } catch (error) {
           console.log('AsyncStorage Error: ' + error.message);
         }
       },
 
       deleteToken: async () => {
-        try{
-          await AsyncStorage.removeItem('token')
+        try {
+          await AsyncStorage.removeItem('token');
           //.then(
           //  () => {
           //    this.setState({

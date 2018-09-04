@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Image, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Image, View} from 'react-native';
 import {
   ListItem,
   Text,
@@ -21,7 +21,7 @@ const RideItem = (props) => {
   return (
 
     <ListItem
-      button onPress={() => props.navigation.navigate('RideDetails', { rideItem: 'testi', rideItem: props.rideItem })}
+      button onPress={() => props.navigation.navigate('RideDetails', { rideItem: props.rideItem })}
       containerStyle={{ borderBottomWidth: 0 }}
     >
 
@@ -37,7 +37,7 @@ const RideItem = (props) => {
         <View style={{ flex: 2 }}>
           <Text>{first_name} {last_name}</Text>
           <Text>{departure}->{destination}</Text>
-          <Text>{available_seats} seats; fuel {estimated_fuel_cost} e</Text>
+          <Text>{available_seats} seats; fuel {estimated_fuel_cost} &euro</Text>
         </View>
       </View>
 

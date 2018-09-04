@@ -59,7 +59,7 @@ class MyRides extends Component {
         <Tabs locked>
           <Tab heading="Passenger">
           <Content>
-            <MyRideList 
+            <MyRideList
             url="http://192.168.1.103:8000/me/rides_as_passenger/"
             token={token}
             renderEmpty="You have no rides or request as a passenger yet."

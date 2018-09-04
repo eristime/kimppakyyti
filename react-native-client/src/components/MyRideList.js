@@ -7,7 +7,6 @@ import {
 
 import RideItem from './RideItem';
 import deviceStorage from '../services/DeviceStorage';
-//import testData from  '../../data-dump';
 
 
 class MyRideList extends Component {
