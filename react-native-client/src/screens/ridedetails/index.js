@@ -15,6 +15,7 @@ import {
   Title
 } from 'native-base';
 import styles from './styles';
+import DefaultText from '../../components/text/DefaultText';
 
 class RideDetails extends Component {
 
@@ -62,11 +63,11 @@ class RideDetails extends Component {
             <ListItem first>
               <Body>
                 <H2 style={styles.heading}>Ride</H2>
-                <Text>From: {departure}</Text>
-                <Text>To: {destination}</Text>
-                <Text>Departing on {date}</Text>
-                <Text>{available_seats} / {total_seat_count} seats available</Text>
-                <Text>Estimated fuel cost {estimated_fuel_cost} euros</Text>
+                <Text style={styles.text}>From: {departure}</Text>
+                <DefaultText>To: {destination}</DefaultText>
+                <Text style={styles.text}>Departing on {date}</Text>
+                <Text style={styles.text}>{available_seats} / {total_seat_count} seats available</Text>
+                <Text style={styles.text}>Estimated fuel cost {estimated_fuel_cost} euros</Text>
               </Body>
 
             </ListItem>
@@ -81,7 +82,7 @@ class RideDetails extends Component {
                 />
                 <View>
                   <Text style={styles.text}>{first_name} {last_name}</Text>
-                  <Text>Rating: {driver_rating} with {driver_review_count} reviews </Text>
+                  <Text style={styles.text}>Rating: {driver_rating} with {driver_review_count} reviews </Text>
                 </View>
 
               </View>
@@ -92,57 +93,18 @@ class RideDetails extends Component {
               
               <Body>
               <H2 style={styles.heading}>Car</H2>
-              <Text>Model: {model} </Text>
-              <Text>Register plate: {register_plate}</Text>
+              <Text style={styles.text}>Model: {model} </Text>
+              <Text style={styles.text}>Register plate: {register_plate}</Text>
               </Body>
               
             </ListItem>
           </List>
         </Content>
         <Button block success
-          onPress={() => { this.setModalVisible(!this.state.modalVisible) }}
+          button onPress={() => this.props.navigation.navigate('MakeRequestModal', { rideItem: rideItem })}
         >
           <Text>Make a ride request</Text>
         </Button>
-
-        {/*TODO: style modal page*/}
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => { alert("Modal has been closed.") }}
-        >
-          <Container>
-            <Header>
-              <Body>
-                <Title>Confirm Ride</Title>
-              </Body>
-            </Header>
-
-            <Text>From: {rideItem.origin}</Text>
-            <Text>To: {rideItem.destination}</Text>
-            <Text>Departing on {rideItem.date} at {rideItem.departure}</Text>
-            <Text>{rideItem.available_seats} seats available </Text>
-            <Text>Estimated fuel cost {rideItem.est_fuel_price} &euro</Text>
-
-
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-              <Button block success>
-
-                {/*TODO: Add a user request to ride*/}
-                <Text>Confirm</Text>
-              </Button>
-              <Button block danger
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible)
-                }}>
-                <Text>Cancel</Text>
-              </Button>
-            </View>
-          </Container>
-
-        </Modal>
 
       </Container>
     );

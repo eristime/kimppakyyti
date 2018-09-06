@@ -21,9 +21,13 @@ export default {
     height: 100
   },
   text: {
-    fontSize: 15,
-    padding:3
+    fontSize: 18,
+    padding: 2
   },
+  sligthlyBolded: {
+    fontWeight: 200
+  },
+
   bolded: {
     fontWeight: 'bold'
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Root } from 'native-base';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 
 import Home from './screens/home/';
@@ -8,9 +8,10 @@ import Login from './screens/login/';
 import RideDetails from './screens/ridedetails';
 import AddRide from './screens/add-ride';
 import MyRides from './screens/my-rides';
+import MakeRequestModal from './screens/MakeRequestModal';
 
 
-const AppNavigator = StackNavigator(
+const MainStack = createStackNavigator(
   {
     Login: { screen: Login},
     Home: { screen: Home},
@@ -24,7 +25,22 @@ const AppNavigator = StackNavigator(
   }
 );
 
+const RootStack = createStackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    MakeRequestModal: {
+      screen: MakeRequestModal,
+    },
+  },
+  {
+    mode: 'card',
+    headerMode: 'none',
+  }
+);
+
 export default () =>
   <Root>
-    <AppNavigator />
+    <RootStack />
   </Root>;

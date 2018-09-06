@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "base64-url": "^2.2.0",
     "color": "1.0.3",
     "expo": "25.0.0",
     "lodash": "4.13.1",
@@ -44,6 +43,6 @@
     "react-native": "0.52.0",
     "react-native-easy-grid": "^0.1.17",
     "react-native-modal-datetime-picker": "^6.0.0",
-    "react-navigation": "1.5.0"
+    "react-navigation": "^2.12.1"
   }
 }

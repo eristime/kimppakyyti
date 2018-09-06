@@ -13,8 +13,6 @@ import {
   Spinner,
   Text
 } from 'native-base';
-import axios from 'axios';
-import base64url from 'base64-url';
 
 import styles from './styles';
 import RideItem from '../../components/RideItem';
@@ -164,6 +162,7 @@ class Home extends Component {
   renderEmpty = () => {
     return (
       <Content>
+        <Text>{'\n'}</Text>
         <H3>Unfortunately no rides available for this day.</H3>
       </Content>
 

@@ -1,2 +1,2 @@
-- using RideList serializer in me/rides_as_driver and me/rides_as_passenger views
-- fetching data to user's driver and passenger list
+- modal for making ride requests
+- ride-details view ui styling
