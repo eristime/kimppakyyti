@@ -16,8 +16,7 @@ backend:
 - write docs
 
 client:
-- authentication
-- add backend url to config: 10.0.2.2
+- error messages when requesting a ride
 - add default pictures and values, when not loaded
 - one single container for gathered data?
 - find a better place for the footer

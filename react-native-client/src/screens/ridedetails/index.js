@@ -6,7 +6,6 @@ import {
   Container,
   Header,
   Content,
-  H2,
   Icon,
   Left,
   List,
@@ -16,6 +15,8 @@ import {
 } from 'native-base';
 import styles from './styles';
 import DefaultText from '../../components/text/DefaultText';
+import Header2 from '../../components/text/Header2';
+import ImportantText from '../../components/text/ImportantText';
 
 class RideDetails extends Component {
 
@@ -62,27 +63,27 @@ class RideDetails extends Component {
           <List>
             <ListItem first>
               <Body>
-                <H2 style={styles.heading}>Ride</H2>
-                <Text style={styles.text}>From: {departure}</Text>
-                <DefaultText>To: {destination}</DefaultText>
-                <Text style={styles.text}>Departing on {date}</Text>
-                <Text style={styles.text}>{available_seats} / {total_seat_count} seats available</Text>
-                <Text style={styles.text}>Estimated fuel cost {estimated_fuel_cost} euros</Text>
+                <Header2>Ride</Header2>
+                <DefaultText>From: <ImportantText>{departure}</ImportantText></DefaultText>
+                <DefaultText>To: <ImportantText>{destination}</ImportantText></DefaultText>
+                <DefaultText>Departing on <ImportantText>{date}</ImportantText></DefaultText>
+                <DefaultText>{available_seats} / {total_seat_count} seats available</DefaultText>
+                <DefaultText>Estimated fuel cost {estimated_fuel_cost} euros</DefaultText>
               </Body>
 
             </ListItem>
 
             <ListItem>
               <Body>
-              <H2 >Driver</H2>
+              <Header2>Driver</Header2>
               <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
                 <Image
                   style={{ width: 90, height: 90, borderRadius: 45 }}
                   source={{ uri: photo }}
                 />
                 <View>
-                  <Text style={styles.text}>{first_name} {last_name}</Text>
-                  <Text style={styles.text}>Rating: {driver_rating} with {driver_review_count} reviews </Text>
+                  <DefaultText>{first_name} {last_name}</DefaultText>
+                  <DefaultText>Rating: {driver_rating} with {driver_review_count} reviews </DefaultText>
                 </View>
 
               </View>
@@ -92,9 +93,9 @@ class RideDetails extends Component {
             <ListItem last>
               
               <Body>
-              <H2 style={styles.heading}>Car</H2>
-              <Text style={styles.text}>Model: {model} </Text>
-              <Text style={styles.text}>Register plate: {register_plate}</Text>
+              <Header2>Car</Header2>
+              <DefaultText>Model: {model} </DefaultText>
+              <DefaultText>Register plate: {register_plate}</DefaultText>
               </Body>
               
             </ListItem>
@@ -103,7 +104,7 @@ class RideDetails extends Component {
         <Button block success
           button onPress={() => this.props.navigation.navigate('MakeRequestModal', { rideItem: rideItem })}
         >
-          <Text>Make a ride request</Text>
+          <DefaultText>Make a ride request</DefaultText>
         </Button>
 
       </Container>

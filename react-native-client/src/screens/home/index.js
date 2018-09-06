@@ -17,7 +17,7 @@ import {
 import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
-import { KIMPPAKYYTI_API_USERNAME, KIMPPAKYYTI_API_PASSWORD  } from '../../../config';
+import config from '../../../config.js';
 import { convertDateForAPI } from '../../services/utils';
 
 class Home extends Component {
@@ -57,17 +57,17 @@ class Home extends Component {
     /*
       param: newRequest: boolean. If true will start on a first page. 
     */
+
+   let { page } = this.state;
     if (newRequest) {
       this.setState({
         page: 1,
         seed: 1
       });
-    }
-    const { page } = this.state;
-    //let url = `http://10.0.2.2:8000/rides/?page=${page}`; //virtual Android on desktop
-    let url = `http://192.168.1.103:8000/rides/?page=${page}`;  // desktop IP
-    //let url = `http://192.168.43.216:8000/rides/?page=${page}`;  // laptop IP
-
+      page = 1;
+    } 
+    
+    let url = `${config.BACKEND_DOMAIN}/rides/?page=${page}`;
 
     if (this.filterParams.destination) {
       url = url + `&destination=${this.filterParams.destination}`;
@@ -161,7 +161,7 @@ class Home extends Component {
 
   renderEmpty = () => {
     return (
-      <Content>
+      <Content style={{ margin: 15 }}>
         <Text>{'\n'}</Text>
         <H3>Unfortunately no rides available for this day.</H3>
       </Content>

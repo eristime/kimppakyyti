@@ -19,6 +19,7 @@ import {
 import styles from './styles';
 //import RideItem from './RideItem';
 import MyRideList from '../../components/MyRideList';
+import config from '../../../config.js';
 //import deviceStorage from '../../services/DeviceStorage';
 //import testData from  '../../../data-dump';
 
@@ -60,7 +61,7 @@ class MyRides extends Component {
           <Tab heading="Passenger">
           <Content>
             <MyRideList
-            url="http://192.168.1.103:8000/me/rides_as_passenger/"
+            url={`${config.BACKEND_DOMAIN}/me/rides_as_passenger/`}
             token={token}
             renderEmpty="You have no rides or request as a passenger yet."
             />
@@ -69,7 +70,7 @@ class MyRides extends Component {
           </Tab>
           <Tab heading="Driver">
             <MyRideList 
-            url="http://192.168.1.103:8000/me/rides_as_driver/"
+            url={`${config.BACKEND_DOMAIN}/me/rides_as_driver/`}
             token={token}
             renderEmpty="You have no rides or there isn't any requests for you yet."
             />

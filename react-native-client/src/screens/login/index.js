@@ -17,17 +17,17 @@ import {
 //import { Expo, AuthSession } from 'expo';
 import axios from 'axios';
 import styles from "./styles";
-import { config } from '../../../config';
+import config from '../../../config.js';
 import deviceStorage from '../../services/DeviceStorage';
 
 class Login extends Component {
 
   _handleTestLoginPressAsync = async () => {
-      const url = `http://192.168.1.103:8000/login/`;
+      const url = `${config.BACKEND_DOMAIN}/login/`;
       console.log(url)
       axios.post(url,{
-          username: 'matkustaja',
-          password: 'matkustaja123',
+          username: config.KIMPPAKYYTI_API_USERNAME,
+          password: config.KIMPPAKYYTI_API_PASSWORD,
       })
       .then((response) => {
          // Handle the JWT response here

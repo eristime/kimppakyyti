@@ -1,2 +1,3 @@
-- modal for making ride requests
-- ride-details view ui styling
+- Backend domain from config file
+- fixing bug where one additional search button press was required when changing date
+- makeRequestModal text styling

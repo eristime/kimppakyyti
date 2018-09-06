@@ -3,9 +3,9 @@ import {
   Text,
 } from 'native-base';
 
-const DefaultText = (props) => {
+const Header2 = (props) => {
     return (
         <Text style={{fontSize:25, padding:2}}>{props.children}</Text>
     );
   };
-export default DefaultText;
+export default Header2;

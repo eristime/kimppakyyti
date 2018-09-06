@@ -7,14 +7,18 @@ import {
   Container,
   Header,
   H2,
-  Text,
   Textarea,
   Title,
   H3
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
 
+import config from '../../config';
 import deviceStorage from '../services/DeviceStorage';
+
+import DefaultText from '../components/text/DefaultText';
+import Header2 from '../components/text/Header2';
+import ImportantText from '../components/text/ImportantText';
 
 
 class MakeRequestModal extends Component {
@@ -71,7 +75,7 @@ class MakeRequestModal extends Component {
             'Content-Type': 'application/json; charset=utf-8',
             authorization: 'Token ' + token
           },
-          body: JSON.stringify({'note': this.state.note})
+          body: JSON.stringify({ 'note': this.state.note })
         }).then(res => res.json())
           .then(res => {
             console.log(res);
@@ -82,7 +86,7 @@ class MakeRequestModal extends Component {
             });
             console.log('post request:', res);
             Alert.alert('Ride request successfully added');
-            //this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Home')
           })
           .catch(error => {
             this.setState({ error, loading: false });
@@ -95,39 +99,39 @@ class MakeRequestModal extends Component {
 
   render() {
     const rideItem = this.props.navigation.getParam('rideItem');
-    const url = `http://192.168.1.103:8000/rides/${rideItem.id}/requests/`;
-    //Alert.alert('url:', url);
+    const url = `${config.BACKEND_DOMAIN}/rides/${rideItem.id}/requests/`;
+    const { departure, destination, date } = rideItem;
     return (
       <Container>
         <Header>
           <Body>
-            <Title>Confirm Ride</Title>
+            <Title>Make a ride request</Title>
           </Body>
         </Header>
-        <Content padder style={{margin: 15}}>
+        <Content padder style={{ margin: 15 }}>
           <Body>
             <H3>Are you sure you want to make this ride request?</H3>
-            <Text>{'\n'}</Text>
-            <Text>From: {rideItem.departure}</Text>
-            <Text>To: {rideItem.destination}</Text>
-            <Text>On {rideItem.date}</Text>
-            <Text>{'\n'}</Text>
-            <Text>Write a note to driver. Only driver can see the note.</Text>
-            <Text>{'\n'}</Text>
+            <DefaultText>{'\n'}</DefaultText>
+            <DefaultText>From: <ImportantText>{departure}</ImportantText></DefaultText>
+            <DefaultText>To: <ImportantText>{destination}</ImportantText></DefaultText>
+            <DefaultText>Departing on <ImportantText>{date}</ImportantText></DefaultText>
+            <DefaultText>{'\n'}</DefaultText>
+            <DefaultText>Write a note to driver. Only driver can see the note.</DefaultText>
+            <DefaultText>{'\n'}</DefaultText>
             <Textarea rowSpan={5} bordered placeholder="Write note here... "
               onChangeText={(text) => this.setState({ note: text })}
-              style={{width:200}} />
-            <Text>{'\n'}</Text>
-          
+              style={{ width: 200 }} />
+            <DefaultText>{'\n'}</DefaultText>
+
           </Body>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
             <Button block success
               onPress={() => this.MakeRideRequest(url)}>
-              <Text>Confirm</Text>
+              <DefaultText>Confirm</DefaultText>
             </Button>
             <Button block danger
               onPress={() => this.props.navigation.goBack()}>
-              <Text>Cancel</Text>
+              <DefaultText>Cancel</DefaultText>
             </Button>
           </View>
         </Content>
