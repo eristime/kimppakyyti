@@ -1,8 +1,19 @@
 from rest_framework import serializers
 from apiv1.models import Request, Passenger
+from .profile_serializers import UserProfileSerializer
+from .ride_serializers import RideListSerializer
 
 
-class RequestSerializer(serializers.ModelSerializer):
+class RequestListSerializer(serializers.ModelSerializer):
+    requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
+    status = serializers.ReadOnlyField()
+    ride = RideListSerializer()
+
+    class Meta:
+        model = Request
+        fields = ('id', 'ride', 'requester', 'note', 'status', )
+
+class RequestCreateSerializer(serializers.ModelSerializer):
     ride = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     requester = serializers.PrimaryKeyRelatedField(many=False, read_only=True,)
     status = serializers.ReadOnlyField()

@@ -3,13 +3,13 @@ from rest_framework import permissions
 from rest_framework import generics
 
 from apiv1.models import Request
-from apiv1.serializers import RequestSerializer
+from apiv1.serializers import RequestListSerializer
 
 
 class UserRequests(generics.ListAPIView):
     ''' Only logged in user able to see her requests'''
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = RequestSerializer
+    serializer_class = RequestListSerializer
 
 
     def get_queryset(self):

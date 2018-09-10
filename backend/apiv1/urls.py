@@ -8,6 +8,11 @@ ride_list = views.RideViewSet.as_view({
     'post': 'create'
 })
 
+request_list = views.RideViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
 urlpatterns = format_suffix_patterns([
     url(r'^$', views.api_root),
 
@@ -55,7 +60,7 @@ urlpatterns = format_suffix_patterns([
         name='passenger-detail'),
 
     url(r'^rides/(?P<pk>[0-9]+)/requests/$',
-        views.RequestList.as_view(),
+        request_list,
         name='request-list'),
 
     url(r'^rides/(?P<pk>[0-9]+)/end/$',
@@ -100,13 +105,4 @@ urlpatterns = format_suffix_patterns([
     url(r'^me/requests/$',
         views.UserRequests.as_view(),
         name='user-request-list'),
-
-    
-    
-    #url(r'^message/$',
-    #    views.MessageList.as_view(),
-    #    name='message-list'),
-    #url(r'^message/(?P<pk>[0-9]+)/$',
-    #    views.MessageDetail.as_view(),
-    #    name='message-detail'),
 ])

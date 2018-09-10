@@ -2,18 +2,26 @@ from rest_framework import permissions, generics
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
+from rest_framework import viewsets
 
-from apiv1.serializers import RequestSerializer, RequestDetailSerializer
+from apiv1.serializers import RequestListSerializer, RequestCreateSerializer, RequestDetailSerializer
 from apiv1.permissions import IsRequester
 from apiv1.models import Request, Ride, Passenger
 
 
-class RequestList(generics.ListCreateAPIView):
+class RequestList(viewsets.ModelViewSet):
     '''
     Drivers able to see the ride requests. Authenticated users able to create requets for rides.
     '''
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = RequestSerializer
+    serializer_class = RequestListSerializer
+
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return RequestListSerializer
+        if self.action == 'create':
+            return RequestCreateSerializer
 
 
     def perform_create(self, serializer):

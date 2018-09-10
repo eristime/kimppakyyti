@@ -210,10 +210,17 @@ class Home extends Component {
             </Button>
 
             <Button vertical
-              onPress={() => this.props.navigation.navigate('MyRides', { token: this.token })}
+              onPress={() => this.props.navigation.navigate('Passenger', { token: this.token })}
+            >
+              {/*<Icon name='md-people' />*/}
+              <Text>Passenger</Text>
+            </Button>
+
+            <Button vertical
+              onPress={() => this.props.navigation.navigate('Driver', { token: this.token })}
             >
               <Icon name='md-car' />
-              <Text>My Rides</Text>
+              <Text>Driver</Text>
             </Button>
 
             <Button vertical
