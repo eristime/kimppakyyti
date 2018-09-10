@@ -21,7 +21,7 @@ const RideItem = (props) => {
   return (
 
     <ListItem
-      button onPress={() => props.navigation.navigate('RideDetails', { rideItem: props.rideItem })}
+      button onPress={() => props.navigation.navigate('RideDetails', { rideItem: props.rideItem, showModalRequestButton: props.showModalRequestButton }, )}
       containerStyle={{ borderBottomWidth: 0 }}
     >
 
@@ -37,7 +37,7 @@ const RideItem = (props) => {
         <View style={{ flex: 2 }}>
           <Text>{first_name} {last_name}</Text>
           <Text>{departure}->{destination}</Text>
-          <Text>{available_seats} seats; fuel {estimated_fuel_cost} &euro</Text>
+          <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
         </View>
       </View>
 

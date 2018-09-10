@@ -5,12 +5,10 @@ import {
   Container,
   Content,
   Fab,
-  List,
   Footer,
   FooterTab,
   H3,
   Icon,
-  Spinner,
   Text
 } from 'native-base';
 
@@ -122,42 +120,12 @@ class Home extends Component {
     );
   };
 
-
-  //renderSeparator = () => {
-  //  return (
-  //    <View
-  //      style={{
-  //        height: 1,
-  //        width: '86%',
-  //        backgroundColor: '#CED0CE',
-  //        marginLeft: '14%'
-  //      }}
-  //    />
-  //  );
-  //};
-
   renderHeader = () => {
     return <AppHeader
       handleSearchButtonPress={this.makeFilteredRemoteRequest}
 
     />;
   };
-
-  //renderFooter = () => {
-  //  if (!this.state.loading) return null;
-  //
-  //  return (
-  //    <View
-  //      style={{
-  //        paddingVertical: 20,
-  //        borderTopWidth: 1,
-  //        borderColor: '#CED0CE'
-  //      }}
-  //    >
-  //      <Spinner />
-  //    </View>
-  //  );
-  //};
 
   renderEmpty = () => {
     return (
@@ -179,6 +147,7 @@ class Home extends Component {
           renderItem={({ item }) => (
             <RideItem
               rideItem={item}
+              showModalRequestButton={true}
             />
 
           )}
@@ -230,7 +199,6 @@ class Home extends Component {
               <Text>Account</Text>
             </Button>
 
-            
           </FooterTab>
         </Footer>
 

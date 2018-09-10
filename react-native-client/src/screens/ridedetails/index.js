@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Image, View, Modal } from 'react-native';
+import { Image, View } from 'react-native';
 import {
   Body,
   Button,
   Container,
   Header,
   Content,
+  H2,
   Icon,
   Left,
   List,
@@ -22,22 +23,27 @@ class RideDetails extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      modalVisible: false,
-    };
+    const { navigation } = props;
+    this.rideItem = navigation.getParam('rideItem');
+    this.showModalRequestButton = navigation.getParam('showModalRequestButton') ? true : false;
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
+  modalRequestButton = () => {
+    if (this.showModalRequestButton){
+      return (
+        <Button block success
+          button onPress={() => this.props.navigation.navigate('MakeRequestModal', { rideItem: this.rideItem })}
+        >
+          <Text>Make a ride request</Text>
+        </Button>
+      );
+    }
+  };
 
   render() {
-    const { navigation } = this.props;
-    const rideItem = navigation.getParam('rideItem');
-    const { date, departure, destination, available_seats, estimated_fuel_cost, total_seat_count } = rideItem;
-    let { first_name, last_name, driver_rating, driver_review_count, photo } = rideItem.driver.profile;
-    let { register_plate, model } = rideItem.car;
+    const { date, departure, destination, available_seats, estimated_fuel_cost, total_seat_count } = this.rideItem;
+    let { first_name, last_name, driver_rating, driver_review_count, photo } = this.rideItem.driver.profile;
+    let { register_plate, model } = this.rideItem.car;
 
     // default values
     first_name = first_name || 'unknown';
@@ -46,12 +52,13 @@ class RideDetails extends Component {
     driver_rating = driver_rating || 4.00;
     driver_review_count = driver_review_count || 0;
 
+
     return (
       <Container>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name='arrow-back' />
+              <Icon name="arrow-back" />
             </Button>
           </Left>
           <Body>
@@ -61,7 +68,7 @@ class RideDetails extends Component {
 
         <Content >
           <List>
-            <ListItem first>
+          <ListItem first>
               <Body>
                 <Header2>Ride</Header2>
                 <DefaultText>From: <ImportantText>{departure}</ImportantText></DefaultText>
@@ -70,7 +77,6 @@ class RideDetails extends Component {
                 <DefaultText>{available_seats} / {total_seat_count} seats available</DefaultText>
                 <DefaultText>Estimated fuel cost {estimated_fuel_cost} euros</DefaultText>
               </Body>
-
             </ListItem>
 
             <ListItem>
@@ -91,21 +97,15 @@ class RideDetails extends Component {
             </ListItem>
 
             <ListItem last>
-              
               <Body>
               <Header2>Car</Header2>
-              <DefaultText>Model: {model} </DefaultText>
-              <DefaultText>Register plate: {register_plate}</DefaultText>
+              <DefaultText>Model: <ImportantText>{model}</ImportantText></DefaultText>
+              <DefaultText>Register plate: <ImportantText>{register_plate}</ImportantText></DefaultText>
               </Body>
-              
             </ListItem>
           </List>
         </Content>
-        <Button block success
-          button onPress={() => this.props.navigation.navigate('MakeRequestModal', { rideItem: rideItem })}
-        >
-          <DefaultText>Make a ride request</DefaultText>
-        </Button>
+        { this.modalRequestButton() }
 
       </Container>
     );
