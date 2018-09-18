@@ -26,6 +26,7 @@ const RequestItem = (props) => {
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 15;
   note = note || '---';
+  const time = '14:53';
 
   return (
 
@@ -58,6 +59,7 @@ const RequestItem = (props) => {
             <Text>{first_name} {last_name}</Text>
             <Text>{departure}->{destination}</Text>
             <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
+            <Text>{time}</Text>
           </View>
         </View>
         <View

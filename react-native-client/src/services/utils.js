@@ -13,3 +13,12 @@ export const convertDateForAPI = (dateObject) => {
     }
     return `${dateObject.getFullYear()}-${month}-${date}`;
   };
+
+  export const convertToHoursMinutes = (dateObject) => {
+    /*
+    param:date, JS date object
+    */
+   //returns formatted time
+
+    return `${dateObject.getHours()}:${dateObject.getMinutes()}`;
+  };

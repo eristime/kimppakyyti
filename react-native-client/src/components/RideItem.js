@@ -17,6 +17,7 @@ const RideItem = (props) => {
   photo = photo || 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg';
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 0;
+  const time = '14:53';
 
   return (
 
@@ -38,6 +39,7 @@ const RideItem = (props) => {
           <Text>{first_name} {last_name}</Text>
           <Text>{departure}->{destination}</Text>
           <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
+          <Text>Leaves at: {time}</Text>
         </View>
       </View>
 

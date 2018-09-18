@@ -1,3 +1,2 @@
-- Backend domain from config file
-- fixing bug where one additional search button press was required when changing date
-- makeRequestModal text styling
+- appheader styling and input for time
+- RideItem displaying time, faking data on front-end

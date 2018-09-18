@@ -18,8 +18,8 @@ class RideViewSet(viewsets.ModelViewSet):
     #permission_classes = () # temporarily remove permission classes since basic auth doesn't work with react native 
     queryset = Ride.objects.all()
     serializer_class = RideListSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ('driver', 'car', 'destination', 'departure', 'date')
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
+    filter_fields = ('driver', 'car', 'destination', 'departure', 'date',)
     ordering_fields = ('date', 'destination', 'departure')
     #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
@@ -41,6 +41,8 @@ class RideViewSet(viewsets.ModelViewSet):
         '''
         
         return Ride.objects.filter(status=Ride.ONGOING)
+
+    
 
   
 class RideDetail(generics.RetrieveAPIView):

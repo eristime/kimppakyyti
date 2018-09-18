@@ -16,7 +16,8 @@ import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
 import config from '../../../config.js';
-import { convertDateForAPI } from '../../services/utils';
+import { convertDateForAPI, convertToHoursMinutes } from '../../services/utils';
+
 
 class Home extends Component {
 
@@ -35,7 +36,8 @@ class Home extends Component {
     this.filterParams = {
       destination: '',
       departure: '',
-      date: new Date()
+      date: new Date(),
+      time: new Date()
     };
   }
 
@@ -48,6 +50,7 @@ class Home extends Component {
     this.filterParams.destination = filterParams.destination;
     this.filterParams.departure = filterParams.departure;
     this.filterParams.date = filterParams.date;
+    this.filterParams.time = filterParams.time;
     this.getRidesFromAPI('new-request');
   };
 
@@ -78,6 +81,11 @@ class Home extends Component {
     if (this.filterParams.date) {
       url += `&date=${convertDateForAPI(this.filterParams.date)}`;
     }
+    /* time input
+    if (this.filterParams.date) {
+      url += `&time=${convertDateForAPI(this.filterParams.date)}`;
+    }
+    */
 
     this.setState({ loading: true });
 
