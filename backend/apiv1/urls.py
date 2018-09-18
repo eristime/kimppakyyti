@@ -8,7 +8,7 @@ ride_list = views.RideViewSet.as_view({
     'post': 'create'
 })
 
-request_list = views.RideViewSet.as_view({
+request_list = views.RequestViewSet.as_view({
     'get': 'list',
     'post': 'create'
 })

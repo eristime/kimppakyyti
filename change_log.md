@@ -1,2 +1,2 @@
-- appheader styling and input for time
-- RideItem displaying time, faking data on front-end
+- request making failures
+- data input for testing UI

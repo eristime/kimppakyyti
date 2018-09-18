@@ -37,7 +37,7 @@ const RideItem = (props) => {
         </View>
         <View style={{ flex: 2 }}>
           <Text>{first_name} {last_name}</Text>
-          <Text>{departure}->{destination}</Text>
+          <Text>{departure} -> {destination}</Text>
           <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
           <Text>Leaves at: {time}</Text>
         </View>

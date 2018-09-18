@@ -59,7 +59,7 @@ const RequestItem = (props) => {
             <Text>{first_name} {last_name}</Text>
             <Text>{departure}->{destination}</Text>
             <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
-            <Text>{time}</Text>
+            <Text>Leaves at: {time}</Text>
           </View>
         </View>
         <View

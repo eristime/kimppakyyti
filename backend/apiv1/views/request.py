@@ -9,7 +9,7 @@ from apiv1.permissions import IsRequester
 from apiv1.models import Request, Ride, Passenger
 
 
-class RequestList(viewsets.ModelViewSet):
+class RequestViewSet(viewsets.ModelViewSet):
     '''
     Drivers able to see the ride requests. Authenticated users able to create requets for rides.
     '''
@@ -32,7 +32,6 @@ class RequestList(viewsets.ModelViewSet):
             raise ValidationError('User can have only one request per ride.')
 
 
-        ride.status 
         if ride.status !='ONGOING':
             raise ValidationError('Not possible to add requests to ride which are not ongoing.')
 
