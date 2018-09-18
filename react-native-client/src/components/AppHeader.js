@@ -61,9 +61,8 @@ class AppHeader extends Component {
     const maximumDate = new Date(d.setFullYear(d.getFullYear() + 2));
     return (
 
-      <Header style={{ height: 150 }}>
+      <Header style={{ height: 140 }}>
         <Content style={{ flex: 1 }}>
-          {/*<Text>Kimppakyyti application</Text>*/}
           <View style={{ flex: 1, marginLeft: 10 }}>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-start' }}>
               <View >
@@ -72,7 +71,7 @@ class AppHeader extends Component {
                   style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                   <Label>From</Label>
                   <Input
-                    placeholder='Set departure'
+                    placeholder="Set departure"
                     onChangeText={(text) => this.setState({ departure: text })}
                   />
                 </Item>
@@ -81,7 +80,7 @@ class AppHeader extends Component {
                   style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
                   <Label>To</Label>
                   <Input
-                    placeholder='Set destination'
+                    placeholder="Set destination"
                     onChangeText={(text) => this.setState({ destination: text })}
                   />
                 </Item>

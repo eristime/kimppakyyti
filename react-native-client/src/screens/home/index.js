@@ -9,6 +9,7 @@ import {
   FooterTab,
   H3,
   Icon,
+  Spinner,
   Text
 } from 'native-base';
 
@@ -63,10 +64,10 @@ class Home extends Component {
     if (newRequest) {
       this.setState({
         page: 1,
-        seed: 1
+        seed: 1,
       });
       page = 1;
-    } 
+    }
     
     let url = `${config.BACKEND_DOMAIN}/rides/?page=${page}`;
 
@@ -136,12 +137,32 @@ class Home extends Component {
   };
 
   renderEmpty = () => {
+    if (this.state.loading){
+      return null;
+    }
     return (
       <Content style={{ margin: 15 }}>
         <Text>{'\n'}</Text>
         <H3>Unfortunately no rides available for this day.</H3>
       </Content>
+    );
+  };
 
+  renderFooter = () => {
+    if (!this.state.loading){
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: '#CED0CE'
+        }}
+      >
+        <Spinner color="blue" />
+      </View>
     );
   };
 
@@ -162,7 +183,7 @@ class Home extends Component {
           keyExtractor={item => item.id}
           //ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
-          //ListFooterComponent={this.renderFooter}
+          ListFooterComponent={this.renderFooter}
           ListEmptyComponent={this.renderEmpty}
           //onRefresh={this.handleRefresh}
           //refreshing={this.state.refreshing}
@@ -172,38 +193,38 @@ class Home extends Component {
 
         <Fab
           active={this.state.fabActive}
-          direction='up'
+          direction="up"
           containerStyle={{ bottom: 60 }}
           style={{ backgroundColor: '#5067FF' }}
-          position='bottomRight'
+          position="bottomRight"
           onPress={() => this.props.navigation.navigate('AddRide', { token: this.token })}>
-          <Icon name='md-add' />
+          <Icon name="md-add" />
         </Fab>
         <Footer>
           <FooterTab>
             <Button vertical>
-              <Icon name='md-home' />
+              <Icon name="md-home" />
               <Text>Home</Text>
             </Button>
 
             <Button vertical
               onPress={() => this.props.navigation.navigate('Passenger', { token: this.token })}
             >
-              {/*<Icon name='md-people' />*/}
+              <Icon name="md-people" />
               <Text>Passenger</Text>
             </Button>
 
             <Button vertical
               onPress={() => this.props.navigation.navigate('Driver', { token: this.token })}
             >
-              <Icon name='md-car' />
+              <Icon name="md-car" />
               <Text>Driver</Text>
             </Button>
 
             <Button vertical
               onPress={() => this.props.navigation.navigate('Login', { token: this.token })}
             >
-              <Icon name='person' />
+              <Icon name="person" />
               <Text>Account</Text>
             </Button>
 
