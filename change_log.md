@@ -1,2 +1,4 @@
-- request making failures
-- data input for testing UI
+-requirements.txt
+-coverage reports
+-all tests pass
+-readmes

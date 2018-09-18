@@ -160,9 +160,9 @@ class TestRideList(APITestCase):
         self.assertEqual(response.status_code, 200)
 
        
-    def test_ride_list_view_not_available_for_unauthenticated_users(self):
+    def test_ride_list_view_available_for_unauthenticated_users(self):
         '''
-        Ensure unauthenticated users can't use the ride-list view.
+        Ensure also unauthenticated users can see the rides.
         '''
         url = reverse('ride-list')
         date_for_input = date.today() + timedelta(days=3)
@@ -180,6 +180,7 @@ class TestRideList(APITestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(Ride.objects.count(), 2) # ride creation didn't work, only two rides
 
-        response = self.client.get(url, format='json')
 
-        self.assertEqual(response.status_code, 401)
+        response = self.client.get(url, format='json')
+        
+        self.assertEqual(response.status_code, 200) # getting rides works
