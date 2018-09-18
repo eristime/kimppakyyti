@@ -23,8 +23,9 @@ class UserRidesAsPassengerList(generics.ListAPIView):
 
         rides = []
         # get all ride id's where user passenger
-        for passenger in Passenger.objects.filter(user=self.request.user, status=Ride.ONGOING):
-            rides.append(passenger.ride)
+        for passenger in Passenger.objects.filter(user=self.request.user):
+            if passenger.ride.status== Ride.ONGOING:
+                rides.append(passenger.ride)
 
         return rides
     

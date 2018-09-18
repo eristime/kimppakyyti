@@ -41,7 +41,9 @@ const RequestItem = (props) => {
         <View
           style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }} >
           <H3>Request for {date}</H3>
-          <Button danger small>
+          <Button danger small
+          onPress={() => props.navigation.navigate('UndoRequestModal', { requestItem: props.requestItem })}
+          >
             <Text>Undo</Text>
           </Button>
         </View>

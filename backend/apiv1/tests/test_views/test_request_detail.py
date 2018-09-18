@@ -103,6 +103,7 @@ class TestRequestDetail(APITestCase):
         user_ride = Ride.objects.filter(driver=self.user)[0]
         user_request = Request.objects.filter(requester=self.user, ride=user_ride)[0]
         url = reverse('request-detail', args=[user_ride.pk, user_request.pk])
+        print('url to remove request:', url)
 
         response = client.delete(url, format='json')
         self.assertEqual(Request.objects.count(), 1)  # two request overall, now one deleted

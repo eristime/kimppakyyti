@@ -32,7 +32,7 @@ class RequestViewSet(viewsets.ModelViewSet):
             raise ValidationError('User can have only one request per ride.')
 
 
-        if ride.status !='ONGOING':
+        if ride.status != Ride.ONGOING:
             raise ValidationError('Not possible to add requests to ride which are not ongoing.')
 
         if self.request.user == ride.driver:
@@ -54,7 +54,7 @@ class RequestViewSet(viewsets.ModelViewSet):
         ride_pk = self.kwargs['pk']
         
         if self.request.user == Ride.objects.get(pk=ride_pk).driver:
-            return Request.objects.filter(ride=ride_pk, status='PENDING')
+            return Request.objects.filter(ride=ride_pk, status=Request.PENDING)
 
         return Request.objects.none()
 
@@ -66,11 +66,12 @@ class RequestDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsRequester,)
     queryset = Request.objects.all()
     serializer_class = RequestDetailSerializer
-    #lookup_field = 'request_pk'
+    lookup_field = 'id'
+    #queryset
 
     #def get_queryset(self):
     #    '''
     #    Only return requests that are not accepted.
     #    '''
-    #    ride = self.kwargs['pk']
-    #    return Request.objects.filter(ride=ride, status='PENDING')
+    #    ride_pk = self.kwargs['pk']
+    #    return Request.objects.filter(ride=ride_pk, status=Ride.PENDING)

@@ -68,7 +68,7 @@ class Home extends Component {
       });
       page = 1;
     }
-    
+
     let url = `${config.BACKEND_DOMAIN}/rides/?page=${page}`;
 
     if (this.filterParams.destination) {

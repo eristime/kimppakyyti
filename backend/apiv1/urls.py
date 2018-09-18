@@ -67,7 +67,7 @@ urlpatterns = format_suffix_patterns([
         views.EndRide.as_view(),
         name='end-ride'),
 
-    url(r'^rides/(?P<pk>[0-9]+)/requests/(?P<request_pk>[0-9]+)/$',
+    url(r'^rides/(?P<pk>[0-9]+)/requests/(?P<id>[0-9]+)/$',
         views.RequestDetail.as_view(),
         name='request-detail'),
 

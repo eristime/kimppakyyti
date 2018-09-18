@@ -11,6 +11,7 @@ import MyRides from './screens/my-rides';
 import Passenger from './screens/passenger';
 import Driver from './screens/driver';
 import MakeRequestModal from './screens/MakeRequestModal';
+import UndoRequestModal from './screens/UndoRequestModal';
 
 
 const MainStack = createStackNavigator(
@@ -36,6 +37,9 @@ const RootStack = createStackNavigator(
     },
     MakeRequestModal: {
       screen: MakeRequestModal,
+    },
+    UndoRequestModal: {
+      screen: UndoRequestModal,
     },
   },
   {
