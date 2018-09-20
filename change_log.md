@@ -1,4 +1,3 @@
--requirements.txt
--coverage reports
--all tests pass
--readmes
+- users only available to admin
+- removing not used routes
+- 
