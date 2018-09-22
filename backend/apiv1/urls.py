@@ -76,7 +76,4 @@ urlpatterns = format_suffix_patterns([
         views.UserRequests.as_view(),
         name='user-request-list'),
 
-    url(r'^me/profile/$',
-        views.UserRequests.as_view(),
-        name='user-request-list'),
 ])

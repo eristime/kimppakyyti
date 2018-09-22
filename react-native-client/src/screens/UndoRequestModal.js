@@ -73,21 +73,25 @@ class UndoRequestModal extends Component {
           headers: {
             authorization: 'Token ' + token
           }
-        }).then(res => res.json())
-          .then(res => {
-            console.log(res);
+        }).then((res) => {
+          console.log(res);
+          if (res.status === 204) {
+            Alert.alert('Ride request undone.');
+          } else {
+            Alert.alert('Problem with adding a request', 'status: ' + res.status.toString());
+          }
+          this.props.navigation.navigate('Home');
+          return res.json();
+        }).then(res => {
             this.setState({
               data: res.results,
               error: res.error || null,
               loading: false
             });
-            console.log('delete request:', res);
-            Alert.alert('REquest deleted', res.results);
-            this.props.navigation.navigate('Passenger');
           })
           .catch(error => {
             this.setState({ error, loading: false });
-            Alert.alert('Error:', error.toString());
+            //Alert.alert('Error:', error.toString());
           });
       });
   };
@@ -96,23 +100,24 @@ class UndoRequestModal extends Component {
   render() {
     const requestItem = this.props.navigation.getParam('requestItem');
     const url = `${config.BACKEND_DOMAIN}/rides/${requestItem.ride.id}/requests/${requestItem.id}/`;
-    console.log('urlo:', url);
+    //console.log('urlo:', url);
 
     return (
       <Container>
         <Content padder style={{ margin: 15 }}>
           <Body>
             <H3>Are you sure you want to undo this ride request?</H3>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Button block danger
-              onPress={() => this.props.navigation.goBack()}>
-              <DefaultText>Cancel</DefaultText>
-            </Button>
-            <Button block success
-              onPress={() => this.undoRequest(url)}>
-              <DefaultText>Confirm</DefaultText>
-            </Button>
-          </View>
+            <DefaultText>{'\n'}</DefaultText>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+              <Button block danger
+                onPress={() => this.props.navigation.goBack()}>
+                <DefaultText>Cancel</DefaultText>
+              </Button>
+              <Button block success
+                onPress={() => this.undoRequest(url)}>
+                <DefaultText>Confirm</DefaultText>
+              </Button>
+            </View>
           </Body>
         </Content>
       </Container>

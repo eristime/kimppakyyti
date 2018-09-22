@@ -18,7 +18,7 @@ import { withNavigation } from 'react-navigation';
 const RequestItem = (props) => {
   const { departure, destination, available_seats, estimated_fuel_cost, date } = props.requestItem.ride;
   let { first_name, last_name, driver_rating, driver_review_count, photo } = props.requestItem.ride.driver.profile;
-  let { note } = props.requestItem.note;
+  let { note } = props.requestItem;
   // default values
   first_name = first_name || 'unknown';
   last_name = last_name || 'unknown';
@@ -26,7 +26,8 @@ const RequestItem = (props) => {
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 15;
   note = note || '---';
-  const time = '14:53';
+  const time = '17:53';
+  //console.log('props.requestItem:', props.requestItem)
 
   return (
 
@@ -64,11 +65,14 @@ const RequestItem = (props) => {
             <Text>Leaves at: {time}</Text>
           </View>
         </View>
+        
         <View
           style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }}
         >
+          <Text>Your note: </Text>
           <Text style={{flex: 1, flexWrap: 'wrap'}} note>'''{note}'''</Text>
         </View>
+        
       </View>
 
     </ListItem>

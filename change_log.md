@@ -1,3 +1,3 @@
-- users only available to admin
-- removing not used routes
-- 
+- redirecting to home view after deleting request
+- error handling when deleting requests??
+- fixing bug when displaying request note

@@ -28,7 +28,7 @@ class MakeRequestModal extends Component {
     this.state = {
       token: null,
       loading: false,
-      note: ''
+      note: 'empty note'
     };
   }
 
@@ -76,8 +76,16 @@ class MakeRequestModal extends Component {
             authorization: 'Token ' + token
           },
           body: JSON.stringify({ 'note': this.state.note })
-        }).then(res => res.json())
-          .then(res => {
+        }).then((res) => {
+          console.log(res);
+          if (res.status === 201) {
+            Alert.alert('Ride request successfully added');
+          } else {
+            Alert.alert('Request cannot be added', 'status: ' + res.status.toString());
+          }
+          this.props.navigation.navigate('Home');
+          return res.json();
+        }).then(res => {
             console.log(res);
             this.setState({
               data: res.results,
@@ -85,8 +93,6 @@ class MakeRequestModal extends Component {
               loading: false
             });
             console.log('post request:', res);
-            Alert.alert('Ride request successfully added');
-            this.props.navigation.navigate('Home')
           })
           .catch(error => {
             this.setState({ error, loading: false });
