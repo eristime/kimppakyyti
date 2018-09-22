@@ -43,7 +43,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.getRidesFromAPI('new request'); // string eveluates to true
+    this.getRidesFromAPI('new request'); // non-empty string eveluates to true
   }
 
 
@@ -72,11 +72,11 @@ class Home extends Component {
     let url = `${config.BACKEND_DOMAIN}/rides/?page=${page}`;
 
     if (this.filterParams.destination) {
-      url = url + `&destination=${this.filterParams.destination}`;
+      url = url + `&destination=${this.filterParams.destination.toLocaleLowerCase()}`;
     }
 
     if (this.filterParams.departure) {
-      url = url + `&departure=${this.filterParams.departure}`;
+      url = url + `&departure=${this.filterParams.departure.toLocaleLowerCase()}`;
     }
 
     if (this.filterParams.date) {
@@ -84,7 +84,7 @@ class Home extends Component {
     }
     
     if (this.filterParams.time) {
-      url += `&time__gte=${convertTimeForAPI(this.filterParams.time)}`;
+      url += `&time__gte=${encodeURIComponent(convertToHoursMinutes(this.filterParams.time))}`;
     }
     
 

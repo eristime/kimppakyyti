@@ -1,4 +1,3 @@
-- time input for rides
-- time formatting on client in RequestItem, RideItem, and RIdeDetails
-- filter using time on backend
-- order rides by time
+- time input displayed correctly
+- departure and destination made lowercase when sent to backend
+- time sent in correct format to backend

@@ -1,6 +1,8 @@
 export const convertDateForAPI = (dateObject) => {
   /*
   param:date, JS date object
+  returns string format '<year>-<month>-<date>'
+
   */
   // getMonth() returns month from 0 to 11
   let month = (dateObject.getMonth() + 1).toString();
@@ -18,16 +20,22 @@ export const convertToHoursMinutes = (dateObject) => {
   /*
   param:date, JS date object
   */
-  //returns formatted time
+  //returns time in HOURS:MINUTES format
+  // 00:59 for example
 
-  return `${dateObject.getHours()}:${dateObject.getMinutes()}`;
-};
+  var formattedMinutes = '';
+  if (dateObject.getMinutes() < 10) {
+    formattedMinutes = `0${dateObject.getMinutes()}`;
+  } else {
+    formattedMinutes = `${dateObject.getMinutes()}`;
+  }
 
-export const convertTimeForAPI = (dateObject) => {
-  /*
-  param:date, JS date object
-  */
-  //returns URI encoded time format for API
+  var formattedHours = '';
+  if (dateObject.getHours() < 10) {
+    formattedHours = `0${dateObject.getHours()}`;
+  } else {
+    formattedHours = `${dateObject.getHours()}`;
+  }
 
-  return encodeURIComponent(`${dateObject.getHours()}:${dateObject.getMinutes()}`);
+  return `${formattedHours}:${formattedMinutes}`;
 };
