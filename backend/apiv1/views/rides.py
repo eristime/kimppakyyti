@@ -33,6 +33,7 @@ class RideViewSet(viewsets.ModelViewSet):
     #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
     ordering = ('date', 'time',)
+    ordering_fields = ('date', 'time',)
 
     def get_serializer_class(self):
         if self.action == 'list':

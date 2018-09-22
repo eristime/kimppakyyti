@@ -18,6 +18,7 @@ import styles from './styles';
 import DefaultText from '../../components/text/DefaultText';
 import Header2 from '../../components/text/Header2';
 import ImportantText from '../../components/text/ImportantText';
+import { capitalizeFirstLetter } from '../../services/utils';
 
 class RideDetails extends Component {
 
@@ -45,6 +46,9 @@ class RideDetails extends Component {
     let { first_name, last_name, driver_rating, driver_review_count, photo } = this.rideItem.driver.profile;
     let { register_plate, model } = this.rideItem.car;
 
+
+    departure = capitalizeFirstLetter(departure);
+    destination = capitalizeFirstLetter(destination);
     // default values
     first_name = first_name || 'unknown';
     last_name = last_name || 'unknown';

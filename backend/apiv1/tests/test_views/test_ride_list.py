@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 
 from django.shortcuts import reverse
 from django.contrib.auth.models import User, AnonymousUser
@@ -29,6 +29,7 @@ class TestRideList(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
@@ -48,6 +49,7 @@ class TestRideList(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.another_user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
@@ -64,6 +66,7 @@ class TestRideList(APITestCase):
             'destination': 'oulu',
             'departure': 'helsinki',
             'date': date_for_input.__str__(), # also api uses datetimes.date string representation
+            'time': '12:30', 
             'available_seats': 3,
             'estimated_fuel_cost': 12.00
         }
@@ -88,6 +91,7 @@ class TestRideList(APITestCase):
             'destination': 'oulu',
             'departure': 'helsinki',
             'date': date_for_input.__str__(), # also api uses datetimes.date string representation
+            'time': '12:30',            
             'available_seats': 3,
             'estimated_fuel_cost': 12.00
         }
@@ -114,6 +118,7 @@ class TestRideList(APITestCase):
             'destination': 'oulu',
             'departure': 'helsinki',
             'date': date_for_input.__str__(), # also api uses datetimes.date string representation
+            'time': '12:30',
             'available_seats': 3,
             'estimated_fuel_cost': 12.00
         }
@@ -171,6 +176,7 @@ class TestRideList(APITestCase):
             'destination': 'oulu',
             'departure': 'helsinki',
             'date': date_for_input.__str__(), # also api uses datetimes.date string representation
+            'time': '12:30',
             'available_seats': 3,
             'estimated_fuel_cost': 12.00
         }

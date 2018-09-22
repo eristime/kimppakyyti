@@ -5,12 +5,15 @@ import {
   Text,
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import { capitalizeFirstLetter } from '../services/utils';
 
 
 const RideItem = (props) => {
   let { departure, destination, available_seats, estimated_fuel_cost, time } = props.rideItem;
   let { first_name, last_name, driver_rating, driver_review_count, photo } = props.rideItem.driver.profile;
 
+  departure = capitalizeFirstLetter(departure);
+  destination = capitalizeFirstLetter(destination);
   // default values
   first_name = first_name || 'unknown';
   last_name = last_name || 'unknown';

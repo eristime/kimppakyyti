@@ -19,6 +19,7 @@ import deviceStorage from '../services/DeviceStorage';
 import DefaultText from '../components/text/DefaultText';
 import Header2 from '../components/text/Header2';
 import ImportantText from '../components/text/ImportantText';
+import { capitalizeFirstLetter } from '../services/utils';
 
 
 class MakeRequestModal extends Component {
@@ -106,7 +107,10 @@ class MakeRequestModal extends Component {
   render() {
     const rideItem = this.props.navigation.getParam('rideItem');
     const url = `${config.BACKEND_DOMAIN}/rides/${rideItem.id}/requests/`;
-    const { departure, destination, date } = rideItem;
+    let { departure, destination, date } = rideItem;
+    departure = capitalizeFirstLetter(departure);
+    destination = capitalizeFirstLetter(destination);
+    
     return (
       <Container>
         <Header>

@@ -39,3 +39,17 @@ export const convertToHoursMinutes = (dateObject) => {
 
   return `${formattedHours}:${formattedMinutes}`;
 };
+
+export const capitalizeFirstLetter = (inputString) => {
+  /*
+  param:inputString, js string
+  */
+
+
+  if (inputString !== (undefined || null || '')){
+    return inputString.charAt(0).toUpperCase() + inputString.slice(1);
+  } else {
+    return '';
+  }
+  
+}
