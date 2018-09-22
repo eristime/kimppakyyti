@@ -1,3 +1,4 @@
-- redirecting to home view after deleting request
-- error handling when deleting requests??
-- fixing bug when displaying request note
+- time input for rides
+- time formatting on client in RequestItem, RideItem, and RIdeDetails
+- filter using time on backend
+- order rides by time

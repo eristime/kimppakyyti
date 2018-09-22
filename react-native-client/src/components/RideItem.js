@@ -8,7 +8,7 @@ import { withNavigation } from 'react-navigation';
 
 
 const RideItem = (props) => {
-  const { departure, destination, available_seats, estimated_fuel_cost } = props.rideItem;
+  let { departure, destination, available_seats, estimated_fuel_cost, time } = props.rideItem;
   let { first_name, last_name, driver_rating, driver_review_count, photo } = props.rideItem.driver.profile;
 
   // default values
@@ -17,7 +17,8 @@ const RideItem = (props) => {
   photo = photo || 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg';
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 0;
-  const time = '14:53';
+  time = time || '14:53';
+  time = time.substr(0,5); // hack to display time properly
 
   return (
 
@@ -38,8 +39,8 @@ const RideItem = (props) => {
         <View style={{ flex: 2 }}>
           <Text>{first_name} {last_name}</Text>
           <Text>{departure} -> {destination}</Text>
-          <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
           <Text>Leaves at: {time}</Text>
+          <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
         </View>
       </View>
 

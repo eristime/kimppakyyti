@@ -37,7 +37,7 @@ class RideSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats','total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'time', 'available_seats','total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
         read_only_fields = ('total_seat_count', )
 
 
@@ -49,7 +49,7 @@ class RideListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'time', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
 class EndRideSerializer(serializers.ModelSerializer):
@@ -59,8 +59,8 @@ class EndRideSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ride
-        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
-        read_only_fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'time', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
+        read_only_fields = ('id', 'driver', 'car', 'destination', 'departure', 'date', 'time', 'available_seats', 'total_seat_count', 'estimated_fuel_cost', 'private', 'driver_only', )
 
 
 class PrivateRideSerializer(serializers.ModelSerializer):

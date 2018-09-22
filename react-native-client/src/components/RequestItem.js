@@ -16,7 +16,7 @@ import { withNavigation } from 'react-navigation';
 
 
 const RequestItem = (props) => {
-  const { departure, destination, available_seats, estimated_fuel_cost, date } = props.requestItem.ride;
+  let { departure, destination, available_seats, estimated_fuel_cost, date, time } = props.requestItem.ride;
   let { first_name, last_name, driver_rating, driver_review_count, photo } = props.requestItem.ride.driver.profile;
   let { note } = props.requestItem;
   // default values
@@ -26,7 +26,9 @@ const RequestItem = (props) => {
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 15;
   note = note || '---';
-  const time = '17:53';
+  time = time || '17:53';
+  time = time.substr(0,5); // hack to display time properly
+
   //console.log('props.requestItem:', props.requestItem)
 
   return (
@@ -61,8 +63,8 @@ const RequestItem = (props) => {
           <View style={{ flex: 2 }}>
             <Text>{first_name} {last_name}</Text>
             <Text>{departure}->{destination}</Text>
-            <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
             <Text>Leaves at: {time}</Text>
+            <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
           </View>
         </View>
         

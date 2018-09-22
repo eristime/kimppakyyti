@@ -41,6 +41,7 @@ class Ride(models.Model):
     destination = models.CharField(max_length=50)
     departure = models.CharField(max_length=50)
     date = models.DateField()
+    time = models.TimeField()
     available_seats = models.PositiveIntegerField()
     total_seat_count = models.PositiveIntegerField()
     status = models.CharField(max_length=10,choices=STATUS, default=ONGOING, editable=False)

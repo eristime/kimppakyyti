@@ -49,9 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_filters',
+    'rest_framework_filters',
     'apiv1.apps.Apiv1Config',
     'corsheaders',
 ]
@@ -128,6 +129,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
          'rest_framework.authentication.SessionAuthentication',
     ),
+    ##'DEFAULT_FILTER_BACKENDS': (
+    ##    'rest_framework_filters.backends.RestFrameworkFilterBackend', ...
+    ##),
     #'DEFAULT_PERMISSION_CLASSES': [
     #    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     #],
@@ -141,6 +145,10 @@ REST_FRAMEWORK = {
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+
+TIME_INPUT_FORMATS = [
+    '%H:%M',        # '14:30'
+]
 
 USE_I18N = True
 

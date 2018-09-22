@@ -17,7 +17,7 @@ import styles from './styles';
 import RideItem from '../../components/RideItem';
 import AppHeader from '../../components/AppHeader';
 import config from '../../../config.js';
-import { convertDateForAPI, convertToHoursMinutes } from '../../services/utils';
+import { convertDateForAPI, convertToHoursMinutes, convertTimeForAPI } from '../../services/utils';
 
 
 class Home extends Component {
@@ -38,7 +38,7 @@ class Home extends Component {
       destination: '',
       departure: '',
       date: new Date(),
-      time: new Date()
+      time: ''
     };
   }
 
@@ -78,15 +78,15 @@ class Home extends Component {
     if (this.filterParams.departure) {
       url = url + `&departure=${this.filterParams.departure}`;
     }
-    //TODO: add date filtering, make today default choice
+
     if (this.filterParams.date) {
       url += `&date=${convertDateForAPI(this.filterParams.date)}`;
     }
-    /* time input
-    if (this.filterParams.date) {
-      url += `&time=${convertDateForAPI(this.filterParams.date)}`;
+    
+    if (this.filterParams.time) {
+      url += `&time__gte=${convertTimeForAPI(this.filterParams.time)}`;
     }
-    */
+    
 
     this.setState({ loading: true });
 
@@ -143,7 +143,7 @@ class Home extends Component {
     return (
       <Content style={{ margin: 15 }}>
         <Text>{'\n'}</Text>
-        <H3>Unfortunately no rides available for this day.</H3>
+        <H3>Unfortunately no rides available for these parameters.</H3>
       </Content>
     );
   };
