@@ -69,7 +69,7 @@ class AppHeader extends Component {
 
                 <Item fixedLabel
                   style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
-                  <Label>From</Label>
+                  <Label style={{ paddingLeft: 5}}>From</Label>
                   <Input
                     placeholder="Set departure"
                     onChangeText={(text) => this.setState({ departure: text })}
@@ -78,7 +78,7 @@ class AppHeader extends Component {
 
                 <Item fixedLabel
                   style={{ width: 270, height: 35, borderRadius: 5, marginTop: 5, backgroundColor: 'white' }}>
-                  <Label>To</Label>
+                  <Label style={{ paddingLeft: 5}}>To</Label>
                   <Input
                     placeholder="Set destination"
                     onChangeText={(text) => this.setState({ destination: text })}

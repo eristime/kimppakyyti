@@ -143,7 +143,7 @@ class Home extends Component {
     return (
       <Content style={{ margin: 15 }}>
         <Text>{'\n'}</Text>
-        <H3>Unfortunately no rides available for these parameters.</H3>
+        <H3>Unfortunately no rides available. Please try another date, time, departure or destination.</H3>
       </Content>
     );
   };
@@ -211,7 +211,7 @@ class Home extends Component {
               onPress={() => this.props.navigation.navigate('Passenger', { token: this.token })}
             >
               <Icon name="md-people" />
-              <Text>Passenger</Text>
+              <Text style={{ fontSize:10 }}>Passenger</Text>
             </Button>
 
             <Button vertical
