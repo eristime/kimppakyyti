@@ -10,15 +10,16 @@ import {
   Text
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
-//import Text from './text/Text';
-
-
+import { capitalizeFirstLetter } from '../services/utils';
 
 
 const RequestItem = (props) => {
-  const { departure, destination, available_seats, estimated_fuel_cost, date } = props.requestItem.ride;
+  let { departure, destination, available_seats, estimated_fuel_cost, date, time } = props.requestItem.ride;
   let { first_name, last_name, driver_rating, driver_review_count, photo } = props.requestItem.ride.driver.profile;
-  let { note } = props.requestItem.note;
+  let { note } = props.requestItem;
+  
+  departure = capitalizeFirstLetter(departure);
+  destination = capitalizeFirstLetter(destination);
   // default values
   first_name = first_name || 'unknown';
   last_name = last_name || 'unknown';
@@ -26,7 +27,10 @@ const RequestItem = (props) => {
   driver_rating = driver_rating || 4.00;
   driver_review_count = driver_review_count || 15;
   note = note || '---';
-  const time = '14:53';
+  time = time || '17:53';
+  time = time.substr(0,5); // hack to display time properly
+
+  //console.log('props.requestItem:', props.requestItem)
 
   return (
 
@@ -60,15 +64,18 @@ const RequestItem = (props) => {
           <View style={{ flex: 2 }}>
             <Text>{first_name} {last_name}</Text>
             <Text>{departure}->{destination}</Text>
-            <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
             <Text>Leaves at: {time}</Text>
+            <Text>{available_seats} seats; fuel {estimated_fuel_cost} euros</Text>
           </View>
         </View>
+        
         <View
           style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }}
         >
+          <Text>Your note: </Text>
           <Text style={{flex: 1, flexWrap: 'wrap'}} note>'''{note}'''</Text>
         </View>
+        
       </View>
 
     </ListItem>

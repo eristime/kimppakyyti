@@ -2,27 +2,38 @@ from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import viewsets
-import django_filters.rest_framework
+import django_filters.rest_framework as filters
+from rest_framework.filters import OrderingFilter
+#import rest_framework_filters as filters
 
 from apiv1.serializers import RideSerializer, RideListSerializer, PrivateRideSerializer, StaffOnlyRideSerializer, DriverOnlyRideSerializer
 from apiv1.permissions import IsOwnerOrReadOnly, IsDriver, IsDriverOrPassengerReadOnly
 from apiv1.models import Ride, PrivateRide, DriverOnlyRide, StaffOnlyRide
 
 
+class RideFilter(filters.FilterSet):
+    
+    time__gte = filters.TimeFilter(field_name='time', lookup_expr='gte',)
+
+    class Meta:
+        model = Ride
+        fields = ('destination', 'departure', 'date', 'time__gte', )
+
 class RideViewSet(viewsets.ModelViewSet):
     '''
-    All able to see. Drivers with cars able to post. (done automatically?)
+    All able to see. Drivers with cars able to post. 
     '''
-    #only drivers who have cars able to create a ride
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    #permission_classes = () # temporarily remove permission classes since basic auth doesn't work with react native 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     queryset = Ride.objects.all()
     serializer_class = RideListSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
-    filter_fields = ('driver', 'car', 'destination', 'departure', 'date',)
-    ordering_fields = ('date', 'destination', 'departure')
+    filter_backends = (filters.DjangoFilterBackend, OrderingFilter,)
+    filter_class = RideFilter
+    #filter_fields = ('destination', 'departure', 'date',)
+    
     #search_fields = ('destination', 'departure')
     #lookup_field = 'ride_pk'
+    ordering = ('date', 'time',)
+    ordering_fields = ('date', 'time',)
 
     def get_serializer_class(self):
         if self.action == 'list':

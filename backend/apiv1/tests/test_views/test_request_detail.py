@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
@@ -29,11 +29,10 @@ class TestRequestDetail(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
-
-
         # create car for another user
         self.another_user_ride_date = date.today() + timedelta(days=5) # rides on different day
         self.another_user = User.objects.create_user(
@@ -49,10 +48,10 @@ class TestRequestDetail(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.another_user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
-
         Request.objects.create(ride=self.user_ride, requester=self.user, note='lolz')
         Request.objects.create(ride=self.another_user_ride, requester=self.another_user, note='xD')
 

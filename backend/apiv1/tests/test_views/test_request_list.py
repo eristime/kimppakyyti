@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 
 from django.shortcuts import reverse
 from django.contrib.auth.models import User, AnonymousUser
@@ -31,6 +31,7 @@ class TestRequestList(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
@@ -51,13 +52,10 @@ class TestRequestList(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.another_user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
-
-        # not possible to create a request for a ride where user acts as a driver
-        #Request.objects.create(ride=self.user_ride, requester=self.another_user, note='lolz')
-        #Request.objects.create(ride=self.another_user_ride, requester=self.user, note='xD')
 
 
     def test_users_can_create_request(self):
@@ -156,11 +154,11 @@ class TestRequestList(APITestCase):
                             destination='helsinki', \
                             departure='oulu', \
                             date=self.another_user_ride_date.__str__(), \
+                            time=time(12, 30, 30), \
                             available_seats=3, \
                             total_seat_count=3, \
                             estimated_fuel_cost=15.5)
-        #setattr(local_another_user_ride, 'status', 'COMPLETED')
-        #local_another_user_ride.save()
+
         
         local_another_user_ride.status='COMPLETED'
         local_another_user_ride.save()
@@ -219,7 +217,7 @@ class TestRequestList(APITestCase):
         self.assertEqual(response.status_code, 200)
 
 
-    def test_ride_list_view_not_available_for_unauthenticated_users(self):
+    def test_request_list_view_not_available_for_unauthenticated_users(self):
         '''
         Ensure unauthenticated users can't use the request-list view.
         '''
@@ -234,7 +232,7 @@ class TestRequestList(APITestCase):
         response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, 401)
-        self.assertEqual(Request.objects.count(), 0) # request creation didn't work, only two rides
+        self.assertEqual(Request.objects.count(), 0) # request creation didn't work, only two requests
 
         response = self.client.get(url, format='json')
 

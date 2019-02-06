@@ -18,6 +18,7 @@ import styles from './styles';
 import DefaultText from '../../components/text/DefaultText';
 import Header2 from '../../components/text/Header2';
 import ImportantText from '../../components/text/ImportantText';
+import { capitalizeFirstLetter } from '../../services/utils';
 
 class RideDetails extends Component {
 
@@ -41,16 +42,21 @@ class RideDetails extends Component {
   };
 
   render() {
-    const { date, departure, destination, available_seats, estimated_fuel_cost, total_seat_count } = this.rideItem;
+    let { date, time, departure, destination, available_seats, estimated_fuel_cost, total_seat_count } = this.rideItem;
     let { first_name, last_name, driver_rating, driver_review_count, photo } = this.rideItem.driver.profile;
     let { register_plate, model } = this.rideItem.car;
 
+
+    departure = capitalizeFirstLetter(departure);
+    destination = capitalizeFirstLetter(destination);
     // default values
     first_name = first_name || 'unknown';
     last_name = last_name || 'unknown';
     photo = photo || 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Original_Doge_meme.jpg/300px-Original_Doge_meme.jpg';
     driver_rating = driver_rating || 4.00;
     driver_review_count = driver_review_count || 0;
+    time = time || '14:53';
+    time = time.substr(0,5); // hack to display time properly
 
 
     return (
@@ -74,6 +80,7 @@ class RideDetails extends Component {
                 <DefaultText>From: <ImportantText>{departure}</ImportantText></DefaultText>
                 <DefaultText>To: <ImportantText>{destination}</ImportantText></DefaultText>
                 <DefaultText>Departing on <ImportantText>{date}</ImportantText></DefaultText>
+                <DefaultText>At <ImportantText>{time}</ImportantText></DefaultText>
                 <DefaultText>{available_seats} / {total_seat_count} seats available</DefaultText>
                 <DefaultText>Estimated fuel cost {estimated_fuel_cost} euros</DefaultText>
               </Body>
