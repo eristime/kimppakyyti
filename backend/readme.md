@@ -23,8 +23,8 @@ htmlcov folder contains the coverage of the tests.
 | passengers	|GET	| /rides/:pk/passengers/ |
 | passenger	| GET, DELETE	| /rides/:pk/passengers/:pk/ |
 | requests	| GET, POST	| /rides/:pk/requests/ |
-| request	| POST	/rides/:pk/requests/:pk/accept/	|
-| end a ride |	POST	/rides/:pk/end/	|
+| request	| POST |	/rides/:pk/requests/:pk/accept/	|
+| end a ride |	POST |	/rides/:pk/end/	|
 
 ### User-resource	
 | User | Methods | Endpoint |
@@ -35,7 +35,7 @@ htmlcov folder contains the coverage of the tests.
 ### Me-resource	
 | Me | Methods | Endpoint |
 | ------------- | ------------- | ------------- |
-| ride requests made by current user |	GET	/me/requests/ |
+| ride requests made by current user |	GET |	/me/requests/ |
 | rides where current user passenger |	GET	| /me/rides-as-passenger/	|
 | rides where current user driver	| GET	| /me/rides-as-driver/ |
 | cars used by current user	| GET, POST	| /me/cars/ |
